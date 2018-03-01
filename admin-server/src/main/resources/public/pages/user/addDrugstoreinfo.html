@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<form class="form-horizontal" onsubmit="return false" >
+			<div class="form-group">
+					<label class="col-md-2 control-label">手机号码</label>
+					<div class="col-md-8">
+						<div class="form-control" id="username">
+						
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">用户类型</label>
+					<input type="hidden" name="type" id="type2">
+					<div class="col-md-2">
+						<select id="type" class="form-control input-sm" disabled="disabled" style="background-color: #EEEEEE;">
+							<option value="1">牧民</option>
+							<option value="2">专家</option>
+							<option value="3">药店</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-actions" id="addinfo">
+					<div class="row" align="center">
+						<div class="col-md-12">
+							<button class="btn btn-primary"
+								onclick="addinfo();">添加药店信息</button>
+						</div>
+					</div>
+				</div>
+		</form>
+		
+	</div>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="drugstoreinfo2" style="display:none;margin-top:20px;">
+		<form class="form-horizontal" onsubmit="return false" >
+				<div class="form-group">
+					<label class="col-md-2 control-label">头像</label>
+					<div class="col-md-8"  id="headImgDiv1">
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店名称</label>
+					<div class="col-md-8">
+						<div class="form-control" id="pharmacyName1">
+						
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">审核状态</label>
+					<div class="col-md-4">
+						<select id="status1" class="form-control input-sm" disabled="disabled"
+						style="background-color: #EEEEEE;">
+							<option value="0">待审核</option>
+							<option value="1">审核通过</option>
+							<option value="2">审核失败</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店许可证</label>
+					<div class="col-md-8"  id="drugstoreLicenseDiv1">
+
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店简历</label>
+					<div class="col-md-8">
+						<div class="form-control" rows="5"
+							id="drugstoreInformation1" >
+						</div>
+					</div>	
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">省</label>
+					<div class="col-md-2">
+						<div class="form-control" id="province1">
+						
+						</div>
+					</div>
+					<label class="col-md-1 control-label">市</label>
+					<div class="col-md-2">
+						<div class="form-control" id="city1">
+						</div>
+					</div>					
+					<label class="col-md-1 control-label">县/区</label>
+					<div class="col-md-2">
+						<div class="form-control"  id="area1">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址</label>
+					<div class="col-md-8" >
+						<div class="form-control" id="address1" >
+						</div>
+					</div>
+				</div>
+				<div class="form-actions">
+					<div class="row" align="center">
+						<div class="col-md-12">
+							<button class="btn btn-primary"
+								onclick="javascript:history.back(-1);">返回</button>
+						</div>
+					</div>
+				</div>
+		</form>
+	</div>
+		
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="drugstoreinfo" style="display:none;margin-top:50px;">
+		<form class="form-horizontal" onsubmit="return false" id="form">
+			<fieldset>
+				<input type="hidden" name="uid" id="uid">
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店名称</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="姓名" type="text"
+							name="pharmacyName" id="pharmacyName" data-bv-notempty="true"
+							data-bv-notempty-message="药店名称不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店头像</label>
+					<div class="col-md-8">
+						<button type="button" class="layui-btn" id="test1">
+							<i class="layui-icon">&#xe67c;</i>上传头像
+						</button>
+						<input type="hidden" name="headerUrl" id="headerUrl">
+					<div class="col-md-4" id="headImgDiv">
+					
+					</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">审核状态</label>
+					<div class="col-md-4">
+						<select id="status" class="form-control input-sm" name="status">
+							<option value="0">待审核</option>
+							<option value="1">审核通过</option>
+							<option value="2">审核失败</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店简历</label>
+					<div class="col-md-8">
+						<textarea class="form-control" placeholder="姓名" rows="5"
+							name="drugstoreInformation" id="drugstoreInformation" data-bv-notempty="true"
+							data-bv-notempty-message="药店简历不能为空">
+						</textarea>
+					</div>	
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店许可证</label>
+					<div class="col-md-8">
+						<button type="button" class="layui-btn" id="test2">
+							<i class="layui-icon">&#xe67c;</i>上传许可证图片
+						</button>
+						<input type="hidden" name="drugstoreLicense" id="drugstoreLicense">
+					<div class="col-md-4" id="drugstoreLicenseDiv">
+					
+					</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">省</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="province" id="province">
+						</select>
+					</div>
+					<label class="col-md-1 control-label">市</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="city" id="city">
+							<option>==请选择===</option>
+						</select>
+					</div>
+					<label class="col-md-1 control-label">县/区</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="area" id="area">
+							<option>==请选择===</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址" type="text"
+							name="address" id="address" data-bv-notempty="true"
+							data-bv-notempty-message="详细地址不能为空">
+					</div>
+				</div>
+				<div class="form-actions">
+					<div class="row" align="center">
+						<div class="col-md-12">
+							<button class="btn btn-primary"
+								onclick="javascript:history.back(-1);">返回</button>
+							<button class="btn btn-primary" type="submit" onclick="add()">
+								<i class="fa fa-save"></i> 保存
+							</button>
+						</div>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</div>
+
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript"
+		src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/layer.js"></script>
+	<script type="text/javascript" src="../../js/my/district.js"></script>
+	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+	var pro = window.location.protocol;
+    var host = window.location.host;
+    var domain = pro + "//" + host;
+	var example;
+	initData();
+	function initData() {
+		var id = getUrlParam("id");
+		if (id != "") {
+			$.ajax({
+						type : 'get',
+						url : '/users/' + id,
+						async : false,
+						success : function(data) {
+							$("#uid").val(data.id);
+							$("#username").html(data.username);
+							$("#type").val(data.type);
+						}
+					});
+		}
+	}
+	drugstoreinfo();
+	function drugstoreinfo(){
+		var id =getUrlParam("id");
+		if (id != "") {
+			$.ajax({
+						type : 'get',
+						url : '/drugstoreinfos/drugstoreinfo/' + id,
+						async : false,
+						success : function(data) {
+							if(data==""){
+								$("#addinfo").show();
+								return;
+							}else{
+								var src=domain + "/files";
+								$("#addinfo").hide();
+								$("#drugstoreinfo2").show();
+								$("#pharmacyName1").html(data.pharmacyName);
+								$("#province1").html(data.provinceName);
+								$("#status1").val(data.status);
+								$("#address1").html(data.address);
+								$("#city1").html(data.cityName);
+								$("#area1").html(data.areaName);
+								$("#drugstoreInformation1").html(data.drugstoreInformation);
+								 var width="width:100px;height:100px";
+				                 var a = "<img src='"+src + data.headerUrl + "' style="+width+"></img>";
+				                 var b = "<img src='"+src + data.drugstoreLicense + "' style="+width+"></img>";
+								$("#headImgDiv1").html(a);
+								$("#drugstoreLicenseDiv1").html(b);
+								
+								
+							}
+						}
+					});
+
+		}
+		
+		
+	}
+	function addinfo(){
+		
+		$("#drugstoreinfo").show();
+	}
+	
+		function add() {
+			$('#form').bootstrapValidator();
+			var bootstrapValidator = $("#form").data('bootstrapValidator');
+			bootstrapValidator.validate();
+			if (!bootstrapValidator.isValid()) {
+				return;
+			}
+			var formdata = $("#form").serializeObject();
+			$.ajax({
+				type : 'post',
+				url : '/drugstoreinfos',
+				contentType : "application/json; charset=utf-8",
+				data : JSON.stringify(formdata),
+				success : function(data) {
+					layer.msg("添加成功", {
+						shift : -1,
+						time : 1000
+					}, function() {
+						location.href = "userList.html";
+					});
+				}
+			});
+		}
+		layui.use('upload', function() {
+			var upload = layui.upload;
+			upload.render({
+				elem : '#test1' //绑定元素
+				,
+				accept : 'images' //允许上传的文件类型
+				,
+				url : '/files' //上传接口
+				,
+				done : function(res, index, upload) {
+					var url = res.url;
+					 var src = domain + "/files" + url;
+					 var width="width:100px;height:100px";
+	                 var a = "<img src='" + src + "' style="+width+"></img>";
+	                 $("#headImgDiv").html(a);
+	                 $("#headerUrl").val(url);
+					//layer.msg("上传成功");
+				}
+			});
+		});	
+		
+		layui.use('upload', function() {
+			var upload = layui.upload;
+			upload.render({
+				elem : '#test2' //绑定元素
+				,
+				accept : 'images' //允许上传的文件类型
+				,
+				url : '/files' //上传接口
+				,
+				done : function(res, index, upload) {
+					var url = res.url;
+					 var src = domain + "/files" + url;
+					 var width="width:100px;height:100px";
+	                 var a = "<img src='" + src + "' style="+width+"></img>";
+	                 $("#drugstoreLicenseDiv").html(a);
+	                 $("#drugstoreLicense").val(url);
+					//layer.msg("上传成功");
+				}
+			});
+		});	
+	</script>
+</body>
+</html>

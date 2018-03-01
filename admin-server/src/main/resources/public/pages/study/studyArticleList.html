@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body>
+    <div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div>
+                <header style="height: 100%">
+					 <div align="left">
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                   <button class="layui-btn layui-btn-small"
+										onclick="location.href='addArticle.html'"
+										permission="sys:studyArticle:add">
+										<i class="layui-icon">&#xe608;</i> 添加
+									</button>
+                                </td>
+                                <td align="right">
+                                    <form class="form-inline" onsubmit="return false">
+                                        <div class="form-group">
+                                           <button id="searchBt" class="layui-btn layui-btn-small"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>
+                </header>
+                
+                <div>
+                    <div class="widget-body no-padding">
+                        <table id="dt-table" class="table table-striped table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                </tr>                       
+                                <tr>
+									<th>序号</th>
+									<th>发布者</th>
+									<th>标题</th>
+									<th>文章分类</th>
+									<th>点击量</th>
+									<th>状态</th>
+									<th>创建时间</th>
+									<th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
+<script type="text/javascript">
+var pers = checkPermission();
+var example;
+function init(){
+	example = 
+    	$('#dt-table').DataTable({
+        	"searching": false,
+        	"processing": false,
+        	"serverSide" : true,
+        	"ajax": {
+        		"url" : "/studyArticles",
+        		"type":"get",
+        		"data":function(d){
+    			
+    			}
+        	},
+        	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
+            "columns": [
+				{"data" : "id", "defaultContent" : ""},
+				{"data" : "uid", "defaultContent" : ""},
+				{"data" : "title", "defaultContent" : ""},
+				{"data" : "categoryId", "defaultContent" : ""},
+				{"data" : "clicks", "defaultContent" : ""},
+				{"data" : "status", "defaultContent" : ""},
+				{"data" : "createTime", "defaultContent" : ""},
+            ],
+            "columnDefs": [
+				{"name" : "id", "targets" : "0"},
+				{"name" : "uid", 
+					"targets" : 1,
+					"render":function(data,type,row){
+						return row['name'];
+					}
+					},
+				{"name" : "title", 
+						"targets" : 2,
+						"render":function(data,type,row,mate){
+							if(data.length>8){
+								return data.substr(0,7)+"...";
+							}else{
+								return data;
+							}
+							
+						}
+						},
+				{"name" : "categoryId", 
+					"targets" :3,
+					"render":function(data,type,row){
+					
+						return row['categoryName'];
+					}
+					},
+				{"name" : "clicks", "targets" : "4"},
+				{"name" : "status", 
+					"targets" : 5,
+					"render":function(data,type,row){
+						
+						if(row['status']==0){
+							return "未审核";
+						}else if(row['status'==1]){
+							return "审核通过";
+						}else{
+							return "审核失败";
+						}
+					}
+				},
+				{"data" : "createTime", "targets" : "6"},
+				{
+					"targets":7,
+					"render":function(data,type,row){
+						
+						var id=row['id'];
+						var href="articleView.html?id="+id;
+						var del = buttonDel(id,"sys:studyArticle:del",pers);
+						var pass=buttonPass(id,"sys:studyArticle:pass",pers);
+						var fail=buttonFail(id,"sys:studyArticle:fail",pers);
+						var view=buttonVeiw(href,"sys:studyArticle:view",pers);
+						var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+						var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+						if(row['status']==0){
+							
+							return view + del + pass + fail;	
+						}else if(row['status']==1){
+							return view + del +string;
+						}else{
+							
+							return view + del+string2;
+						}
+					}
+				}
+              ],
+           "order": [[ 0, "asc" ]]
+        } );
+}
+function pass(id){
+	layer.confirm('确定要通过审核吗？',{btn:['确定','取消']},function(){
+		$.ajax({
+			type:'get',
+			url:'/studyArticles/pass/'+id,
+			success:function(data){
+				 example.ajax.reload();
+	                layer.msg("审核通过");
+			}
+		})
+	})
+}
+
+
+function fail(id){
+	
+	layer.prompt({
+		  formType: 2,
+		  title:'请填写审核失败的原因',
+		  area: ['500px', '200px'] //自定义文本域宽高
+		}, function(value, index, elem){
+			$.ajax({
+				type:'get',
+				url:'/studyArticles/fail/?id='+id+'&reason='+value,
+				success:function(data){
+					 example.ajax.reload();
+		                layer.msg("操作成功");
+				}
+			})
+		 //得到value
+		  layer.close(index);
+		});
+	
+	/* layer.confirm('确定要审核失败吗？',{btn:['确定','取消']},function(){
+		$.ajax({
+			type:'get',
+			url:'/studyArticles/fail/'+id,
+			success:function(data){
+				 example.ajax.reload();
+	                layer.msg("审核失败");
+			}
+		})
+	}) */
+}
+
+
+function del(id){
+	layer.confirm('确定要删除吗？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+    	$.ajax({
+            type : 'delete',
+            url : '/studyArticles/'+id,
+            success : function(data) {
+                example.ajax.reload();
+                layer.msg("删除成功");
+            }
+        });
+        
+        layer.close(1);
+    });
+}
+
+$("#searchBt").click(function(){
+	example.ajax.reload();
+});
+
+init();
+</script>

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../layui/css/layui.css">
+</head>
+<body>
+    <div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <header style="height: 100%">
+                    <div align="left">
+	                    <table style="width: 100%">
+	                   		<tr>
+	                   			<td>
+									<form class="form-inline" onsubmit="return false">
+										<div class="form-group">
+											用户名：
+											<input id="username" type="text" class="form-control" placeholder="用户名">
+											昵称：
+											<input id="nickname" type="text" class="form-control" placeholder="昵称">
+											状态：
+											<select class="form-control input-sm" id="status">
+												<option value="">全部</option>
+												<option value="1">正常</option>
+												<option value="2">锁定</option>
+												<option value="0">无效</option>
+											</select>
+											<button id="searchBt" class="layui-btn layui-btn-small" permission="sys:user:query"><i class="layui-icon">&#xe615;</i>搜索</button>
+										</div>
+									</form>
+								</td>
+								<td align="right">
+	                   				<button class="layui-btn layui-btn-small" onclick="location.href='addUser.html'" permission="sys:user:add">
+                                      <i class="layui-icon">&#xe608;</i> 添加
+                                    </button>
+	                   			</td>
+	                   		</tr> 
+	                    </table>
+					</div>
+                </header>
+                
+                <div>
+                    <div class="widget-body no-padding">
+                        <table id="dt-table" class="table table-striped table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                </tr>                       
+                                <tr>
+                                    <th>手机号</th>
+                                    <th>类型</th>
+									<th>状态</th>
+									<th>创建时间</th>
+									<th>修改时间</th>     
+									<th>操作</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
+<script type="text/javascript">
+var pers = checkPermission();
+
+var example;
+function init(){
+	example = 
+    	$('#dt-table').DataTable({
+        	"searching": false,
+        	"processing": false,
+        	"serverSide" : true,
+        	"ajax": {
+        		"url" : "/users",
+        		"type":"get",
+        		"data":function(d){
+    				d.username = $('#username').val();
+    				d.nickname = $('#nickname').val();
+    				d.status = $('#status').val();
+    			}
+        	},
+        	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
+            "columns": [
+                { "data": "username", "defaultContent": ""},
+                { "data": "type", "defaultContent": ""},
+                { "data": "status", "defaultContent": ""},
+                { "data": "createTime", "defaultContent": ""},
+                { "data": "updateTime", "defaultContent": ""},
+                { "data": "", "defaultContent": ""},
+                
+            ],
+            "columnDefs": [
+                { "name": "username", "targets": 0 },
+                { 
+                	"targets": 1 ,
+                	"render":function(data,type,row){
+                		var type=row['type'];
+                		var a;
+                		if(type==0){
+                			a="操作员";
+                		}else if(type==1){
+                			
+                			a="牧民";
+                		}else if(type==2){
+                			
+                			a="专家";
+                		}else{
+                			a="药店";
+                		}
+                		return a;
+                	}
+                	
+                },
+                { 
+                	"targets": 2,
+                	"render": function (data, type, row) {
+                		var status = row['status'];
+                		var a = "";
+                		if(status == 0){
+                			a = "无效";
+                		} else if(status == 1){
+                			a = "正常";
+                		} else {
+                			a = "<span style='color:red'>锁定</span>";
+                		}
+                    	return a;
+                  	}
+                },
+                { 
+                	"targets": 5,
+                	"render": function (data, type, row) {
+                		var id = row['id'];
+                		var type=row['type'];
+                		if(type==0){
+                			var href = "updateUser.html?id=" + id;
+                    		var edit = buttonEdit(href, "sys:user:add", pers);
+                            return edit;
+                		}else if(type == 1) {
+							var del = buttonDel(id,"sys:customerUser:del",pers);
+							var addinfo = "addHerdsmaninfo.html?id="+id;
+							var create = buttonCreate(addinfo,"sys:herdsmaninfo:add",pers);
+							var href = "updateCustomerUser.html?id="+id;
+							var edit = buttonEdit(href,"sys:herdsmaninfo:update",pers);
+							return create + edit ;
+						} else if (type == 2) {
+							var dell =buttonDelExpert(id,"sys:customerUser:del",pers)
+							var addexperinfo = "addExpertinfo.html?id="+id;
+							var create = buttonCreate(addexperinfo,"sys:customerUser:addExpertinfo",pers);
+							var href = "updateExpertinfo.html?id="+id;
+							var edit = buttonEdit(href,"sys:expertinfo:update",pers);
+							var pass=buttonExpertPass(id,"sys:expertinfo:pass",pers);
+							var fail=buttonExpertFail(id,"sys:expertinfo:fail",pers);
+							var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+							var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+							var string3='<span class="layui-badge">暂无详细信息</span>';
+							if(row['typestatus']==0){
+								return create + edit +pass+fail ;
+							}else if(row['typestatus']==1)
+								{
+								return create + edit + dell+string;
+								}else if(row['typestatus']==2){
+									return create + edit+string2;
+								}else{
+									return create + edit+string3;
+								}
+						}else{
+							var dell =buttonDelDrugstore(id,"sys:customerUser:del",pers)
+							var add="addDrugstoreinfo.html?id="+id;
+							var create=buttonCreate(add,"sys:drugstoreinfo:add",pers);
+							var update="updateDrugstoreinfo.html?id="+id;
+							var edit=buttonEdit(update,"sys:drugstoreinfo:update",pers);
+							var pass=buttonDrugstorePass(id,"sys:drugstoreinfo:pass",pers);
+							var fail=buttonDrugstoreFail(id,"sys:drugstoreinfo:fail",pers);
+							var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+							var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+							var string3='<span class="layui-badge">暂无详细信息</span>';
+							if(row['typestatus']==0){
+								return create + edit+pass+fail ;
+							}else if(row['typestatus']==1)
+								{
+								return create + edit +string;
+								}else if(row['typestatus']==2){
+									return create + edit  + string2;
+								}else{
+									return create + edit  + string3;
+								}
+						}
+                		
+                  }
+                }
+              ],
+            "order": [[ 0, "desc" ],[1, "asc"]]
+        } );
+}
+function expertPass(id){
+	layer.confirm('确定要通过审核吗？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			type : 'get',
+			url : '/expertinfos/passExpert/' + id,
+			success : function(data) {
+				example.ajax.reload();
+				layer.msg("审核通过");
+			}
+		});
+
+		layer.close(1);
+	});
+	
+	
+}
+function expertFail(id){
+	layer.confirm('确定审核失败吗？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			type : 'get',
+			url : '/expertinfos/failExpert/' + id,
+			success : function(data) {
+				example.ajax.reload();
+				layer.msg("操作成功");
+			}
+		});
+
+		layer.close(1);
+	});
+	
+	
+}
+function drugstorePass(id){
+	layer.confirm('确定要通过审核吗？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			type : 'get',
+			url : '/drugstoreinfos/passDrugstore/' + id,
+			success : function(data) {
+				example.ajax.reload();
+				layer.msg("审核通过");
+			}
+		});
+
+		layer.close(1);
+	});
+	
+	
+}
+function drugstoreFail(id){
+	layer.confirm('确定审核失败吗？', {
+		btn : [ '确定', '取消' ]
+	}, function() {
+		$.ajax({
+			type : 'get',
+			url : '/drugstoreinfos/failDrugstore/' + id,
+			success : function(data) {
+				example.ajax.reload();
+				layer.msg("操作成功");
+			}
+		});
+
+		layer.close(1);
+	});
+	
+	
+}
+$("#searchBt").click(function(){
+	example.ajax.reload();
+});
+
+init();
+</script>

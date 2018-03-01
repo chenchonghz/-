@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body>
+	<div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+			<div>
+				<header style="height: 100%">
+					<div align="left">
+						<table style="width: 100%">
+							<tr>
+								<td>
+									<button class="layui-btn layui-btn-small"
+										onclick="location.href='addCustomerUser.html'"
+										permission="sys:customerUser:add">
+										<i class="layui-icon">&#xe608;</i> 添加
+									</button>
+								</td>
+								<td align="right">
+									<form class="form-inline" onsubmit="return false">
+										<div class="form-group">
+											<button id="searchBt" class="layui-btn layui-btn-small">
+												<i class="layui-icon">&#xe615;</i>搜索
+											</button>
+										</div>
+									</form>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</header>
+
+				<div>
+					<div class="widget-body no-padding">
+						<table id="dt-table"
+							class="table table-striped table-bordered table-hover"
+							style="width: 100%">
+							<thead>
+								<tr>
+								</tr>
+								<tr>
+									<th>序号</th>
+									<th>手机号码</th>
+									<th>注册时间</th>
+									<th>修改时间</th>
+									<th>类型</th>
+									<th>操作</th>
+								</tr>
+							</thead>
+							<tbody>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
+<script type="text/javascript"
+	src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript"
+	src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
+<script type="text/javascript">
+	var pers = checkPermission();
+	var example;
+	function init() {
+		example = $('#dt-table')
+				.DataTable(
+						{
+							"searching" : false,
+							"processing" : false,
+							"serverSide" : true,
+							"ajax" : {
+								"url" : "/customerUsers",
+								"type" : "get",
+								"data" : function(d) {
+
+								}
+							},
+							"dom" : "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",
+							"columns" : [ {
+								"data" : "id",
+								"defaultContent" : ""
+							}, {
+								"data" : "mobilePhone",
+								"defaultContent" : ""
+							}, {
+								"data" : "createTime",
+								"defaultContent" : ""
+							}, {
+								"data" : "updateTime",
+								"defaultContent" : ""
+							}, {
+								"data" : "typeName",
+								"defaultContent" : ""
+							},
+
+							],
+							"columnDefs" : [
+									{
+										"name" : "id",
+										"targets" : "0"
+									},
+									{
+										"name" : "mobilePhone",
+										"targets" : "1"
+									},
+									{
+										"name" : "createTime",
+										"targets" : "2"
+									},
+									{
+										"name" : "updateTime",
+										"targets" : "3"
+									},
+									{
+										"name" : "typeName",
+										"targets" : "4"
+									},
+									{
+										"targets" : 5,
+										"render" : function(data, type, row) {
+											var id = row['id'];
+											if (row['type'] == 1) {
+												var del = buttonDel(id,"sys:customerUser:del",pers);
+												var addinfo = "addHerdsmaninfo.html?id="+id;
+												var create = buttonCreate(addinfo,"sys:herdsmaninfo:add",pers);
+												var href = "updateCustomerUser.html?id="+id;
+												var edit = buttonEdit(href,"sys:customerUser:add",pers);
+												return create + edit + del;
+											} else if (row['type'] == 2) {
+												var dell =buttonDelExpert(id,"sys:customerUser:del",pers)
+												var addexperinfo = "addExpertinfo.html?id="+id;
+												var create = buttonCreate(addexperinfo,"sys:customerUser:addExpertinfo",pers);
+												var href = "updateExpertinfo.html?id="+id;
+												var edit = buttonEdit(href,"sys:customerUser:add",pers);
+												var pass=buttonExpertPass(id,"sys:expertinfo:pass",pers);
+												var fail=buttonExpertFail(id,"sys:expertinfo:fail",pers);
+												var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+												var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+												var string3='<span class="layui-badge">暂无详细信息</span>';
+												if(row['status']==0){
+													return create + edit + dell+pass+fail ;
+												}else if(row['status']==1)
+													{
+													return create + edit + dell+string;
+													}else if(row['status']==2){
+														return create + edit + dell+string2;
+													}else{
+														return create + edit + dell+string3;
+													}
+											}else{
+												var dell =buttonDelDrugstore(id,"sys:customerUser:del",pers)
+												var add="addDrugstoreinfo.html?id="+id;
+												var create=buttonCreate(add,"sys:drugstoreinfo:add",pers);
+												var update="updateDrugstoreinfo.html?id="+id;
+												var edit=buttonEdit(update,"sys:drugstoreinfo:update",pers);
+												var pass=buttonDrugstorePass(id,"sys:drugstoreinfo:pass",pers);
+												var fail=buttonDrugstoreFail(id,"sys:drugstoreinfo:fail",pers);
+												var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+												var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+												var string3='<span class="layui-badge">暂无详细信息</span>';
+												if(row['status']==0){
+													return create + edit + dell+pass+fail ;
+												}else if(row['status']==1)
+													{
+													return create + edit + dell+string;
+													}else if(row['status']==2){
+														return create + edit + dell + string2;
+													}else{
+														return create + edit + dell + string3;
+													}
+											}
+										}
+									}
+							],
+							"order" : [ [ 0, "asc" ] ]
+						});
+	}
+	function expertPass(id){
+		layer.confirm('确定要通过审核吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'get',
+				url : '/customerUsers/passExpert/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("审核通过");
+				}
+			});
+
+			layer.close(1);
+		});
+		
+		
+	}
+	function expertFail(id){
+		layer.confirm('确定审核失败吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'get',
+				url : '/customerUsers/failExpert/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("操作成功");
+				}
+			});
+
+			layer.close(1);
+		});
+		
+		
+	}
+	function drugstorePass(id){
+		layer.confirm('确定要通过审核吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'get',
+				url : '/customerUsers/passDrugstore/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("审核通过");
+				}
+			});
+
+			layer.close(1);
+		});
+		
+		
+	}
+	function drugstoreFail(id){
+		layer.confirm('确定审核失败吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'get',
+				url : '/customerUsers/failDrugstore/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("操作成功");
+				}
+			});
+
+			layer.close(1);
+		});
+		
+		
+	}
+	
+	function del(id) {
+		layer.confirm('确定要删除吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'delete',
+				url : '/customerUsers/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("删除成功");
+				}
+			});
+
+			layer.close(1);
+		});
+	}
+	
+	function delExpert(id) {
+		layer.confirm('确定要删除吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'delete',
+				url : '/customerUsers/expertinfo/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("删除成功");
+				}
+			});
+
+			layer.close(1);
+		});
+	}
+	
+	function delDrugstore(id){
+		
+		layer.confirm('确定要删除吗？', {
+			btn : [ '确定', '取消' ]
+		}, function() {
+			$.ajax({
+				type : 'delete',
+				url : '/customerUsers/drugstoreinfo/' + id,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("删除成功");
+				}
+			});
+
+			layer.close(1);
+		});
+		
+	}
+
+	$("#searchBt").click(function() {
+		example.ajax.reload();
+	});
+
+	init();
+</script>

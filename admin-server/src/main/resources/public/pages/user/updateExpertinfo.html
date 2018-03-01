@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/font-awesome/css/font-awesome.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+<style>
+.layui-upload-img {
+    width: 92px;
+    height: 92px;
+    margin: 0 10px 10px 0;
+}
+.layui-icon{
+	cursor:pointer;
+}
+</style>
+</head>
+<body>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<form class="form-horizontal" onsubmit="return false" id="formCustomerUser">
+			<fieldset>
+			<input type="hidden" id="uid" name="id">
+				<div class="form-group">
+					<label class="col-md-2 control-label">手机号码</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="手机号码" type="text"
+							name="username" id="username" data-bv-notempty="true"
+							data-bv-notempty-message="手机号码不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">密码</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="密码" type="password"
+							name="passWord" id="passWord" data-bv-notempty="false"
+							data-bv-notempty-message="密码不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">用户类型</label>
+					<input type="hidden" name="type" id="type2">
+					<div class="col-md-2">
+						<select id="type" class="form-control input-sm" disabled="disabled" style="background-color: #EEEEEE;">
+							<option value="1">牧民</option>
+							<option value="2">专家</option>
+							<option value="3">药店</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-actions">
+					<div class="row" align="center">
+						<div class="col-md-12">
+							<button class="btn btn-primary"
+								onclick="javascript:history.back(-1);">返回</button>
+							<button class="btn btn-primary" type="submit" onclick="update()">
+								<i class="fa fa-save"></i> 保存基本信息
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="form-actions" id="addinfo">
+				<div class="row" align="center">
+					<div class="col-md-12">
+						暂无专家信息
+					</div>
+				</div>
+			</div>
+			</fieldset>
+		</form>
+	</div>
+	
+	<div id="expertinfo" class="col-xs-12 col-sm-12 col-md-12 col-lg-12" style="margin-top:50px">
+		<form class="form-horizontal" onsubmit="return false" id="formexpertinfo">
+			<fieldset>
+			<input type="hidden" id="infoid" name="id">
+			<input type="hidden" id="infouid" name="uid">
+				<div class="form-group">
+				<label class="col-md-2 control-label">姓名</label>
+				<div class="col-md-8">
+						<input class="form-control" placeholder="姓名" type="text"
+							name="name" id="name" data-bv-notempty="true"
+							data-bv-notempty-message="姓名不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+				<label class="col-md-2 control-label">蒙文名</label>
+				<div class="col-md-8">
+						<input class="form-control" placeholder="姓名" type="text"
+							name="nameMeng" id="nameMeng" data-bv-notempty="true"
+							data-bv-notempty-message="姓名不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">身份证号码</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="身份证号码" type="text"
+							name="cardNumber" id="cardNumber" data-bv-notempty="true"
+							data-bv-notempty-message="身份证号码不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">性别</label>
+					<div class="col-md-4">
+						<select name="sex" id="sex" class="form-control input-sm">
+							<option value="1">男</option>
+							<option value="2">女</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">审核状态</label>
+					<div class="col-md-4">
+						<select name="status" id="status" class="form-control input-sm">
+							<option value="0">待审核</option>
+							<option value="1">审核通过</option>
+							<option value="2">审核失败</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">头像</label>
+					<div class="col-md-8">
+						<button type="button" class="layui-btn" id="test1">
+							<i class="layui-icon">&#xe67c;</i>上传头像
+						</button>
+						<input type="hidden" name="headerUrl" id="headerUrl">
+						<div class="col-md-4" id="headImgDiv">
+					
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">学历</label>
+					<div class="col-md-8">
+						<select class="form-control education" name="education" >
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">学历蒙文</label>
+					<div class="col-md-8">
+						<select class="form-control educationMeng" name="educationMeng" >
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">专长</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="专业" type="text"
+							name="expertise" id="expertise" data-bv-notempty="true"
+							data-bv-notempty-message="专业不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">专长蒙文</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="专业蒙文" type="text"
+							name="expertiseMeng" id="expertiseMeng" data-bv-notempty="true"
+							data-bv-notempty-message="专业不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">个人信息</label>
+					<div class="col-md-8">
+						<textarea class="form-control" placeholder="个人信息"  rows="5"
+							name="personal" id="personal"
+							data-bv-notempty="true" data-bv-notempty-message="个人信息不能为空">
+							</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">个人信息(蒙文)</label>
+					<div class="col-md-8">
+						<textarea class="form-control" placeholder="个人信息"  rows="5"
+							name="personalMeng" id="personalMeng"
+							data-bv-notempty="true" data-bv-notempty-message="蒙文个人信息不能为空">
+							</textarea>
+					</div>
+				</div>
+				<div class="layui-upload">
+					<input type="hidden" name="expertCertificate" id="expertCertificate">
+  					<button type="button" class="layui-btn" id="test2">上传证书（可上传多个）</button> 
+  					<blockquote class="layui-elem-quote layui-quote-nm" style="margin-top: 10px;">
+    				预览图：
+    					<div class="layui-upload-list" id="demo2"></div>
+ 					</blockquote>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址" type="text"
+							name="address" id="address" data-bv-notempty="true"
+							data-bv-notempty-message="详细地址不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙文)</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址" type="text"
+							name="addressMeng" id="addressMeng" data-bv-notempty="true"
+							data-bv-notempty-message="详细地址蒙文不能为空">
+					</div>
+				</div>
+				<div class="form-actions">
+					<div class="row" align="center">
+						<div class="col-md-12">
+							<button class="btn btn-primary"
+								onclick="javascript:history.back(-1);">返回</button>
+							<button class="btn btn-primary" type="submit" onclick="updateHerdsmaninfo()">
+								<i class="fa fa-save"></i> 保存专家信息
+							</button>
+						</div>
+					</div>
+				</div>
+
+			</fieldset>
+		</form>
+	</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript"
+		src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/layer.js"></script>
+	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+	var pro = window.location.protocol;
+    var host = window.location.host;
+    var domain = pro + "//" + host;
+    var img;
+	var example;
+	initEducationList();
+	initEducationmList();
+	layui.use('layer', function() {
+		var layer = layui.layer;
+	});
+	initData();
+	function initData() {
+		var id = getUrlParam("id");
+		if (id != "") {
+			$.ajax({
+						type : 'get',
+						url : '/users/' + id,
+						async : false,
+						success : function(data) {
+							$("#uid").val(data.id);
+							$("#username").val(data.username);
+							$("#type").val(data.type);
+							$("#type2").val(data.type);
+						
+						}
+					});
+
+		}
+	}
+	initHerdsmaninfoData();
+	function initHerdsmaninfoData(){
+		var id = getUrlParam("id");
+		if (id != "") {
+			$.ajax({
+						type : 'get',
+						url : '/expertinfos/expertinfo/' + id,
+						async : false,
+						success : function(data) {
+							if (data == "") {
+								$("#addinfo").show();
+								$("#expertinfo").hide();
+								return;
+										}else{
+											$("#addinfo").hide();
+											var src=domain+"/files";
+											$("#name").val(data.name);
+											$("#nameMeng").val(data.nameMeng);
+											$("#cardNumber").val(data.cardNumber);
+											$("#address").val(data.address);
+											$("#addressMeng").val(data.addressMeng);
+											$("#infoid").val(data.id);
+											$("#infouid").val(data.uid);
+											$("#sex").val(data.sex);
+											$(".education").val(data.education);
+											$(".educationMeng").val(data.educationMeng);
+											$("#status").val(data.status);
+											$("#expertise").val(data.expertise);
+											$("#expertiseMeng").val(data.expertiseMeng);
+											$("#personal").val(data.personal);
+											$("#personalMeng").val(data.personalMeng);
+												var width = "width:100px;height:100px";
+												var a = "<img src='"+src + data.headerUrl + "' style="+width+"></img>";
+												$("#headImgDiv").html(a);
+												$("#headerUrl").val(data.headerUrl);
+												 var imgLists=$("#demo2");	
+												  img= eval('(' + data.expertCertificate + ')'); 
+													for(var i=0;i<img.length;i++){
+														imgLists.append('<a id="upload_img_'+i+'" title="'+i+'"><input type="hidden" class="upload_img_more" value="'+img[i]+'"><span><i class="layui-icon" style="font-size:20px;">&#x1007;</i></span><img class="layui-upload-img" src="'+src+img[i]  +'" ></a>');
+														$("#upload_img_"+i).click(function(){
+																var i =$(this).attr('title');
+															$.ajax({
+													            type : 'get',
+													            url : '/files/file/?url='+img[i]+"&pid="+i,
+													            success : function(data) {
+													            	
+													        		$("#upload_img_"+data).remove();
+													            }
+													        });
+														})
+													}
+										}
+						}
+					});
+
+		}	
+	}
+	
+	
+	function update() {
+		$('#formCustomerUser').bootstrapValidator();
+		var bootstrapValidator = $("#formCustomerUser").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if (!bootstrapValidator.isValid()){
+			return;
+		}
+
+		var formdata = $("#formCustomerUser").serializeObject();
+			console.log(formdata);
+		$.ajax({
+			type : 'put',
+			url : '/expertinfos/',
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(formdata),
+			success : function(data) {
+				layer.msg("修改成功", {
+					shift : -1,
+					time : 1000
+				}, function() {
+					location.href = "userList.html";
+				});
+			}
+		});
+	}
+	layui.use('upload',function() {
+		var $ = layui.jquery, upload = layui.upload;
+		 //多图片上传
+		 var imgLists=$("#demo2");
+		  upload.render({
+		    elem: '#test2'
+		    ,url: '/files'
+		    ,multiple: true
+		    ,before: function(obj){
+                //将每次选择的文件追加到文件队列
+                var files = obj.pushFile();
+                //预读本地文件，如果是多文件，则会遍历。(不支持ie8/9)
+                obj.preview(function(index, file, result){
+       
+                    if(file.size>0 &&  imgLists.find('img').length==0){
+                    	imgLists.empty();
+                    }
+                    imgLists.append('<a id="upload_img_'+index+'"><input type="hidden" class="upload_img_more" ><span><i class="layui-icon" style="font-size:20px;">&#x1007;</i></span><img class="layui-upload-img" src="'+ result +'" alt="'+ file.name +'"></a>');
+
+                    $("#upload_img_"+index).bind('click',function(){
+                        delete files[index];//这里用官网介绍的方法，但是图片无法删除，提交后还是有图片内容
+                        $(this).remove();
+                    });
+                });
+            }
+		    ,done: function(res, index, upload){
+		    	var one =imgLists.find("a#upload_img_"+index);
+		    	one.find("input").val(res.url);
+		    	var upload_img=$(".upload_img_more");
+		    	var leng =upload_img.length;
+		    	var array=[];
+		    	for(var u=0;u<leng;u++)
+		    		{
+		    		array.push(upload_img.eq(u).val());
+		    		}
+		    	var arr = JSON.stringify(array);
+		    	$("#expertCertificate").val(arr);
+		      //上传完毕
+		    }
+		  });
+	})
+	layui.use('upload', function() {
+		var upload = layui.upload;
+		upload.render({
+			elem : '#test1' //绑定元素
+			,
+			accept : 'images' //允许上传的文件类型
+			,
+			url : '/files' //上传接口
+			,
+			done : function(res, index, upload) {
+				var url = res.url;
+				 var src = domain + "/files" + url;
+				 var width="width:100px;height:100px";
+                 var a = "<img src='" + src + "' style="+width+"></img>";
+                 $("#headImgDiv").html(a);
+                 $("#headerUrl").val(url);
+				//layer.msg("上传成功");
+			}
+		});
+	});
+	function updateHerdsmaninfo(){
+		var upload_img=$(".upload_img_more");
+    	var leng =upload_img.length;
+    	var array=[];
+    	for(var u=0;u<leng;u++)
+    		{
+    		array.push(upload_img.eq(u).val());
+    		}
+    	var arr = JSON.stringify(array);
+    	$("#expertCertificate").val(arr);
+		$('#formexpertinfo').bootstrapValidator();
+		var bootstrapValidator = $("#formexpertinfo").data('bootstrapValidator');
+		bootstrapValidator.validate();
+		if (!bootstrapValidator.isValid()) {
+			return;
+		}
+		var formdata = $("#formexpertinfo").serializeObject();	
+		$.ajax({
+			type : 'put',
+			url : '/expertinfos/',
+			contentType : "application/json; charset=utf-8",
+			data : JSON.stringify(formdata),
+			success : function(data) {
+				layer.msg("修改成功", {
+					shift : -1,
+					time : 1000
+				}, function() {
+					location.href = "userList.html";
+				});
+			}
+		});		
+	}
+	
+	
+	</script>
+</body>
+</html>
