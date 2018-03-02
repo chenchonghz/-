@@ -13,6 +13,7 @@ if ('WebSocket' in window) {
 websocket.onmessage = function(event) {
     var d = event.data;
     var data = JSON.parse(d);
+    console.log(data);
  	processData(data);
 }
 
@@ -25,6 +26,10 @@ function processData(data){
 	
 	if(type  == "NEW_NOTICE"){
 		showNotices(data.articles);
+	}
+	if(type == "NEW_VIDEO"){
+		
+		showVideo(data.videoconnect)
 	}
 }
 
@@ -61,4 +66,20 @@ function showNotices(articles){
 	      });
 	});
 }
+
+function showVideo(videoconnect){
+	layui.use(['layer'], function(){
+	    layer = layui.layer;
+	    layer.open({
+	        type:2,
+	        area: ['800px', '400px'],
+	        shade: 0.7,
+	        moveType: 0,
+	        content: videoconnect.url+videoconnect.roomid
+	        
+	      });
+	});
+}
+
+
 

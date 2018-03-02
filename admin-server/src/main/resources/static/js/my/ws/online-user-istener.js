@@ -10,6 +10,6 @@ if ('WebSocket' in window) {
 //接收到消息的回调方法  
 websocket.onmessage = function(event) {
     var d = event.data;
-//    console.log(d);
+    console.log(d);
     reloadList();
 }

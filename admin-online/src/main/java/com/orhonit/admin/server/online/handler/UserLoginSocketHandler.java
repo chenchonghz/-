@@ -23,8 +23,10 @@ import com.orhonit.admin.server.common.utils.JsonUtil;
 import com.orhonit.admin.server.online.constants.MsgType;
 import com.orhonit.admin.server.online.dto.LoginUserDto;
 import com.orhonit.admin.server.online.dto.NoticeDto;
+import com.orhonit.admin.server.online.dto.VideoDto;
 import com.orhonit.admin.server.sys.model.Articles;
 import com.orhonit.admin.server.sys.model.User;
+import com.orhonit.admin.server.sys.model.Videoconnect;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
 import lombok.extern.slf4j.Slf4j;
@@ -140,6 +142,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 		return false;
 	}
 
+	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onApplicationEvent(AdminEvent adminEvent) {
 		if (adminEvent.getEventType() == EventType.USER_CHANGE) {
@@ -170,6 +173,19 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 				}
 			});
 
+		}else if(EventType.NEW_VIDEO == adminEvent.getEventType()){
+			Videoconnect videoconnect = (Videoconnect) adminEvent.getSource();
+			User user = UserUtil.getCurrentUser();
+			VideoDto videoDto = new VideoDto();
+			videoDto.setType(EventType.NEW_VIDEO.name());
+			videoDto.setVideoconnect(videoconnect);
+			String msg = JsonUtil.toJson(videoDto);
+			sessions.forEach((k, v) -> {
+				if (k.equals(user.getId()) || k==Long.parseLong(videoconnect.getEid().toString())) {
+					sendMsg(v, msg);
+				}
+			});
+			
 		}
 	}
 

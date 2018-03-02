@@ -26,6 +26,7 @@
                                     <th>昵称</th>
                                     <th>手机号</th>
                                     <th>邮箱</th>
+                                    <th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -40,10 +41,16 @@
 
 <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript" src="../../js/my/ws/online-user-istener.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
 <script type="text/javascript">
+var pers = checkPermission();
+var pro = window.location.protocol;
+var host = window.location.host;
+var domain = pro + "//" + host;
 var example;
 function init(){
 	example = 
@@ -68,14 +75,35 @@ function init(){
                 
             ],
             "columnDefs": [
-                { "name": "username", "targets": 0 },
-                { "name": "nickname", "targets": 1 },
-                { "name": "phone", "targets": 2 },
-                { "name": "email", "targets": 3 },
+                { "name": "username", "targets": "0" },
+                { "name": "nickname", "targets": "1" },
+                { "name": "phone", "targets": "2" },
+                { "name": "email", "targets": "3" },
+                { 
+                	"targets": 4,
+                	"render": function (data, type, row) {
+                		var id = row['id'];
+                		var video=buttonVideo(id)
+                        return video;
+                  	}
+                }
               ]
         } );
 }
-
+function videoSee(id){
+	$.ajax({
+		url:'/videoconnects/vc/'+id,
+		type:'get',
+		seccess:function(data){
+			//example.ajax.reload();
+		}
+		
+		
+	})
+	
+	
+	
+}
 //setInterval("reloadList()", 10000);
 function reloadList(){
 	example.ajax.reload();

@@ -16,5 +16,9 @@ public enum EventType {
 	/**
 	 * 公告
 	 */
-	NEW_NOTICE
+	NEW_NOTICE,
+	/**
+	 * 视频
+	 */
+	NEW_VIDEO
 }

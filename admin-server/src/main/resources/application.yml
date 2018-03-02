@@ -50,3 +50,5 @@ token:
     seconds: 86400
 server:
   port: 8080
+videoconnect:
+  path: https://192.168.31.26/m/
