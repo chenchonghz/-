@@ -10,6 +10,10 @@ import lombok.Setter;
 @Setter
 public class Medicalequipment extends BaseEntity<Long> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3422966771080524772L;
 	private String name;
 	private String image;
 	private String content;
