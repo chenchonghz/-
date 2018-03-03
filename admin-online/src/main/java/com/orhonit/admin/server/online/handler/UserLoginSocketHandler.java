@@ -24,6 +24,7 @@ import com.orhonit.admin.server.online.constants.MsgType;
 import com.orhonit.admin.server.online.dto.LoginUserDto;
 import com.orhonit.admin.server.online.dto.NoticeDto;
 import com.orhonit.admin.server.online.dto.VideoDto;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.model.Articles;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
@@ -41,7 +42,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j(topic = "adminLogger")
 @Component
 public class UserLoginSocketHandler implements WebSocketHandler, ApplicationListener<AdminEvent> {
-
+	@Autowired
+	private ExpertinfoDao expertinfoDao;
+	
+	
 	/**
 	 * 登录用户打开所有页面的连接
 	 */
@@ -112,6 +116,9 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 			}
 			map.remove(onlineUserKey);
 			log.debug("移除连接{}:{}", user.getNickname(), onlineUserKey);
+			if(user.getType() == 2){
+				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()), 3);
+			}
 
 			if (map.isEmpty()) {
 				sessions.remove(id);
@@ -133,8 +140,12 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 		User oldUser = onlineUsers.putIfAbsent(id, user);
 		if (oldUser == null) {
 			log.debug("添加在线用户：{}", user.getUsername());
+			if(user.getType() == 2){
+				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()),1);
+			}
 			userOnlineSocketHandler.sendToAll();
 		}
+	
 	}
 
 	@Override

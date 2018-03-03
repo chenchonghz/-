@@ -30,6 +30,8 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 public class UserOnlineSocketHandler implements WebSocketHandler {
 
+	
+	
 	/**
 	 * 登录用户打开所有页面的连接
 	 */
@@ -42,7 +44,7 @@ public class UserOnlineSocketHandler implements WebSocketHandler {
 		synchronized (username.intern()) {
 			String onlineUserKey = (String) session.getAttributes().get(UserConstants.ONLINE_USER_KEY);
 			sessions.putIfAbsent(onlineUserKey, session);
-
+			
 			log.debug("在线列表：{}连接成功", user.getNickname());
 		}
 	}
@@ -71,6 +73,7 @@ public class UserOnlineSocketHandler implements WebSocketHandler {
 			}
 
 			String onlineUserKey = (String) session.getAttributes().get(UserConstants.ONLINE_USER_KEY);
+			
 			sessions.remove(onlineUserKey);
 			log.debug("在线列表：移除连接{}", user.getNickname());
 		}

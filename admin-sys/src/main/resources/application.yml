@@ -13,3 +13,5 @@ logging:
   level:
     root: info
     com.zw: debug
+ videoconnect:
+  path: https://192.168.31.26/m/

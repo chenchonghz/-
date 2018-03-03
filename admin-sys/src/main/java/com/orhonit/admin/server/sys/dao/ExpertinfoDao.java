@@ -38,4 +38,7 @@ public interface ExpertinfoDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Expertinfo> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+   
+    @Update("update expertinfo t set state = #{arg1} where t.uid = #{arg0}")
+	void updateState(int id,int i);
 }
