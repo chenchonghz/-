@@ -1,7 +1,5 @@
 package com.orhonit.admin.server.sys.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;

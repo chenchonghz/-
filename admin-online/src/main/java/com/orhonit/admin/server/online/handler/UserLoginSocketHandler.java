@@ -142,7 +142,6 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 		return false;
 	}
 
-	@SuppressWarnings("unlikely-arg-type")
 	@Override
 	public void onApplicationEvent(AdminEvent adminEvent) {
 		if (adminEvent.getEventType() == EventType.USER_CHANGE) {
