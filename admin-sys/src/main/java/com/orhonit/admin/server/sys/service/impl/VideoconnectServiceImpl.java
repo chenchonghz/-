@@ -1,5 +1,6 @@
 package com.orhonit.admin.server.sys.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -81,6 +82,7 @@ public class VideoconnectServiceImpl implements VideoconnectService {
             videoConnect.setUrl(videoconnectPath);
             int round = (int) (Math.random() * 1000000);
             videoConnect.setRoomid(round);
+            videoConnect.setTime(new Date());
             videoconnectDao.save(videoConnect);
             expertinfo.setState(2);
             expertinfoDao.update(expertinfo);

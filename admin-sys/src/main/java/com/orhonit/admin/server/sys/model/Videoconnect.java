@@ -1,5 +1,7 @@
 package com.orhonit.admin.server.sys.model;
 
+import java.util.Date;
+
 import com.orhonit.admin.server.common.model.BaseEntity;
 
 
@@ -18,5 +20,6 @@ public class Videoconnect extends BaseEntity<Long> {
 	private Integer eid;
 	private Integer roomid;
 	private String url;
+	private Date time;
 
 }

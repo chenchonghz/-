@@ -26,7 +26,7 @@ public interface VideoconnectDao {
     int update(Videoconnect videoconnect);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into videoconnect(hid, eid, roomid, url) values(#{hid}, #{eid}, #{roomid}, #{url})")
+    @Insert("insert into videoconnect(hid, eid, roomid, url, time) values(#{hid}, #{eid}, #{roomid}, #{url}, #{time})")
     int save(Videoconnect videoconnect);
     
     int count(@Param("params") Map<String, Object> params);
