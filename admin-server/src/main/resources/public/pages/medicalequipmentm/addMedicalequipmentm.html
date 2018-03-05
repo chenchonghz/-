@@ -80,12 +80,12 @@
 
 		$.ajax({
 			type : 'post',
-			url : '/medicalequipments',
+			url : '/medicalequipmentms',
 			contentType: "application/json; charset=utf-8",  
 			data : JSON.stringify(formdata),
 			success : function(data) {
 				layer.msg("添加成功", {shift: -1, time: 1000}, function(){
-					location.href = "medicalequipmentList.html";
+					location.href = "medicalequipmentmList.html";
                 });
 			}
 		});

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>器械详情</title>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="articleView">
+		<form class="form-horizontal"  onsubmit="return false" id="form">
+			<div class="form-group">
+				<label class="col-md-2 control-label">器械名称</label>
+				<div class="col-md-8">
+					<div class="form-control" id="name"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">内容</label>
+				<div class="col-md-8">
+					<div id="content"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">封面图</label>
+				<div class="col-md-8">
+					<div id="headImgDiv"></div>
+				</div>
+			</div>
+			
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+						<button type="button" class="btn btn-primary" onclick="javascript:history.back(-1);">返回</button>
+						
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/layer.js"></script>
+		<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../js/my/district.js"></script>
+	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript">
+	var pro = window.location.protocol;
+    var host = window.location.host;
+    var domain = pro + "//" + host;
+	initData();
+	
+	function initData(){
+		var id = getUrlParam("id");
+		if(id != ""){
+			$.ajax({
+				type : 'get',
+				url : '/medicalequipmentms/'+id,
+				async : false,
+				success : function(data) {
+					$("#id").html(data.id);
+					$("#name").html(data.name);
+					$("#content").html(data.content);
+					var src = domain + "/files"+data.image;
+					var width = "width:300px;height:300px";
+					var a = "<img src='" +src + "' style="+width+"></img>";
+					$("#headImgDiv").html(a);
+					$("#headerUrl").val(data.image);
+				}
+			});
+			
+		}
+	}
+	
+	</script>
+</body>
+</html>

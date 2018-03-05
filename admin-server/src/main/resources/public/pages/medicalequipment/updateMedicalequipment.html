@@ -29,7 +29,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-2 control-label">图片</label>
+				<label class="col-md-2 control-label">封面图片</label>
 				<button type="button" class="layui-btn" id="test1">
 							<i class="layui-icon">&#xe67c;</i>
 						</button>
@@ -79,7 +79,7 @@
 					if(data.image==null){
 						$("#headImgDiv").html('无图片');
 					}else{
-						 var src = domain + "/files"+data.image;
+						var src = domain + "/files"+data.image;
 						var width = "width:100px;height:100px";
 						var a = "<img src='" +src + "' style="+width+"></img>";
 						$("#headImgDiv").html(a);

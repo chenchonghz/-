@@ -12,11 +12,12 @@
 <body>
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="articleView">
 		<form class="form-horizontal"  onsubmit="return false" id="form">
+		<input type="hidden" id="id" name="id">
 			<div class="form-group">
 				<label class="col-md-2 control-label">器械名称</label>
 				<div class="col-md-8">
-					<input class="form-control" placeholder="器械名称" type="text"
-							name="name" id="title" data-bv-notempty="true"
+					<input class="form-control" type="text"
+							name="name" id="name" data-bv-notempty="true"
 							data-bv-notempty-message="名称不能空">
 				</div>
 			</div>
@@ -41,7 +42,7 @@
 				<div class="row" align="center">
 					<div class="col-md-12">
 						<button type="button" class="btn btn-primary" onclick="javascript:history.back(-1);">返回</button>
-						<button class="btn btn-primary" type="submit" onclick="add()">
+						<button class="btn btn-primary" type="submit" onclick="update()">
 								<i class="fa fa-save"></i> 保存
 							</button>
 					</div>
@@ -62,9 +63,39 @@
 	var pro = window.location.protocol;
     var host = window.location.host;
     var domain = pro + "//" + host;
-	var example;
+	initData();
+	
+	function initData(){
+		var id = getUrlParam("id");
+		if(id != ""){
+			$.ajax({
+				type : 'get',
+				url : '/medicalequipmentms/'+id,
+				async : false,
+				success : function(data) {
+					$("#id").val(data.id);
+					$("#name").val(data.name);
+					$("#demo").text(data.content);
+					if(data.image==null){
+						$("#headImgDiv").html('无图片');
+					}else{
+						var src = domain + "/files"+data.image;
+						var width = "width:100px;height:100px";
+						var a = "<img src='" +src + "' style="+width+"></img>";
+						$("#headImgDiv").html(a);
+						$("#headerUrl").val(data.image);
+					}
+				}
+			});
+			
+		}
+	}
+	var pro = window.location.protocol;
+	var host = window.location.host;
+	var domain = pro + "//" + host;
+	
 	var layedit, index;
-	layui.use(['layedit','upload'], function(){
+	layui.use('layedit', function(){
 	  layedit = layui.layedit;
 	  layedit.set({
           uploadImage: {
@@ -74,23 +105,6 @@
         });
 	  index = layedit.build('demo');
 	});
-	function add() {
-	    var formdata = $("#form").serializeObject();
-	    formdata.content = layedit.getContent(index);
-
-		$.ajax({
-			type : 'post',
-			url : '/medicalequipments',
-			contentType: "application/json; charset=utf-8",  
-			data : JSON.stringify(formdata),
-			success : function(data) {
-				layer.msg("添加成功", {shift: -1, time: 1000}, function(){
-					location.href = "medicalequipmentList.html";
-                });
-			}
-		});
-	}
-		
 	layui.use('upload',function(){
 		var $ = layui.jquery, upload = layui.upload;
 		//普通图片上传
@@ -111,6 +125,22 @@
 					}
 				});
 	})
+	function update() {
+	    var formdata = $("#form").serializeObject();
+	    formdata.content = layedit.getContent(index);
+
+		$.ajax({
+			type : 'put',
+			url : '/medicalequipmentms',
+			contentType: "application/json; charset=utf-8",  
+			data : JSON.stringify(formdata),
+			success : function(data) {
+				layer.msg("修改成功", {shift: -1, time: 1000}, function(){
+					location.href = "medicalequipmentmList.html";
+                });
+			}
+		});
+	}
 	</script>
 </body>
 </html>

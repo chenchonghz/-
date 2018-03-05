@@ -17,8 +17,8 @@
                             <tr>
                                 <td>
                                     <button class="layui-btn layui-btn-small"
-										onclick="location.href='addMedicalequipment.html'"
-										permission="sys:addMedicalequipment:add">
+										onclick="location.href='addMedicalequipmentm.html'"
+										permission="sys:addMedicalequipmentm:add">
 										<i class="layui-icon">&#xe608;</i> 添加
 									</button>
                                 </td>
@@ -80,7 +80,7 @@ function init(){
         	"processing": false,
         	"serverSide" : true,
         	"ajax": {
-        		"url" : "/medicalequipments",
+        		"url" : "/medicalequipmentms",
         		"type":"get",
         		"data":function(d){
     			
@@ -113,11 +113,11 @@ function init(){
                 	"targets": 3,
                 	"render": function (data, type, row) {
                 		var id = row['id'];
-                		var pass="medicalequipmentView.html?id="+id;
-                		var view=buttonVeiw(pass,"sys:Medicalequipment:view",pers);
-        				var href = "updateMedicalequipment.html?id=" + id;
-        				var edit = buttonEdit(href, "sys:updateMedicalequipment:update", pers);
-                        var del = buttonDel(id, "sys:delMedicalequipment:del", pers);
+                		var pass="medicalequipmentmView.html?id="+id;
+                		var view=buttonVeiw(pass,"sys:Medicalequipmentm:view",pers);
+        				var href = "updateMedicalequipmentm.html?id=" + id;
+        				var edit = buttonEdit(href, "sys:updateMedicalequipmentm:update", pers);
+                        var del = buttonDel(id, "sys:delMedicalequipmentm:del", pers);
                         return view+edit+del;
                   	}
                 }
@@ -132,7 +132,7 @@ function del(id){
     }, function() {
     	$.ajax({
             type : 'delete',
-            url : '/medicalequipments/'+id,
+            url : '/medicalequipmentms/'+id,
             success : function(data) {
                 example.ajax.reload();
                 layer.msg("删除成功");
