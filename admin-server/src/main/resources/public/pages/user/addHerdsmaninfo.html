@@ -212,6 +212,9 @@
     var domain = pro + "//" + host;
 	var example;
 	initData();
+	$(function(){
+		ProviceBind();
+	})
 	function initData() {
 		var id = getUrlParam("id");
 		if (id != "") {

@@ -13,12 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
-import com.orhonit.admin.server.common.datatables.TableRequestHandler;
-import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
-import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
-import com.orhonit.admin.server.sys.dao.DistrictDao;
 import com.orhonit.admin.server.sys.model.District;
+import com.orhonit.admin.server.sys.service.DistrictService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -27,12 +24,12 @@ import io.swagger.annotations.ApiOperation;
 public class DistrictController {
 
     @Autowired
-    private DistrictDao districtDao;
+    private DistrictService districtService;
 
     @PostMapping
     @ApiOperation(value = "保存")
     public District save(@RequestBody District district) {
-        districtDao.save(district);
+    	districtService.save(district);
 
         return district;
     }
@@ -40,7 +37,7 @@ public class DistrictController {
     @ApiOperation(value = "获取省级名称")
     public List<District> province(){
     	
-    	List<District> byUpid = districtDao.getByUpid(0);
+    	List<District> byUpid = districtService.getByUpid(0);
     	return byUpid;
     }
     
@@ -48,7 +45,7 @@ public class DistrictController {
     @ApiOperation(value = "获取市级名称")
     public List<District> city(@PathVariable int id){
     	
-    	List<District> byUpid = districtDao.getByUpid(id);
+    	List<District> byUpid = districtService.getByUpid(id);
     	return byUpid;
     }
     
@@ -56,19 +53,19 @@ public class DistrictController {
     @ApiOperation(value = "获取区或县级名称")
     public List<District> area(@PathVariable int id){
     	
-    	List<District> byUpid = districtDao.getByUpid(id);
+    	List<District> byUpid = districtService.getByUpid(id);
     	return byUpid;
     }
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取")
     public District get(@PathVariable Long id) {
-        return districtDao.getById(id);
+        return districtService.getById(id);
     }
 
     @PutMapping
     @ApiOperation(value = "修改")
     public District update(@RequestBody District district) {
-        districtDao.update(district);
+    	districtService.update(district);
 
         return district;
     }
@@ -76,24 +73,12 @@ public class DistrictController {
     @GetMapping
     @ApiOperation(value = "列表")
     public TableResponse<District> list(TableRequest request) {
-        return TableRequestHandler.<District> builder().countHandler(new CountHandler() {
-
-            @Override
-            public int count(TableRequest request) {
-                return districtDao.count(request.getParams());
-            }
-        }).listHandler(new ListHandler<District>() {
-
-            @Override
-            public List<District> list(TableRequest request) {
-                return districtDao.list(request.getParams(), request.getStart(), request.getLength());
-            }
-        }).build().handle(request);
+    	return districtService.list(request);
     }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
-        districtDao.delete(id);
+    	districtService.delete(id);
     }
 }

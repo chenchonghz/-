@@ -84,6 +84,14 @@
 							data-bv-notempty-message="药店名称不能为空">
 					</div>
 				</div>
+			<div class="form-group">
+					<label class="col-md-2 control-label">药店名称</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="药店名称(蒙)" type="text"
+							name="pharmacyNameMeng" id="pharmacyNameMeng" data-bv-notempty="true"
+							data-bv-notempty-message="药店名称不能为空">
+					</div>
+				</div>
 				<div class="form-group">
 					<label class="col-md-2 control-label">审核状态</label>
 					<div class="col-md-4">
@@ -111,6 +119,15 @@
 					<div class="col-md-8">
 						<textarea class="form-control" placeholder="药店信息"  rows="5"
 							name="drugstoreInformation" id="drugstoreInformation"
+							data-bv-notempty="true" data-bv-notempty-message="药店信息不能为空">
+							</textarea>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店信息(蒙)</label>
+					<div class="col-md-8">
+						<textarea class="form-control" placeholder="药店信息(蒙)"  rows="5"
+							name="drugstoreInformationMeng" id="drugstoreInformationMeng"
 							data-bv-notempty="true" data-bv-notempty-message="药店信息不能为空">
 							</textarea>
 					</div>
@@ -147,10 +164,37 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">省(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="provinceMeng" id="provinceMeng">
+						</select>
+					</div>
+					<label class="col-md-1 control-label">市(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="cityMeng" id="cityMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+					<label class="col-md-1 control-label">县/区(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="areaMeng" id="areaMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">详细地址</label>
 					<div class="col-md-8">
 						<input class="form-control" placeholder="详细地址" type="text"
 							name="address" id="address" data-bv-notempty="true"
+							data-bv-notempty-message="详细地址不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙)</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址" type="text"
+							name="addressMeng" id="addressMeng" data-bv-notempty="true"
 							data-bv-notempty-message="详细地址不能为空">
 					</div>
 				</div>
@@ -176,9 +220,9 @@
 	<script type="text/javascript" src="../../js/common.js"></script>
 	<script type="text/javascript" src="../../js/layer.js"></script>
 	<script type="text/javascript" src="../../js/my/district.js"></script>
+	<script type="text/javascript" src="../../js/my/districtm.js"></script>
 	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
-	<script type="text/javascript" src="../../js/my/district.js"></script>
 	<script type="text/javascript">
 	var pro = window.location.protocol;
     var host = window.location.host;
@@ -224,7 +268,9 @@
 											$("#addinfo").hide();
 											var src=domain+"/files";
 											$("#pharmacyName").val(data.pharmacyName);
+											$("#pharmacyNameMeng").val(data.pharmacyNameMeng);
 											$("#address").val(data.address);
+											$("#addressMeng").val(data.addressMeng);
 											$("#infoid").val(data.id);
 											$("#infouid").val(data.uid);
 											$("#drugstoreInformation").val(data.drugstoreInformation)
@@ -234,6 +280,13 @@
 											$("#city").val(data.city);
 											areaBind();
 											$("#area").val(data.area);
+											$("#drugstoreInformationMeng").val(data.drugstoreInformationMeng)
+											ProviceMengBind();
+											$("#provinceMeng").val(data.provinceMeng);
+											cityMengBind();
+											$("#cityMeng").val(data.cityMeng);
+											areaMengBind();
+											$("#areaMeng").val(data.areaMeng);
 											$("#status").val(data.status);
 											$("#headerUrl").val(data.headerUrl);
 											$("#drugstoreLicense").val(data.drugstoreLicense);

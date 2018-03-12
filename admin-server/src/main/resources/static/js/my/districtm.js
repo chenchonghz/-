@@ -1,15 +1,15 @@
  $(function () {
 
     //默认绑定省
-    //ProviceBind();
+//    ProviceMengBind();
     //绑定事件
-    $("#province").change( function () {
-        cityBind();
-        areaBind();
+    $("#provinceMeng").change( function () {
+        cityMengBind();
+        areaMengBind();
     })
     
-    $("#city").change(function () {
-        areaBind();
+    $("#cityMeng").change(function () {
+        areaMengBind();
     })
    
    
@@ -18,16 +18,16 @@
 })
 
 
-function ProviceBind() {
+function ProviceMengBind() {
     //清空下拉数据
-    var pro=$("#province").val();
+    var pro=$("#provinceMeng").val();
     $.ajax({
         type: "get",
-        url: "/districts/province",
+        url: "/districtms/province",
         dataType: "JSON",
         async: false,
         success: function (data) {
-        	  var select = $("#province");
+        	  var select = $("#provinceMeng");
               select.append("<option value='0'>==请选择===</option>");
               for(var i=0; i<data.length; i++){
                   var d = data[i];
@@ -45,20 +45,20 @@ function ProviceBind() {
    
         
 }
-function cityBind() {
+function cityMengBind() {
 
 
-    var provice = $("#province").val();
+    var provice = $("#provinceMeng").val();
     //判断省份这个下拉框选中的值是否为空
     if (provice == 0) {
-        $("#city").html("<option value="+0+">==请选择===</option>");
+        $("#cityMeng").html("<option value="+0+">==请选择===</option>");
         return;
     }
-    $("#city").html("");
+    $("#cityMeng").html("");
     var str = "<option value="+0+">==请选择===</option>";
     $.ajax({
         type: "get",
-        url: "/districts/city/"+provice,
+        url: "/districtms/city/"+provice,
         dataType: "JSON",
         async: false,
         success: function (data) {
@@ -67,7 +67,7 @@ function cityBind() {
                 str += "<option value=" + item.id + ">" + item.name + "</option>";
             })
             //将数据添加到省份这个下拉框里面
-            $("#city").append(str);
+            $("#cityMeng").append(str);
         },
         error: function () { alert("Error"); }
     });
@@ -75,21 +75,21 @@ function cityBind() {
 
 }
 
-function areaBind() {
+function areaMengBind() {
 
 
-    var provice = $("#city").val();
+    var provice = $("#cityMeng").val();
     //判断市这个下拉框选中的值是否为空
     if (provice == 0) {
-    	 $("#area").html("<option value="+0+">==请选择===</option>");
+    	 $("#areaMeng").html("<option value="+0+">==请选择===</option>");
         return;
     }
-    $("#area").html("");
+    $("#areaMeng").html("");
     var str = "<option value="+0+">==请选择===</option>";
     //将市的ID拿到数据库进行查询，查询出他的下级进行绑定
     $.ajax({
         type: "get",
-        url: "/districts/area/"+provice,
+        url: "/districtms/area/"+provice,
         dataType: "JSON",
         async: false,
         success: function (data) {
@@ -98,7 +98,7 @@ function areaBind() {
                 str += "<option value=" + item.id + ">" + item.name + "</option>";
             })
             //将数据添加到省份这个下拉框里面
-            $("#area").append(str);
+            $("#areaMeng").append(str);
         },
         error: function () { alert("Error"); }
     });

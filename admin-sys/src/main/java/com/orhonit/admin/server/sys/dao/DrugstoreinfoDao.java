@@ -31,14 +31,14 @@ public interface DrugstoreinfoDao {
     @Select("select * from drugstoreinfo t where t.uid = #{id}")
     Drugstoreinfo ById(Long id);
     
-    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName from drugstoreinfo as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id where uid=#{uid}") 
+    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName,e.name as provinceNameMeng,f.name as cityNameMeng,g.name as areaNameMeng from drugstoreinfo as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id left join districtm e on a.provinceMeng = e.id left join districtm f on a.cityMeng = f.id left join districtm g on a.areaMeng = g.id where uid=#{uid}") 
     Drugstoreinfo getByUid(int uid);
     
-    @Update("update drugstoreinfo t set uid = #{uid}, pharmacyName = #{pharmacyName}, drugstoreLicense = #{drugstoreLicense}, drugstoreInformation = #{drugstoreInformation}, province = #{province}, city = #{city}, area = #{area}, address = #{address}, headerUrl = #{headerUrl},updateTime = now(), status = #{status} where t.id = #{id}")
+    @Update("update drugstoreinfo t set uid = #{uid}, pharmacyName = #{pharmacyName}, pharmacyNameMeng = #{pharmacyNameMeng}, drugstoreLicense = #{drugstoreLicense}, drugstoreInformation = #{drugstoreInformation}, drugstoreInformationMeng = #{drugstoreInformationMeng}, province = #{province}, provinceMeng = #{provinceMeng}, city = #{city}, cityMeng = #{cityMeng}, area = #{area}, areaMeng = #{areaMeng}, address = #{address}, addressMeng = #{addressMeng}, headerUrl = #{headerUrl}, createTime = #{createTime}, updateTime = #{updateTime}, status = #{status} where t.id = #{id}")
     int update(Drugstoreinfo drugstoreinfo);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into drugstoreinfo(uid, pharmacyName, drugstoreLicense, drugstoreInformation, province, city, area, address, headerUrl, createTime, updateTime, status) values(#{uid}, #{pharmacyName}, #{drugstoreLicense}, #{drugstoreInformation}, #{province}, #{city}, #{area}, #{address}, #{headerUrl},now(), now(), #{status})")
+    @Insert("insert into drugstoreinfo(uid, pharmacyName, pharmacyNameMeng, drugstoreLicense, drugstoreInformation, drugstoreInformationMeng, province, provinceMeng, city, cityMeng, area, areaMeng, address, addressMeng, headerUrl, createTime, updateTime, status) values(#{uid}, #{pharmacyName}, #{pharmacyNameMeng}, #{drugstoreLicense}, #{drugstoreInformation}, #{drugstoreInformationMeng}, #{province}, #{provinceMeng}, #{city}, #{cityMeng}, #{area}, #{areaMeng}, #{address}, #{addressMeng}, #{headerUrl}, #{createTime}, #{updateTime}, #{status})")
     int save(Drugstoreinfo drugstoreinfo);
     
     int count(@Param("params") Map<String, Object> params);

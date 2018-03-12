@@ -57,6 +57,14 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">药店名称(蒙)</label>
+					<div class="col-md-8">
+						<div class="form-control" id="pharmacyName2">
+						
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">审核状态</label>
 					<div class="col-md-4">
 						<select id="status1" class="form-control input-sm" disabled="disabled"
@@ -82,6 +90,14 @@
 					</div>	
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">药店简历(蒙)</label>
+					<div class="col-md-8">
+						<div class="form-control" rows="5"
+							id="drugstoreInformation2" >
+						</div>
+					</div>	
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">省</label>
 					<div class="col-md-2">
 						<div class="form-control" id="province1">
@@ -100,9 +116,34 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">省</label>
+					<div class="col-md-2">
+						<div class="form-control" id="province2">
+						
+						</div>
+					</div>
+					<label class="col-md-1 control-label">市</label>
+					<div class="col-md-2">
+						<div class="form-control" id="city2">
+						</div>
+					</div>					
+					<label class="col-md-1 control-label">县/区</label>
+					<div class="col-md-2">
+						<div class="form-control"  id="area2">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">详细地址</label>
 					<div class="col-md-8" >
 						<div class="form-control" id="address1" >
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙)</label>
+					<div class="col-md-8" >
+						<div class="form-control" id="address2" >
 						</div>
 					</div>
 				</div>
@@ -124,8 +165,16 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">药店名称</label>
 					<div class="col-md-8">
-						<input class="form-control" placeholder="姓名" type="text"
+						<input class="form-control" placeholder="名称" type="text"
 							name="pharmacyName" id="pharmacyName" data-bv-notempty="true"
+							data-bv-notempty-message="药店名称不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店名称(蒙文)</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="名称" type="text"
+							name="pharmacyNameMeng" id="pharmacyNameMeng" data-bv-notempty="true"
 							data-bv-notempty-message="药店名称不能为空">
 					</div>
 				</div>
@@ -154,8 +203,17 @@
 				<div class="form-group">
 					<label class="col-md-2 control-label">药店简历</label>
 					<div class="col-md-8">
-						<textarea class="form-control" placeholder="姓名" rows="5"
+						<textarea class="form-control" placeholder="药店简历" rows="5"
 							name="drugstoreInformation" id="drugstoreInformation" data-bv-notempty="true"
+							data-bv-notempty-message="药店简历不能为空">
+						</textarea>
+					</div>	
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">药店简历(蒙文)</label>
+					<div class="col-md-8">
+						<textarea class="form-control" placeholder="药店简历(蒙文)" rows="5"
+							name="drugstoreInformationMeng" id="drugstoreInformationMeng" data-bv-notempty="true"
 							data-bv-notempty-message="药店简历不能为空">
 						</textarea>
 					</div>	
@@ -192,10 +250,37 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">省(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="provinceMeng" id="provinceMeng">
+						</select>
+					</div>
+					<label class="col-md-1 control-label">市(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="cityMeng" id="cityMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+					<label class="col-md-1 control-label">县/区(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="areaMeng" id="areaMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">详细地址</label>
 					<div class="col-md-8">
 						<input class="form-control" placeholder="详细地址" type="text"
 							name="address" id="address" data-bv-notempty="true"
+							data-bv-notempty-message="详细地址不能为空">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙)</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址" type="text"
+							name="addressMeng" id="addressMeng" data-bv-notempty="true"
 							data-bv-notempty-message="详细地址不能为空">
 					</div>
 				</div>
@@ -222,6 +307,7 @@
 	<script type="text/javascript" src="../../js/common.js"></script>
 	<script type="text/javascript" src="../../js/layer.js"></script>
 	<script type="text/javascript" src="../../js/my/district.js"></script>
+	<script type="text/javascript" src="../../js/my/districtm.js"></script>
 	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript">
@@ -230,6 +316,11 @@
     var domain = pro + "//" + host;
 	var example;
 	initData();
+	$(function(){
+		ProviceMengBind(); 
+		ProviceBind();
+	})
+	 
 	function initData() {
 		var id = getUrlParam("id");
 		if (id != "") {
@@ -254,6 +345,7 @@
 						url : '/drugstoreinfos/drugstoreinfo/' + id,
 						async : false,
 						success : function(data) {
+							console.log(data)
 							if(data==""){
 								$("#addinfo").show();
 								return;
@@ -262,12 +354,18 @@
 								$("#addinfo").hide();
 								$("#drugstoreinfo2").show();
 								$("#pharmacyName1").html(data.pharmacyName);
+								$("#pharmacyName2").html(data.pharmacyNameMeng);
 								$("#province1").html(data.provinceName);
+								$("#province2").html(data.provinceNameMeng);
 								$("#status1").val(data.status);
 								$("#address1").html(data.address);
+								$("#address2").html(data.addressMeng);
 								$("#city1").html(data.cityName);
+								$("#city2").html(data.cityNameMeng);
 								$("#area1").html(data.areaName);
+								$("#area2").html(data.areaNameMeng);
 								$("#drugstoreInformation1").html(data.drugstoreInformation);
+								$("#drugstoreInformation2").html(data.drugstoreInformationMeng);
 								 var width="width:100px;height:100px";
 				                 var a = "<img src='"+src + data.headerUrl + "' style="+width+"></img>";
 				                 var b = "<img src='"+src + data.drugstoreLicense + "' style="+width+"></img>";
