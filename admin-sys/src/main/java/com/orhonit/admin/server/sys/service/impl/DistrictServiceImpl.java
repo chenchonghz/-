@@ -16,8 +16,8 @@ import com.orhonit.admin.server.sys.service.DistrictService;
 
 @Service
 public class DistrictServiceImpl implements DistrictService {
-	  @Autowired
-	  private DistrictDao districtDao;
+	@Autowired
+	private DistrictDao districtDao;
 
 	@Override
 	public void save(District district) {

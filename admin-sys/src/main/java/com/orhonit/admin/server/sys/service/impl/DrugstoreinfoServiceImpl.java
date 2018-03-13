@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler;
@@ -45,6 +46,7 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 	}
 
 	@Override
+	@Transactional
 	public int getDrugstoreUid(Long id) {
 		// TODO Auto-generated method stub
 		Drugstoreinfo drugstore=drugstoreinfoDao.ById(id);
@@ -53,6 +55,7 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 	}
 
 	@Override
+	@Transactional
 	public int getDrugstoreFailUid(Long id) {
 		// TODO Auto-generated method stub
 		Drugstoreinfo drugstore=drugstoreinfoDao.ById(id);
