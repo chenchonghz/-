@@ -37,7 +37,6 @@ public class ArticlesController {
 	public Articles saveArticles(@RequestBody Articles articles) {
 		articlesService.save(articles);
 		sendMsg(articles);
-
 		return articles;
 	}
 
@@ -72,7 +71,6 @@ public class ArticlesController {
 	@ApiOperation(value = "文章列表")
 	@RequiresPermissions("articles:query")
 	public TableResponse<Articles> listArticles(TableRequest request) {
-		
 		return articlesService.listArticles(request);
 	}
 
