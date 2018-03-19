@@ -54,6 +54,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-redis</artifactId>
 		</dependency>
+		<dependency>
+	  		<groupId>fastdfs_client</groupId>
+	  		<artifactId>fastdfs_client</artifactId>
+	  		<version>1.25</version>
+  		</dependency>
 		<!-- 集群下，启用session共享时，需打开 -->
 		<!-- <dependency>
 			<groupId>org.springframework.session</groupId>
