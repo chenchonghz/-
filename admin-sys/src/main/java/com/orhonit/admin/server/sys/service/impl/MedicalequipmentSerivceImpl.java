@@ -60,4 +60,10 @@ public class MedicalequipmentSerivceImpl implements MedicalequipmentSerivce {
 		medicalequipmentDao.delete(id);
 	}
 
+	@Override
+	public List<Medicalequipment> all() {
+		// TODO Auto-generated method stub
+		return medicalequipmentDao.all();
+	}
+
 }

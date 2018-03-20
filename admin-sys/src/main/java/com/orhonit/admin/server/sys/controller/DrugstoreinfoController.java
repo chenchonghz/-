@@ -83,4 +83,10 @@ public class DrugstoreinfoController {
     public void delete(@PathVariable Long id) {
     	drugstoreinfoService.delete(id);
     }
+    
+    @GetMapping("/ten/{start}")
+    @ApiOperation(value = "药店的10条数据")
+    public List<Drugstoreinfo> ten(@PathVariable Long start){
+    	return drugstoreinfoService.ten(start-1);
+    }
 }

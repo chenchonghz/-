@@ -26,4 +26,6 @@ public interface DrugstoreinfoService {
 
 	void delete(Long id);
 
+	List<Drugstoreinfo> ten(Long start);
+
 }

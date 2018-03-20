@@ -17,7 +17,7 @@ import com.orhonit.admin.server.sys.model.User;
 public interface UserDao {
 
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	@Insert("insert into sys_user(username, password, salt, nickname, headImgUrl, phone, telephone, email, birthday, sex, status, createTime, updateTime) values(#{username}, #{password}, #{salt}, #{nickname}, #{headImgUrl}, #{phone}, #{telephone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now())")
+	@Insert("insert into sys_user(username, password, salt, nickname, headImgUrl, phone, telephone, email, birthday, sex, status, createTime, updateTime,type) values(#{username}, #{password}, #{salt}, #{nickname}, #{headImgUrl}, #{phone}, #{telephone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now(),#{type})")
 	int save(User user);
 
 	@Select("select * from sys_user t where t.id = #{id}")

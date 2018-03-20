@@ -92,4 +92,10 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 		// TODO Auto-generated method stub
 		drugstoreinfoDao.delete(id);
 	}
+
+	@Override
+	public List<Drugstoreinfo> ten(Long start) {
+		// TODO Auto-generated method stub
+		return drugstoreinfoDao.ten(start);
+	}
 }

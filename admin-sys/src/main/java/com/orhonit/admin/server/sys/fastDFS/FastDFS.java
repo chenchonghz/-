@@ -32,8 +32,9 @@ public class FastDFS {
 			flag = true;
 		}
 		// 如果校验失败，直接返回
+		fastDFSEntity.setState(0);
 		if(!flag){
-			fastDFSEntity.setState(0);
+			fastDFSEntity.setUrl("文件必须为MP4格式");
 			String json = MAPPER.writeValueAsString(fastDFSEntity);
 			return json;
 		}
@@ -52,15 +53,25 @@ public class FastDFS {
 		// 获取上传文件的后缀名
 		System.out.println(file.getOriginalFilename());
 		String ext = StringUtils.substringAfterLast(file.getOriginalFilename(), ".");
-		String[] str = storageClient.upload_file(file.getBytes(),ext, null);
-		fastDFSEntity.setState(1);
-		String[] split = str[1].split("/");
-		String url = "/";
-		for (int i = 1; i < split.length; i++) {
-			url+=split[i]+"/";
-		} 
-		fastDFSEntity.setUrl(url);
-		System.out.println(fastDFSEntity.getUrl());
+		String[] str;
+		try {
+			str = storageClient.upload_file(file.getBytes(),ext, null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fastDFSEntity.setUrl("文件太大，请上传少于1G文件");
+			String json = MAPPER.writeValueAsString(fastDFSEntity);
+			return json;
+		}
+		if(str != null){
+			fastDFSEntity.setState(1);
+			String url = str[0]+"&"+str[1];
+			fastDFSEntity.setUrl(url);
+			System.out.println(fastDFSEntity.getUrl());
+			String json = MAPPER.writeValueAsString(fastDFSEntity);
+			return json;
+		}
+		fastDFSEntity.setUrl("文件太大，请上传少于1G文件");
 		String json = MAPPER.writeValueAsString(fastDFSEntity);
 		return json;
 	 }

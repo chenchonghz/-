@@ -1,6 +1,8 @@
 package com.orhonit.admin.server.sys.controller;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -78,6 +80,10 @@ public class ExpertinfoController {
     	expertinfoService.delete(id);
     }
     
-   
+   @GetMapping("/three")
+   @ApiOperation(value="诊断前三")
+   public List<Expertinfo> three(){
+	   return expertinfoService.three();
+   }
     
 }

@@ -44,4 +44,7 @@ public interface DrugstoreinfoDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Drugstoreinfo> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    
+    @Select("select * from drugstoreinfo d where d.status=1 limit #{start},10")
+	List<Drugstoreinfo> ten(Long start);
 }

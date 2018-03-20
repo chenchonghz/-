@@ -1,5 +1,7 @@
 package com.orhonit.admin.server.sys.service;
 
+import java.util.List;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Expertinfo;
@@ -21,5 +23,7 @@ public interface ExpertinfoService {
 	TableResponse<Expertinfo> list(TableRequest request);
 
 	void delete(Long id);
+
+	List<Expertinfo> three();
 
 }

@@ -83,5 +83,11 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 		// TODO Auto-generated method stub
 		expertinfoDao.delete(id);
 	}
+
+	@Override
+	public List<Expertinfo> three() {
+		// TODO Auto-generated method stub
+		return expertinfoDao.three();
+	}
 	 
 }

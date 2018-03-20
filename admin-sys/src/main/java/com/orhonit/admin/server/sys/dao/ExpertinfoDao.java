@@ -41,4 +41,7 @@ public interface ExpertinfoDao {
    
     @Update("update expertinfo t set state = #{arg1} where t.uid = #{arg0}")
 	void updateState(int id,int i);
+    
+    @Select("select * from expertinfo t where t.status=1 order by t.dealingProblems desc limit 0,3")
+	List<Expertinfo> three();
 }
