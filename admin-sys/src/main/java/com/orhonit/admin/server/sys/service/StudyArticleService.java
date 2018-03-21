@@ -1,5 +1,7 @@
 package com.orhonit.admin.server.sys.service;
 
+import java.util.List;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.StudyArticle;
@@ -19,5 +21,7 @@ public interface StudyArticleService {
 	int studyArticlePassFail(Long id, String reason);
 
 	StudyArticle getId(Long id);
+
+	List<StudyArticle> ten(long start);
 
 }

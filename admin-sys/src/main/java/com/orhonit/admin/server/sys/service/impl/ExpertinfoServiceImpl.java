@@ -89,5 +89,11 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 		// TODO Auto-generated method stub
 		return expertinfoDao.three();
 	}
+
+	@Override
+	public List<Expertinfo> ten(long start) {
+		// TODO Auto-generated method stub
+		return expertinfoDao.ten(start);
+	}
 	 
 }

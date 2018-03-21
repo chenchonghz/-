@@ -59,4 +59,10 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		taskDao.delete(id);
 	}
+
+	@Override
+	public List<Task> ten(long start) {
+		// TODO Auto-generated method stub
+		return taskDao.ten(start);
+	}
 }

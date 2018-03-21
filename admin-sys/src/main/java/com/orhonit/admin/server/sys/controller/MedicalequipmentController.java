@@ -2,7 +2,6 @@ package com.orhonit.admin.server.sys.controller;
 
 
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -61,11 +60,5 @@ public class MedicalequipmentController {
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
     	medicalequipmentService.delete(id);
-    }
-    
-    @GetMapping("/all")
-    @ApiOperation(value = "查询所有")
-    public List<Medicalequipment> all(){
-    	return medicalequipmentService.all();
     }
 }

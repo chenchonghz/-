@@ -94,5 +94,11 @@ public class StudyArticleServiceImpl implements StudyArticleService {
 		// TODO Auto-generated method stub
 		return studyArticleDao.getId(id);
 	}
+
+	@Override
+	public List<StudyArticle> ten(long start) {
+		// TODO Auto-generated method stub
+		return studyArticleDao.ten(start);
+	}
     
 }

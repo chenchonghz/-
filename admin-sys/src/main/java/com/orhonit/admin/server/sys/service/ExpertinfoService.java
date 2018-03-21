@@ -26,4 +26,6 @@ public interface ExpertinfoService {
 
 	List<Expertinfo> three();
 
+	List<Expertinfo> ten(long start);
+
 }

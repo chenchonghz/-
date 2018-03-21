@@ -90,5 +90,17 @@ public class StudyVideoServiceImpl implements StudyVideoService {
     	studyVideo.setReason(reason);
     	return studyVideoDao.updateFail(studyVideo);
 	}
+
+	@Override
+	public List<StudyVideo> ten(Long start) {
+		// TODO Auto-generated method stub
+		return studyVideoDao.ten(start);
+	}
+
+	@Override
+	public StudyVideo frist() {
+		// TODO Auto-generated method stub
+		return studyVideoDao.frist();
+	}
     
 }

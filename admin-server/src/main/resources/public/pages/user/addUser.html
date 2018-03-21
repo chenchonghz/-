@@ -84,6 +84,7 @@
 		    var formdata = $("#form").serializeObject();
 		    formdata.roleIds = getCheckedRoleIds();
 			console.log(formdata)
+			alert(JSON.stringify(formdata));
 			$.ajax({
 				type : 'post',
 				url : '/users',
