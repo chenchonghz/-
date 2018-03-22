@@ -1,13 +1,18 @@
 package com.orhonit.admin.server.app.controller;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.aliyuncs.exceptions.ClientException;
+import com.orhonit.admin.server.common.utils.RandomCode;
+import com.orhonit.admin.server.common.utils.SMSutil;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Medicalequipment;
@@ -82,6 +87,29 @@ public class CommonAppController {
 	@ApiOperation(value="动物病例十条数据")
 	public List<Task> Tten(@PathVariable Long start){
 		return taskService.ten(start - 1);
+	}
+	@Autowired
+	private RedisTemplate<String, String> redisTemplate;
+	private static final String PHONE_PREFIX = "Phones:";
+	@GetMapping("/sendMsg/{phone}")
+	@ApiOperation(value="发送验证码")
+	public String sendMsg(@PathVariable String phone){
+		String code =String.valueOf(RandomCode.genCode());
+		redisTemplate.opsForValue().set(PHONE_PREFIX + phone, code, 300, TimeUnit.SECONDS);
+		try {
+			SMSutil.sendSms(phone, code);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "验证码发送失败";
+		}
+		return "验证码发送成功";
+	}
+	@GetMapping("/getMsg/{phone}")
+	@ApiOperation(value="获取验证码")
+	public String getMsg(@PathVariable String phone){
+		String code = redisTemplate.opsForValue().get(phone);
+		return code;
 	}
 	
 }

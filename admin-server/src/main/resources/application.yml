@@ -30,7 +30,7 @@ spring:
     servlet:
       load-on-startup: 1
   redis:
-    host: localhost
+    host: 127.0.0.1
     port: 6379
 mybatis:
   type-aliases-package: com.orhonit.admin.server.sys.model

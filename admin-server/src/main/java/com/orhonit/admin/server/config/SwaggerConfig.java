@@ -55,6 +55,11 @@ public class SwaggerConfig {
 	public Docket articlesDocket() {
 		return docket("文章", "/articles.*");
 	}
+	
+	@Bean("commentmDocket")
+	public Docket commentmDocket() {
+		return docket("蒙文评论", "/commentms.*");
+	}
 
 	private Docket docket(String title, String path) {
 		Docket docket = new Docket(DocumentationType.SWAGGER_2)

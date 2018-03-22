@@ -8,7 +8,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import net.sf.ehcache.Cache;
@@ -22,7 +21,7 @@ import net.sf.ehcache.Element;
  *
  *
  */
-@Primary
+
 @Service
 public class EhCacheTokenManager implements TokenManager {
 
