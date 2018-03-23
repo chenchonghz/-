@@ -3,10 +3,13 @@ package com.orhonit.admin.server.app.controller;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import org.apache.shiro.authc.IncorrectCredentialsException;
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -108,8 +111,21 @@ public class CommonAppController {
 	@GetMapping("/getMsg/{phone}")
 	@ApiOperation(value="获取验证码")
 	public String getMsg(@PathVariable String phone){
-		String code = redisTemplate.opsForValue().get(phone);
+		String code = redisTemplate.opsForValue().get(PHONE_PREFIX + phone);
 		return code;
+	}
+	@PostMapping("checkMsg")
+	@ApiOperation(value = "验证验证码")
+	public void checkMsg(String username,String code){
+		System.out.println(code);
+		String phone = redisTemplate.opsForValue().get(PHONE_PREFIX + username);
+		System.out.println(phone);
+		if(phone == null){
+			throw new UnknownAccountException("验证码已过期");
+		}
+		if(!phone.equals(code)){
+			throw new IncorrectCredentialsException("验证码有误");
+		}
 	}
 	
 }

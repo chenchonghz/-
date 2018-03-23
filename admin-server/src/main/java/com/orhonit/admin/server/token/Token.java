@@ -33,5 +33,4 @@ public class Token implements Serializable {
 	 */
 	@Builder.Default
 	private Date createTime = new Date();
-
 }
