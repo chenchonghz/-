@@ -59,5 +59,11 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
 		// TODO Auto-generated method stub
 		studyarticlemDao.delete(id);
 	}
+
+	@Override
+	public List<Studyarticlem> ten(long l) {
+		// TODO Auto-generated method stub
+		return studyarticlemDao.ten(l);
+	}
 	
 }

@@ -60,4 +60,16 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 		// TODO Auto-generated method stub
 		studyvideomDao.delete(id);
 	}
+
+	@Override
+	public Studyvideom frist() {
+		// TODO Auto-generated method stub
+		return studyvideomDao.frist();
+	}
+
+	@Override
+	public List<Studyvideom> ten(long l) {
+		// TODO Auto-generated method stub
+		return studyvideomDao.ten(l);
+	}
 }

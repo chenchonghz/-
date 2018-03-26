@@ -21,16 +21,24 @@ import com.orhonit.admin.server.sys.dto.UserDto;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Medicalequipment;
+import com.orhonit.admin.server.sys.model.Medicalequipmentm;
 import com.orhonit.admin.server.sys.model.StudyArticle;
 import com.orhonit.admin.server.sys.model.StudyVideo;
+import com.orhonit.admin.server.sys.model.Studyarticlem;
+import com.orhonit.admin.server.sys.model.Studyvideom;
 import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.service.MedicalequipmentSerivce;
+import com.orhonit.admin.server.sys.service.MedicalequipmentmService;
 import com.orhonit.admin.server.sys.service.StudyArticleService;
 import com.orhonit.admin.server.sys.service.StudyVideoService;
+import com.orhonit.admin.server.sys.service.StudyarticlemService;
+import com.orhonit.admin.server.sys.service.StudyvideomService;
 import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.service.TaskmService;
 import com.orhonit.admin.server.sys.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
@@ -58,6 +66,13 @@ public class CommonAppController {
     public List<Medicalequipment> all(){
     	return medicalequipmentService.all();
     }
+	@Autowired
+	private MedicalequipmentmService MedicalequipmentmService;
+	@GetMapping("/medicalequipmentm/all")
+	@ApiOperation(value = "查询蒙语所有")
+	public List<Medicalequipmentm> allm(){
+		return MedicalequipmentmService.all();
+	}
 	
 	@Autowired
     private DrugstoreinfoService drugstoreinfoService;
@@ -79,6 +94,18 @@ public class CommonAppController {
 	public List<StudyVideo> Sten(@PathVariable Long start){
 		return studyVideoService.ten(start - 1);
 	}
+	@Autowired
+	private StudyvideomService studyvideomService;
+	@GetMapping("/studyvideom/frist")
+	@ApiOperation("蒙语观看最多的1条视频学习")
+	public Studyvideom fristm(){
+		return studyvideomService.frist();
+	}
+	@GetMapping("/studyvideom/ten/{start}")
+	@ApiOperation(value="蒙语视频学习的十条数据")
+	public List<Studyvideom> Stenm(@PathVariable Long start){
+		return studyvideomService.ten(start - 1);
+	}
 	
 	@Autowired
     private StudyArticleService studyArticleService;
@@ -87,6 +114,13 @@ public class CommonAppController {
 	public List<StudyArticle> SAten(@PathVariable Long start){
 		return studyArticleService.ten(start-1);
 	}
+	@Autowired
+	private StudyarticlemService studyarticlemService;
+	@GetMapping("/studyarticlem/ten/{start}")
+	@ApiOperation(value="蒙语文章资料学习的十条数据")
+	public List<Studyarticlem> SAtenm(@PathVariable Long start){
+		return studyarticlemService.ten(start-1);
+	}
 	
 	@Autowired
     private TaskService taskService;
@@ -94,6 +128,13 @@ public class CommonAppController {
 	@ApiOperation(value="动物病例十条数据")
 	public List<Task> Tten(@PathVariable Long start){
 		return taskService.ten(start - 1);
+	}
+	@Autowired
+	private TaskmService taskmService;
+	@GetMapping("/taskm/ten/{start}")
+	@ApiOperation(value="动物病例十条数据")
+	public List<Taskm> Ttenm(@PathVariable Long start){
+		return taskmService.ten(start - 1);
 	}
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;

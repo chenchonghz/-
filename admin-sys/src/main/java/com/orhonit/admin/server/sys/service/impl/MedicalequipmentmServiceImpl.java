@@ -60,5 +60,11 @@ public class MedicalequipmentmServiceImpl implements MedicalequipmentmService {
 		// TODO Auto-generated method stub
 		medicalequipmentmDao.delete(id);
 	}
+
+	@Override
+	public List<Medicalequipmentm> all() {
+		// TODO Auto-generated method stub
+		return medicalequipmentmDao.all();
+	}
 	 
 }
