@@ -45,6 +45,6 @@ public interface DrugstoreinfoDao {
 
     List<Drugstoreinfo> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     
-    @Select("select * from drugstoreinfo d where d.status=1 limit #{start},10")
+    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName,e.name as provinceNameMeng,f.name as cityNameMeng,g.name as areaNameMeng from drugstoreinfo as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id left join districtm e on a.provinceMeng = e.id left join districtm f on a.cityMeng = f.id left join districtm g on a.areaMeng = g.id where a.status=1 limit #{start},10")
 	List<Drugstoreinfo> ten(Long start);
 }

@@ -1,5 +1,6 @@
 package com.orhonit.admin.server.app.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -16,18 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aliyuncs.exceptions.ClientException;
 import com.orhonit.admin.server.common.utils.RandomCode;
 import com.orhonit.admin.server.common.utils.SMSutil;
+import com.orhonit.admin.server.sys.dto.UserDto;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Medicalequipment;
 import com.orhonit.admin.server.sys.model.StudyArticle;
 import com.orhonit.admin.server.sys.model.StudyVideo;
 import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.service.MedicalequipmentSerivce;
 import com.orhonit.admin.server.sys.service.StudyArticleService;
 import com.orhonit.admin.server.sys.service.StudyVideoService;
 import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.service.UserService;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -66,7 +70,7 @@ public class CommonAppController {
 	@Autowired
     private StudyVideoService studyVideoService;
 	@GetMapping("/studyvideo/frist")
-	@ApiOperation("观看最多的1条视频学习动物1条数据")
+	@ApiOperation("观看最多的1条视频学习")
 	public StudyVideo frist(){
 		return studyVideoService.frist();
 	}
@@ -114,18 +118,31 @@ public class CommonAppController {
 		String code = redisTemplate.opsForValue().get(PHONE_PREFIX + phone);
 		return code;
 	}
+	@Autowired
+	private UserService userService;
 	@PostMapping("checkMsg")
-	@ApiOperation(value = "验证验证码")
-	public void checkMsg(String username,String code){
-		System.out.println(code);
+	@ApiOperation(value = "验证验证码注册用户")
+	public User checkMsg(String username,String pass,String code,String type,String rid){
 		String phone = redisTemplate.opsForValue().get(PHONE_PREFIX + username);
-		System.out.println(phone);
 		if(phone == null){
 			throw new UnknownAccountException("验证码已过期");
 		}
 		if(!phone.equals(code)){
 			throw new IncorrectCredentialsException("验证码有误");
 		}
+		UserDto userDto = new UserDto();
+		userDto.setUsername(username);
+		userDto.setPassword(pass);
+		userDto.setType(Integer.parseInt(type));
+		ArrayList<Long> list = new ArrayList<>();
+		list.add(Long.parseLong(rid));
+		userDto.setRoleIds(list);
+		User u = userService.getUser(userDto.getUsername());
+		if (u != null) {
+			throw new IllegalArgumentException(userDto.getUsername() + "已存在");
+		}
+
+		return userService.saveUser(userDto);
 	}
 	
 }

@@ -46,7 +46,6 @@ public class LoginController {
 
 		return tokenManager.saveToken(usernamePasswordToken);
 	}
-	
 	@ApiOperation(value = "当前登录用户")
 	@GetMapping("/sys/login")
 	private User getLoginInfo() {
