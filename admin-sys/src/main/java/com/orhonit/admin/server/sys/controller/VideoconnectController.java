@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 import java.util.List;
 
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -41,7 +42,11 @@ public class VideoconnectController {
     @GetMapping("/vc/{eid}")
     @ApiOperation(value = "发起视频会议")
     public Videoconnect saveVc(@PathVariable int eid) {
-    	return videoconnectService.saveVc(eid);
+    	Videoconnect videoconnect = videoconnectService.saveVc(eid);
+    	if(videoconnect == null){
+    		throw new UnknownAccountException("系统错误");
+    	}
+    	return videoconnect;
     	
     	
     }

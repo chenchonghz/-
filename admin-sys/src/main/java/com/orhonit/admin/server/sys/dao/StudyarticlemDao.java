@@ -32,6 +32,6 @@ public interface StudyarticlemDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Studyarticlem> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select * from studyarticlem where status = 1 limit #{start},10")
+    @Select("select * from studyarticlem where status = 1 order by id desc limit #{start},10")
 	List<Studyarticlem> ten(long start);
 }

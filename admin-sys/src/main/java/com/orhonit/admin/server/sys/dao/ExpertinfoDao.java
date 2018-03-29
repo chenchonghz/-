@@ -44,6 +44,6 @@ public interface ExpertinfoDao {
     
     @Select("select * from expertinfo t where t.status=1 order by t.dealingProblems desc limit 0,3")
 	List<Expertinfo> three();
-    @Select("select * from expertinfo where status = 1 limit #{start},10")
+    @Select("select * from expertinfo where status = 1 order by state asc, id desc limit #{start},10")
 	List<Expertinfo> ten(long start);
 }

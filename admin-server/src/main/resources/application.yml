@@ -51,4 +51,4 @@ token:
 server:
   port: 8080
 videoconnect:
-  path: https://192.168.31.26/m/
+  path: https://sphy.etkqqzhdj.gov.cn:25783/r/

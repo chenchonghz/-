@@ -34,6 +34,6 @@ public interface StudyvideomDao {
     List<Studyvideom> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select s.* from studyVideom s,category c where c.parentId = 11 and s.categoryId = c.id  and s.status = 1 order by s.clicks desc limit 0,1")
 	Studyvideom frist();
-	@Select("select * from studyVideom where status=1 limit #{start},10")
+	@Select("select * from studyVideom where status=1 order by id desc limit #{start},10")
 	List<Studyvideom> ten(long start);
 }

@@ -32,6 +32,6 @@ public interface MedicalequipmentDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Medicalequipment> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select * from medicalequipment")
+    @Select("select * from medicalequipment order by id desc")
 	List<Medicalequipment> all();
 }

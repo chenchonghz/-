@@ -132,7 +132,7 @@ public class CommonAppController {
 	@Autowired
 	private TaskmService taskmService;
 	@GetMapping("/taskm/ten/{start}")
-	@ApiOperation(value="动物病例十条数据")
+	@ApiOperation(value="蒙语动物病例十条数据")
 	public List<Taskm> Ttenm(@PathVariable Long start){
 		return taskmService.ten(start - 1);
 	}

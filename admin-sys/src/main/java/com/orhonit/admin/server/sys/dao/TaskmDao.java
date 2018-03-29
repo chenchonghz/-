@@ -32,6 +32,6 @@ public interface TaskmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Taskm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select * from taskm where status = 2 and good = 1 limit #{start},10")
+    @Select("select * from taskm where status = 2 and good = 1 order by id desc limit #{start},10")
 	List<Taskm> ten(long start);
 }
