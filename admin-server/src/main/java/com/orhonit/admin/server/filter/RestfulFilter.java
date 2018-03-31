@@ -69,7 +69,7 @@ public class RestfulFilter extends UserFilter {
 		if (StringUtils.isBlank(loginToken)) {
 			loginToken = httpServletRequest.getHeader(UserConstants.LOGIN_TOKEN);
 		}
-
+		System.out.println(loginToken);
 		return loginToken;
 	}
 

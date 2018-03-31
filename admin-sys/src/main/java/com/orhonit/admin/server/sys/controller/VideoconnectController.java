@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -39,10 +40,10 @@ public class VideoconnectController {
         return videoconnect;
     }
     
-    @GetMapping("/vc/{eid}")
+    @GetMapping("/vc")
     @ApiOperation(value = "发起视频会议")
-    public Videoconnect saveVc(@PathVariable int eid) {
-    	Videoconnect videoconnect = videoconnectService.saveVc(eid);
+    public Videoconnect saveVc(@RequestParam(value="eid") String eid) {
+    	Videoconnect videoconnect = videoconnectService.saveVc(Integer.parseInt(eid));
     	if(videoconnect == null){
     		throw new UnknownAccountException("系统错误");
     	}
