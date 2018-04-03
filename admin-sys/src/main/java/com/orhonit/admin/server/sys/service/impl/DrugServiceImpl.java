@@ -59,4 +59,10 @@ public class DrugServiceImpl implements DrugService {
 		// TODO Auto-generated method stub
 		drugDao.delete(id);
 	}
+
+	@Override
+	public List<Drug> getByUid(Long uid) {
+		// TODO Auto-generated method stub
+		return drugDao.getByUid(uid);
+	}
 }

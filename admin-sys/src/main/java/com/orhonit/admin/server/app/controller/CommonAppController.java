@@ -18,10 +18,12 @@ import com.aliyuncs.exceptions.ClientException;
 import com.orhonit.admin.server.common.utils.RandomCode;
 import com.orhonit.admin.server.common.utils.SMSutil;
 import com.orhonit.admin.server.sys.dto.UserDto;
+import com.orhonit.admin.server.sys.model.Drug;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Medicalequipment;
 import com.orhonit.admin.server.sys.model.Medicalequipmentm;
+import com.orhonit.admin.server.sys.model.Newherdsman;
 import com.orhonit.admin.server.sys.model.StudyArticle;
 import com.orhonit.admin.server.sys.model.StudyVideo;
 import com.orhonit.admin.server.sys.model.Studyarticlem;
@@ -29,10 +31,12 @@ import com.orhonit.admin.server.sys.model.Studyvideom;
 import com.orhonit.admin.server.sys.model.Task;
 import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
+import com.orhonit.admin.server.sys.service.DrugService;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.service.MedicalequipmentSerivce;
 import com.orhonit.admin.server.sys.service.MedicalequipmentmService;
+import com.orhonit.admin.server.sys.service.NewherdsmanService;
 import com.orhonit.admin.server.sys.service.StudyArticleService;
 import com.orhonit.admin.server.sys.service.StudyVideoService;
 import com.orhonit.admin.server.sys.service.StudyarticlemService;
@@ -186,4 +190,19 @@ public class CommonAppController {
 		return userService.saveUser(userDto);
 	}
 	
+	@Autowired
+	private DrugService drugService;
+	@GetMapping("/getDrug/{uid}")
+	@ApiOperation(value="根据药店的uid获得药品的信息")
+	public List<Drug> getDrug(@PathVariable Long uid){
+		return drugService.getByUid(uid);
+	}
+	
+	@Autowired
+	private NewherdsmanService newherdsmanService;
+	@GetMapping("/getnewherdsman/{uid}")
+	@ApiOperation(value="根据牧民的uid获得信息")
+	public Newherdsman getnewherdsman(@PathVariable Long uid){
+		return newherdsmanService.getUid(uid);
+	}
 }

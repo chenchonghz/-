@@ -32,4 +32,6 @@ public interface DrugDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Drug> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("select * from drug where uid=#{uid} and status = 0")
+	List<Drug> getByUid(Long uid);
 }

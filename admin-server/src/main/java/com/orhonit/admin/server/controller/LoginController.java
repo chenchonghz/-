@@ -43,7 +43,8 @@ public class LoginController {
 	public Token restfulLogin(String username, String password) {
 		UsernamePasswordToken usernamePasswordToken = new UsernamePasswordToken(username, password);
 		SecurityUtils.getSubject().login(usernamePasswordToken);
-
+		User user = UserUtil.getCurrentUser();
+		System.err.println(user);
 		return tokenManager.saveToken(usernamePasswordToken);
 	}
 	@ApiOperation(value = "当前登录用户")

@@ -17,6 +17,7 @@ import com.orhonit.admin.server.sys.dao.VideoconnectDao;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
+import com.orhonit.admin.server.sys.service.NewherdsmanService;
 import com.orhonit.admin.server.sys.service.VideoconnectService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
@@ -95,7 +96,7 @@ public class VideoconnectServiceImpl implements VideoconnectService {
 
 	@Autowired
 	private ApplicationContext applicationContext;
-
+	@Autowired NewherdsmanService newherdsmanService;
 	private void sendMsg(Videoconnect videoConnect) {
 		applicationContext.publishEvent(new AdminEvent(videoConnect, EventType.NEW_VIDEO));
 	}

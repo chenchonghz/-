@@ -38,6 +38,7 @@ public class UserServiceImpl implements UserService {
 				.md5Hex(UUID.randomUUID().toString() + System.currentTimeMillis() + UUID.randomUUID().toString()));
 		user.setPassword(passwordEncoder(user.getPassword(), user.getSalt()));
 		user.setStatus(Status.VALID);
+		user.setXinxi(0);
 		userDao.save(user);
 		saveUserRoles(user.getId(), userDto.getRoleIds());
 

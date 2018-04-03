@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen" href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+</head>
+<body>
+    <div>
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div>
+                <header style="height: 100%">
+					 <div align="left">
+                        <table style="width: 100%">
+                            <tr>
+                                <td>
+                                    
+                                </td>
+                                <td align="right">
+                                    <form class="form-inline" onsubmit="return false">
+                                        <div class="form-group">
+                                           <button id="searchBt" class="layui-btn layui-btn-small"><i class="layui-icon">&#xe615;</i>搜索</button>
+                                        </div>
+                                    </form>
+                                </td>
+                            </tr> 
+                        </table>
+                    </div>
+                </header>
+                
+                <div>
+                    <div class="widget-body no-padding">
+                        <table id="dt-table" class="table table-striped table-bordered table-hover" style="width:100%">
+                            <thead>
+                                <tr>
+                                </tr>                       
+                                <tr>
+									<th>id</th>
+									<th>uid</th>
+									<th>province</th>
+									<th>city</th>
+									<th>area</th>
+									<th>address</th>
+									<th>headerUrl</th>
+									<th>sex</th>
+									<th>createTime</th>
+									<th>updateTime</th>
+									<th>cardNumber</th>
+									<th>name</th>
+									<th>provinceMeng</th>
+									<th>cityMeng</th>
+									<th>areaMeng</th>
+									<th>addressMeng</th>
+									<th>nameMeng</th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript">
+
+var example;
+function init(){
+	example = 
+    	$('#dt-table').DataTable({
+        	"searching": false,
+        	"processing": false,
+        	"serverSide" : true,
+        	"ajax": {
+        		"url" : "/newherdsmans",
+        		"type":"get",
+        		"data":function(d){
+    			
+    			}
+        	},
+        	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
+            "columns": [
+				{"data" : "id", "defaultContent" : ""},
+				{"data" : "uid", "defaultContent" : ""},
+				{"data" : "province", "defaultContent" : ""},
+				{"data" : "city", "defaultContent" : ""},
+				{"data" : "area", "defaultContent" : ""},
+				{"data" : "address", "defaultContent" : ""},
+				{"data" : "headerUrl", "defaultContent" : ""},
+				{"data" : "sex", "defaultContent" : ""},
+				{"data" : "createTime", "defaultContent" : ""},
+				{"data" : "updateTime", "defaultContent" : ""},
+				{"data" : "cardNumber", "defaultContent" : ""},
+				{"data" : "name", "defaultContent" : ""},
+				{"data" : "provinceMeng", "defaultContent" : ""},
+				{"data" : "cityMeng", "defaultContent" : ""},
+				{"data" : "areaMeng", "defaultContent" : ""},
+				{"data" : "addressMeng", "defaultContent" : ""},
+				{"data" : "nameMeng", "defaultContent" : ""},
+
+                
+            ],
+            "columnDefs": [
+				{"name" : "id", "targets" : "0"},
+				{"name" : "uid", "targets" : "1"},
+				{"name" : "province", "targets" : "2"},
+				{"name" : "city", "targets" : "3"},
+				{"name" : "area", "targets" : "4"},
+				{"name" : "address", "targets" : "5"},
+				{"name" : "headerUrl", "targets" : "6"},
+				{"name" : "sex", "targets" : "7"},
+				{"name" : "createTime", "targets" : "8"},
+				{"name" : "updateTime", "targets" : "9"},
+				{"name" : "cardNumber", "targets" : "10"},
+				{"name" : "name", "targets" : "11"},
+				{"name" : "provinceMeng", "targets" : "12"},
+				{"name" : "cityMeng", "targets" : "13"},
+				{"name" : "areaMeng", "targets" : "14"},
+				{"name" : "addressMeng", "targets" : "15"},
+				{"name" : "nameMeng", "targets" : "16"},
+
+              ],
+           "order": [[ 0, "asc" ]]
+        } );
+}
+
+function del(id){
+	layer.confirm('确定要删除吗？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+    	$.ajax({
+            type : 'delete',
+            url : '/newherdsmans/'+id,
+            success : function(data) {
+                example.ajax.reload();
+                layer.msg("删除成功");
+            }
+        });
+        
+        layer.close(1);
+    });
+}
+
+$("#searchBt").click(function(){
+	example.ajax.reload();
+});
+
+init();
+</script>
