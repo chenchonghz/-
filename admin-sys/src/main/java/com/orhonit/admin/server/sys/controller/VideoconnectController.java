@@ -42,8 +42,8 @@ public class VideoconnectController {
     
     @GetMapping("/vc")
     @ApiOperation(value = "发起视频会议")
-    public Videoconnect saveVc(@RequestParam(value="eid") String eid) {
-    	Videoconnect videoconnect = videoconnectService.saveVc(Integer.parseInt(eid));
+    public Videoconnect saveVc(@RequestParam(value="eid") String eid,@RequestParam(value="type") String type) {
+    	Videoconnect videoconnect = videoconnectService.saveVc(Integer.parseInt(eid),Integer.parseInt(type));
     	if(videoconnect == null){
     		throw new UnknownAccountException("系统错误");
     	}
@@ -51,8 +51,30 @@ public class VideoconnectController {
     	
     	
     }
-   
+    @GetMapping("/vc/return")
+    @ApiOperation(value = "视频会议专家回复")
+    public void returnVc(@RequestParam(value = "hid")String hid,@RequestParam(value = "ifOrNot")String ifOrNot){
+    	try {
+			videoconnectService.returnVc(hid,ifOrNot);
+			System.out.println(hid+"---"+ifOrNot);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new UnknownAccountException("系统错误");
+		}
+    }
     
+    @GetMapping("/vc/stop")
+    @ApiOperation(value = "视频会议挂断")
+    public void stopVc(@RequestParam(value = "id")String id){
+    	try {
+			videoconnectService.stopVc(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new UnknownAccountException("系统错误");
+		}
+    }
 
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取")

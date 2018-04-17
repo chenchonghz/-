@@ -21,5 +21,6 @@ public class Videoconnect extends BaseEntity<Long> {
 	private Integer roomid;
 	private String url;
 	private Date time;
+	private Integer type;
 
 }

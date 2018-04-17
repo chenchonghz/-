@@ -19,7 +19,11 @@ public interface VideoconnectService {
 
 	void delete(Long id);
 
-	Videoconnect saveVc(int eid);
+	Videoconnect saveVc(int eid, int type);
+
+	void returnVc(String hid, String ifOrNot);
+
+	void stopVc(String id);
 
 
 }

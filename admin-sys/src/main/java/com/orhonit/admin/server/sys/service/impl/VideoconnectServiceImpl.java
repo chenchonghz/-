@@ -14,10 +14,11 @@ import com.orhonit.admin.server.common.constants.EventType;
 import com.orhonit.admin.server.common.event.AdminEvent;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.VideoconnectDao;
+import com.orhonit.admin.server.sys.dto.ReturnVc;
+import com.orhonit.admin.server.sys.dto.StopVc;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
-import com.orhonit.admin.server.sys.service.NewherdsmanService;
 import com.orhonit.admin.server.sys.service.VideoconnectService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
@@ -72,7 +73,7 @@ public class VideoconnectServiceImpl implements VideoconnectService {
 
 	@Override
 	@Transactional
-	public Videoconnect saveVc(int eid) {
+	public Videoconnect saveVc(int eid,int type) {
 		// TODO Auto-generated method stub
 		Expertinfo expertinfo = this.expertinfoDao.ByUid(eid);
     	if(expertinfo.getState() == 1) {
@@ -84,6 +85,7 @@ public class VideoconnectServiceImpl implements VideoconnectService {
             int round = (int) (Math.random() * 1000000);
             videoConnect.setRoomid(round);
             videoConnect.setTime(new Date());
+            videoConnect.setType(type);
             videoconnectDao.save(videoConnect);
             expertinfo.setState(2);
             expertinfoDao.update(expertinfo);
@@ -94,12 +96,69 @@ public class VideoconnectServiceImpl implements VideoconnectService {
     	}
 	}
 
+	
+	
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月16日
+	 * @param hid
+	 * @param type
+	 * @param ifOrNot
+	 * @see com.orhonit.admin.server.sys.service.VideoconnectService#returnVc(java.lang.String, java.lang.String, java.lang.String)
+	 * @Description: 专家回复牧民的视频通话请求 
+	 */
+	@Override
+	public void returnVc(String hid, String ifOrNot) {
+		// TODO Auto-generated method stub
+		/*
+		 * 发送给牧民的视频通话回执
+		 */
+		ReturnVc returnVc = new ReturnVc();
+		returnVc.setHid(Integer.parseInt(hid));
+		returnVc.setIfOrNot(Integer.parseInt(ifOrNot));
+		this.sendReturnMsg(returnVc);
+	}
+	
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月17日
+	 * @param id
+	 * @see com.orhonit.admin.server.sys.service.VideoconnectService#stopVc(java.lang.String)
+	 * @Description: TODO 
+	 */
+	@Override
+	public void stopVc(String id) {
+		// TODO Auto-generated method stub
+		int Uid = Integer.parseInt(UserUtil.getCurrentUser().getId().toString());
+		Videoconnect videoconnect = videoconnectDao.getById(Long.parseLong(id));
+		expertinfoDao.updateState(videoconnect.getEid(), 1);//专家在线状态改变为1
+		StopVc stopVc = new StopVc();
+		stopVc.setStop(1);
+		if(Uid == videoconnect.getEid()){
+			stopVc.setId(videoconnect.getHid());
+		}else{
+			stopVc.setId(videoconnect.getEid());
+		}
+		this.sendStopMsg(stopVc);
+	}
+
 	@Autowired
 	private ApplicationContext applicationContext;
-	@Autowired NewherdsmanService newherdsmanService;
 	private void sendMsg(Videoconnect videoConnect) {
 		applicationContext.publishEvent(new AdminEvent(videoConnect, EventType.NEW_VIDEO));
 	}
+	
+	private void sendStopMsg(StopVc stopVc) {
+		// TODO Auto-generated method stub
+		applicationContext.publishEvent(new AdminEvent(stopVc, EventType.VIDEO_STOP));
+	}
+
+	public void sendReturnMsg(ReturnVc returnVc) {
+		// TODO Auto-generated method stub
+		applicationContext.publishEvent(new AdminEvent(returnVc, EventType.VIDEO_RETURN));
+	}
+
+
 
 	
 	

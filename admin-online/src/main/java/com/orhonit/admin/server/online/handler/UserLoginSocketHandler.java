@@ -23,8 +23,12 @@ import com.orhonit.admin.server.common.utils.JsonUtil;
 import com.orhonit.admin.server.online.constants.MsgType;
 import com.orhonit.admin.server.online.dto.LoginUserDto;
 import com.orhonit.admin.server.online.dto.NoticeDto;
+import com.orhonit.admin.server.online.dto.ReturnVcDto;
+import com.orhonit.admin.server.online.dto.StopVcDto;
 import com.orhonit.admin.server.online.dto.VideoDto;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
+import com.orhonit.admin.server.sys.dto.ReturnVc;
+import com.orhonit.admin.server.sys.dto.StopVc;
 import com.orhonit.admin.server.sys.model.Articles;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
@@ -116,7 +120,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 			}
 			map.remove(onlineUserKey);
 			log.debug("移除连接{}:{}", user.getNickname(), onlineUserKey);
-			if(user.getType() == 2){
+			if(user.getType() != 3){
 				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()), 3);
 			}
 
@@ -140,7 +144,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 		User oldUser = onlineUsers.putIfAbsent(id, user);
 		if (oldUser == null) {
 			log.debug("添加在线用户：{}", user.getUsername());
-			if(user.getType() == 2){
+			if(user.getType() != 1){
 				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()),1);
 			}
 			userOnlineSocketHandler.sendToAll();
@@ -185,17 +189,38 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 
 		}else if(EventType.NEW_VIDEO == adminEvent.getEventType()){
 			Videoconnect videoconnect = (Videoconnect) adminEvent.getSource();
-			User user = UserUtil.getCurrentUser();
 			VideoDto videoDto = new VideoDto();
 			videoDto.setType(EventType.NEW_VIDEO.name());
 			videoDto.setVideoconnect(videoconnect);
 			String msg = JsonUtil.toJson(videoDto);
 			sessions.forEach((k, v) -> {
-				if (k.equals(user.getId()) || k==Long.parseLong(videoconnect.getEid().toString())) {
+				if (k==Long.parseLong(videoconnect.getEid().toString())) {
 					sendMsg(v, msg);
 				}
 			});
 			
+		}else if(EventType.VIDEO_RETURN == adminEvent.getEventType()){
+			ReturnVc returnVc = (ReturnVc) adminEvent.getSource();
+			ReturnVcDto returnVcDto = new ReturnVcDto();
+			returnVcDto.setType(EventType.VIDEO_RETURN.name());
+			returnVcDto.setReturnVc(returnVc);
+			String msg = JsonUtil.toJson(returnVcDto);
+			sessions.forEach((k, v) -> {
+				if (k == Long.parseLong(returnVc.getHid().toString())) {
+					sendMsg(v, msg);
+				}
+			});
+		}else if(EventType.VIDEO_STOP == adminEvent.getEventType()){
+			StopVc stopVc = (StopVc) adminEvent.getSource();
+			StopVcDto stopVcDto = new StopVcDto();
+			stopVcDto.setType(EventType.VIDEO_STOP.name());
+			stopVcDto.setStopVc(stopVc);
+			String msg = JsonUtil.toJson(stopVcDto);
+			sessions.forEach((k, v) -> {
+				if (k == Long.parseLong(stopVc.getId().toString())) {
+					sendMsg(v, msg);
+				}
+			});
 		}
 	}
 

@@ -20,5 +20,13 @@ public enum EventType {
 	/**
 	 * 视频
 	 */
-	NEW_VIDEO
+	NEW_VIDEO,
+	/*
+	 * 视频回执
+	 */
+	VIDEO_RETURN,
+	/*
+	 * 视频终止
+	 */
+	VIDEO_STOP
 }
