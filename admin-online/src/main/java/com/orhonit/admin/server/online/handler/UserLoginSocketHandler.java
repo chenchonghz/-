@@ -120,7 +120,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 			}
 			map.remove(onlineUserKey);
 			log.debug("移除连接{}:{}", user.getNickname(), onlineUserKey);
-			if(user.getType() != 3){
+			if(user.getType() == 1){
 				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()), 3);
 			}
 
@@ -144,7 +144,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 		User oldUser = onlineUsers.putIfAbsent(id, user);
 		if (oldUser == null) {
 			log.debug("添加在线用户：{}", user.getUsername());
-			if(user.getType() != 1){
+			if(user.getType() == 3){
 				expertinfoDao.updateState(Integer.parseInt(user.getId().toString()),1);
 			}
 			userOnlineSocketHandler.sendToAll();
@@ -210,10 +210,21 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 					sendMsg(v, msg);
 				}
 			});
-		}else if(EventType.VIDEO_STOP == adminEvent.getEventType()){
+		}else if(EventType.VIDEO_STOP_E == adminEvent.getEventType()){
 			StopVc stopVc = (StopVc) adminEvent.getSource();
 			StopVcDto stopVcDto = new StopVcDto();
-			stopVcDto.setType(EventType.VIDEO_STOP.name());
+			stopVcDto.setType(EventType.VIDEO_STOP_E.name());
+			stopVcDto.setStopVc(stopVc);
+			String msg = JsonUtil.toJson(stopVcDto);
+			sessions.forEach((k, v) -> {
+				if (k == Long.parseLong(stopVc.getId().toString())) {
+					sendMsg(v, msg);
+				}
+			});
+		}else if(EventType.VIDEO_STOP_H == adminEvent.getEventType()){
+			StopVc stopVc = (StopVc) adminEvent.getSource();
+			StopVcDto stopVcDto = new StopVcDto();
+			stopVcDto.setType(EventType.VIDEO_STOP_H.name());
 			stopVcDto.setStopVc(stopVc);
 			String msg = JsonUtil.toJson(stopVcDto);
 			sessions.forEach((k, v) -> {

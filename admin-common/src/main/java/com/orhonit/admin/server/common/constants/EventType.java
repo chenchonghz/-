@@ -26,7 +26,11 @@ public enum EventType {
 	 */
 	VIDEO_RETURN,
 	/*
-	 * 视频终止
+	 * 视频终止专家
 	 */
-	VIDEO_STOP
+	VIDEO_STOP_E,
+	/*
+	 * 视频终止牧民
+	 */
+	VIDEO_STOP_H
 }

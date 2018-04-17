@@ -108,11 +108,15 @@ public class VideoconnectServiceImpl implements VideoconnectService {
 	 * @Description: 专家回复牧民的视频通话请求 
 	 */
 	@Override
-	public void returnVc(String hid, String ifOrNot) {
+	public void returnVc(String hid, String ifOrNot) { //ifOrNot:1接受 0拒绝
 		// TODO Auto-generated method stub
 		/*
 		 * 发送给牧民的视频通话回执
 		 */
+		if(Integer.parseInt(ifOrNot) == 2){
+			Long id = UserUtil.getCurrentUser().getId();
+			expertinfoDao.updateState(id.intValue(), 1);
+		}
 		ReturnVc returnVc = new ReturnVc();
 		returnVc.setHid(Integer.parseInt(hid));
 		returnVc.setIfOrNot(Integer.parseInt(ifOrNot));
@@ -136,21 +140,28 @@ public class VideoconnectServiceImpl implements VideoconnectService {
 		stopVc.setStop(1);
 		if(Uid == videoconnect.getEid()){
 			stopVc.setId(videoconnect.getHid());
+			this.sendStopMsgH(stopVc);
 		}else{
 			stopVc.setId(videoconnect.getEid());
+			this.sendStopMsgE(stopVc);
 		}
-		this.sendStopMsg(stopVc);
+		
+	}
+
+	private void sendStopMsgE(StopVc stopVc) {
+		// TODO Auto-generated method stub
+		applicationContext.publishEvent(new AdminEvent(stopVc, EventType.VIDEO_STOP_E));
+	}
+
+	private void sendStopMsgH(StopVc stopVc) {
+		// TODO Auto-generated method stub
+		applicationContext.publishEvent(new AdminEvent(stopVc, EventType.VIDEO_STOP_H));
 	}
 
 	@Autowired
 	private ApplicationContext applicationContext;
 	private void sendMsg(Videoconnect videoConnect) {
 		applicationContext.publishEvent(new AdminEvent(videoConnect, EventType.NEW_VIDEO));
-	}
-	
-	private void sendStopMsg(StopVc stopVc) {
-		// TODO Auto-generated method stub
-		applicationContext.publishEvent(new AdminEvent(stopVc, EventType.VIDEO_STOP));
 	}
 
 	public void sendReturnMsg(ReturnVc returnVc) {
