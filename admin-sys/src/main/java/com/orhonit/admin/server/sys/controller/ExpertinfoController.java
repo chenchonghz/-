@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 
+import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,4 +80,15 @@ public class ExpertinfoController {
     	expertinfoService.delete(id);
     }
     
+    @GetMapping("/createTask/{id}")
+    @ApiOperation(value = "专家视频完毕创建诊断表")
+    public void createTask(@PathVariable Long id){
+    	try {
+			expertinfoService.createTask(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new UnknownAccountException("系统错误");
+		}
+    }
 }

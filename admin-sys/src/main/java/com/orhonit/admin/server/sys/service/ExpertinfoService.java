@@ -28,4 +28,6 @@ public interface ExpertinfoService {
 
 	List<Expertinfo> ten(long start);
 
+	void createTask(Long id);
+
 }

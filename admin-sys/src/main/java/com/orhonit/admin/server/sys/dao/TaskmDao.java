@@ -26,7 +26,7 @@ public interface TaskmDao {
     int update(Taskm taskm);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into taskm(herdsmanId, expertId, title, content, illnessCategoryId, processingMethod, enclosure, status, type, good, herdsmanId, expertId, title, content, illnessCategoryId, processingMethod, enclosure, status, type, good) values(#{herdsmanId}, #{expertId}, #{title}, #{content}, #{illnessCategoryId}, #{processingMethod}, #{enclosure}, #{status}, #{type}, #{good}, #{herdsmanId}, #{expertId}, #{title}, #{content}, #{illnessCategoryId}, #{processingMethod}, #{enclosure}, #{status}, #{type}, #{good})")
+    @Insert("insert into taskm(herdsmanId, expertId, title, content, illnessCategoryId, processingMethod, enclosure, status, type, good) values(#{herdsmanId}, #{expertId}, #{title}, #{content}, #{illnessCategoryId}, #{processingMethod}, #{enclosure}, #{status}, #{type}, #{good})")
     int save(Taskm taskm);
     
     int count(@Param("params") Map<String, Object> params);

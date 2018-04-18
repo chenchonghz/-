@@ -13,7 +13,13 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.model.Expertinfo;
+import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
+import com.orhonit.admin.server.sys.model.Videoconnect;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
+import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.service.TaskmService;
+import com.orhonit.admin.server.sys.service.VideoconnectService;
 @Service
 public class ExpertinfoServiceImpl implements ExpertinfoService {
 	 @Autowired
@@ -94,6 +100,39 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	public List<Expertinfo> ten(long start) {
 		// TODO Auto-generated method stub
 		return expertinfoDao.ten(start);
+	}
+	@Autowired
+	private VideoconnectService videoconnectService;
+	@Autowired
+	private TaskmService taskmService;
+	@Autowired
+	private TaskService taskService;
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月18日
+	 * @param id
+	 * @see com.orhonit.admin.server.sys.service.ExpertinfoService#createTask(java.lang.Long)
+	 * @Description: 视频诊断完毕后根据视频主键生成诊断表 
+	 */
+	@Override
+	public void createTask(Long id) {
+		// TODO Auto-generated method stub
+		Videoconnect videoconnect = videoconnectService.getById(id);
+		if(videoconnect.getType() == 1){
+			Taskm taskm = new Taskm();
+			taskm.setExpertId(videoconnect.getEid());
+			taskm.setHerdsmanId(videoconnect.getHid());
+			taskm.setStatus(1);
+			taskm.setType(2);
+			taskmService.save(taskm);
+		}else{
+			Task task = new Task();
+			task.setExpertId(videoconnect.getEid());
+			task.setHerdsmanId(videoconnect.getHid());
+			task.setStatus(1);
+			task.setType(2);
+			taskService.save(task);
+		}
 	}
 	 
 }
