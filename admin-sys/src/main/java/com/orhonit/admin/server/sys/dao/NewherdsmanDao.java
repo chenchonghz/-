@@ -33,12 +33,17 @@ public interface NewherdsmanDao {
 
     List<Newherdsman> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     
-    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName from newherdsman as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id where uid=#{uid}") 
+    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName from newherdsman as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id where uid=#{id}") 
     Newherdsman getByUid(int id);
     
-    @Select("select a.*,b.name as provinceNamem,c.name as cityNamem,d.name as areaNamem from newherdsman as a left join districtm b on a.province = b.id left join districtm c on a.city=c.id left join districtm d on a.area=d.id where uid=#{uid}") 
+    @Select("select a.*,b.name as provinceNamem,c.name as cityNamem,d.name as areaNamem from newherdsman as a left join districtm b on a.provinceMeng = b.id left join districtm c on a.cityMeng=c.id left join districtm d on a.areaMeng=d.id where uid=#{id}") 
     Newherdsman getByUidm(int id);
     
     @Select("select * from newherdsman t where t.uid=#{id}")
     Newherdsman getUid(Long id);
+    @Select("select a.*,b.name as provinceName,c.name as cityName,d.name as areaName ,x.name as provinceNamem,y.name as cityNamem,z.name as areaNamem from newherdsman as a left join district b on a.province = b.id left join district c on a.city=c.id left join district d on a.area=d.id     "
+    		+ "left join districtm x on a.provinceMeng = x.id left join districtm y on a.cityMeng=y.id left join districtm z on a.areaMeng=z.id where uid=#{uid}")
+	Newherdsman AppGetByUid(int uid);
+    @Update("update newherdsman t set province = #{province}, city = #{city}, area = #{area}, address = #{address}, headerUrl = #{headerUrl}, sex = #{sex}, updateTime = #{updateTime}, cardNumber = #{cardNumber}, name = #{name}, provinceMeng = #{provinceMeng}, cityMeng = #{cityMeng}, areaMeng = #{areaMeng}, addressMeng = #{addressMeng}, nameMeng = #{nameMeng} where t.id = #{id}")
+	void Appupdate(Newherdsman newherdsman);
 }

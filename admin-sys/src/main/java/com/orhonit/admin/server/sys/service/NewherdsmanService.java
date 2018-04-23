@@ -1,5 +1,7 @@
 package com.orhonit.admin.server.sys.service;
 
+import org.springframework.http.ResponseEntity;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Newherdsman;
@@ -21,5 +23,11 @@ public interface NewherdsmanService {
 	Newherdsman getByUidm(int id);
 	
 	Newherdsman getUid(Long id);
+
+	ResponseEntity<?> AppGetByUid(int uid);
+
+	ResponseEntity<?> Appsave(Newherdsman newherdsman);
+
+	ResponseEntity<?> Appupdate(Newherdsman newherdsman);
 
 }

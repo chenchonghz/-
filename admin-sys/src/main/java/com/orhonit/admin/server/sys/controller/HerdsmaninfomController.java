@@ -32,7 +32,7 @@ public class HerdsmaninfomController {
 
         return herdsmaninfom;
     }
-
+   
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取")
     public Herdsmaninfom get(@PathVariable Long id) {

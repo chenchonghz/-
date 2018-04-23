@@ -187,6 +187,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 		// TODO Auto-generated method stub
 		try {
 			expertinfo.setStatus(0);
+			expertinfo.setUpdateTime(new Date());
 			expertinfoDao.AppUpdate(expertinfo);
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {

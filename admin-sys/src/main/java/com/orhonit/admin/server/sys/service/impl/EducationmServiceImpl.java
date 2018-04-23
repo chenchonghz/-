@@ -5,7 +5,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler;
@@ -15,9 +14,6 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandle
 import com.orhonit.admin.server.sys.dao.EducationmDao;
 import com.orhonit.admin.server.sys.model.Educationm;
 import com.orhonit.admin.server.sys.service.EducationmService;
-
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 
 @Service
 public class EducationmServiceImpl implements EducationmService {

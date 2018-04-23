@@ -50,6 +50,6 @@ public interface ExpertinfoDao {
     @Update("update expertinfo t set videoDiagnosis = videoDiagnosis + 1 where t.uid = #{eid}")
 	void updatevideoDiagnosis(Integer eid);
 
-    @Update("update expertinfo set expertCertificate=#{expertCertificate},education=#{education},educationMeng=#{educationMeng},personal=#{personal},personalMeng=#{personalMeng},expertise=#{expertise},expertiseMeng=#{expertiseMeng},address=#{address},addressMeng=#{addressMeng},sex=#{sex},headerUrl=#{headerUrl},cardNumber=#{cardNumber},name=#{name},nameMeng=#{nameMeng},status=#{status} where id = #{id}")
+    @Update("update expertinfo set expertCertificate=#{expertCertificate},education=#{education},educationMeng=#{educationMeng},personal=#{personal},personalMeng=#{personalMeng},expertise=#{expertise},expertiseMeng=#{expertiseMeng},address=#{address},addressMeng=#{addressMeng},sex=#{sex},headerUrl=#{headerUrl},cardNumber=#{cardNumber},name=#{name},nameMeng=#{nameMeng},status=#{status},updateTime=#{updateTime} where id = #{id}")
 	void AppUpdate(Expertinfo expertinfo);
 }

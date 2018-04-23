@@ -18,6 +18,7 @@ import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -56,10 +57,10 @@ public class ExpertinfoController {
      * @return  
      * @Description: 手机端根据uid拿到专家的详情信息，不存在返回401 
      */
-    @GetMapping("/AppGet/{id}")
+    @GetMapping("/AppGet")
     @ApiOperation(value = "手机端根据uid获取")
-    public ResponseEntity<?> getByUid(@PathVariable int id){
-    	return expertinfoService.getByUid(id);
+    public ResponseEntity<?> getByUid(){
+    	return expertinfoService.getByUid(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
     }
     /**
      * @author: 孙少辉
