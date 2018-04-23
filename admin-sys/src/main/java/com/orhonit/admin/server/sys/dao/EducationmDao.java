@@ -32,4 +32,6 @@ public interface EducationmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Educationm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("select * from educationm")
+	List<Educationm> getList();
 }

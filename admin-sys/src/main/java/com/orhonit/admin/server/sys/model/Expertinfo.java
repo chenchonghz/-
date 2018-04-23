@@ -16,6 +16,8 @@ public class Expertinfo extends BaseEntity<Long> {
 	private String expertCertificate;
 	private Integer education;
 	private Integer educationMeng;
+	private String educationName;
+	private String educationMengName;
 	private String personal;
 	private String personalMeng;
 	private Integer status;
@@ -33,5 +35,6 @@ public class Expertinfo extends BaseEntity<Long> {
 	private String cardNumber;
 	private String name;
 	private String nameMeng;
+	private String reason;
 
 }

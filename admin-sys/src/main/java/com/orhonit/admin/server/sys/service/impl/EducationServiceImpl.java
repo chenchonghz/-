@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -57,6 +58,19 @@ public class EducationServiceImpl implements EducationService{
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		educationDao.delete(id);
+	}
+
+	@Override
+	public ResponseEntity<?> getList() {
+		// TODO Auto-generated method stub
+		try {
+			List<Education> list = educationDao.getList();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 
 }

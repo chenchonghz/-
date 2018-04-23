@@ -2,6 +2,8 @@ package com.orhonit.admin.server.sys.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Expertinfo;
@@ -29,5 +31,11 @@ public interface ExpertinfoService {
 	List<Expertinfo> ten(long start);
 
 	void createTask(Long id);
+
+	ResponseEntity<?> getByUid(int id);
+
+	ResponseEntity<?> saveExpertinfo(Expertinfo expertinfo);
+
+	ResponseEntity<?> AppUpdate(Expertinfo expertinfo);
 
 }

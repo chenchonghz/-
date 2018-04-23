@@ -136,6 +136,7 @@ public class VideoconnectServiceImpl implements VideoconnectService {
 		int Uid = Integer.parseInt(UserUtil.getCurrentUser().getId().toString());
 		Videoconnect videoconnect = videoconnectDao.getById(Long.parseLong(id));
 		expertinfoDao.updateState(videoconnect.getEid(), 1);//专家在线状态改变为1
+		expertinfoDao.updatevideoDiagnosis(videoconnect.getEid());//专家视频诊断数量加1
 		StopVc stopVc = new StopVc();
 		stopVc.setStop(1);
 		if(Uid == videoconnect.getEid()){

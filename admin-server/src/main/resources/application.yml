@@ -36,7 +36,7 @@ mybatis:
   type-aliases-package: com.orhonit.admin.server.sys.model
   mapper-locations: classpath*:/mybatis-mappers/*
 files:
-  path: ${file-path:d:/files}
+  path: ${file-path:D:/files}
 logging:
   config: classpath:logback-admin.xml
 log:
@@ -49,6 +49,6 @@ token:
   expire:
     seconds: 86400
 server:
-  port: 8080
+  port: 80
 videoconnect:
   path: https://sphy.etkqqzhdj.gov.cn:25783/r/

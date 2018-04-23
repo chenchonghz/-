@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,7 +51,18 @@ public class EducationController {
     public TableResponse<Education> list(TableRequest request) {
     	return educationService.list(request);
     }
-
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月23日
+     * @return  
+     * @Description: App端拿到list信息
+     */
+    @GetMapping("/getList")
+    @ApiOperation(value = "APP端拿到列表信息")
+    public ResponseEntity<?> getList(){
+    	return educationService.getList();
+    }
+    
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {

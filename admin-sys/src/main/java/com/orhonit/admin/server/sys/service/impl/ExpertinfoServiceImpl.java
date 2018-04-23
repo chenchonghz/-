@@ -1,8 +1,10 @@
 package com.orhonit.admin.server.sys.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,11 +17,13 @@ import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Task;
 import com.orhonit.admin.server.sys.model.Taskm;
+import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.service.TaskService;
 import com.orhonit.admin.server.sys.service.TaskmService;
 import com.orhonit.admin.server.sys.service.VideoconnectService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class ExpertinfoServiceImpl implements ExpertinfoService {
 	 @Autowired
@@ -132,6 +136,63 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			task.setStatus(1);
 			task.setType(2);
 			taskService.save(task);
+		}
+	}
+
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月21日
+	 * @param id
+	 * @return
+	 * @see com.orhonit.admin.server.sys.service.ExpertinfoService#getByUid(int)
+	 * @Description: 手机端根据uid拿到专家的详情信息，不存在返回401  
+	 */
+	@Override
+	public ResponseEntity<?> getByUid(int id) {
+		// TODO Auto-generated method stub
+		Expertinfo expertinfo = expertinfoDao.ByUid(id);
+		System.out.println(expertinfo);
+		if(expertinfo != null){
+			return ResponseEntity.ok(expertinfo);
+		}else{
+			return ResponseEntity.status(401).body("信息未完善");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> saveExpertinfo(Expertinfo expertinfo) {
+		// TODO Auto-generated method stub
+		try {
+			User user = UserUtil.getCurrentUser();
+			expertinfo.setUid(Integer.parseInt(user.getId().toString()));
+			expertinfo.setStatus(0);
+			expertinfo.setState(1);
+			expertinfo.setDealingProblems(0);
+			expertinfo.setActivity(0);
+			expertinfo.setVideoDiagnosis(0);
+			expertinfo.setPhoneDiagnosis(0);
+			expertinfo.setCreateTime(new Date());
+			expertinfo.setUpdateTime(new Date());
+			expertinfoDao.save(expertinfo);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+		
+	}
+
+	@Override
+	public ResponseEntity<?> AppUpdate(Expertinfo expertinfo) {
+		// TODO Auto-generated method stub
+		try {
+			expertinfo.setStatus(0);
+			expertinfoDao.AppUpdate(expertinfo);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("系统错误");
 		}
 	}
 	 

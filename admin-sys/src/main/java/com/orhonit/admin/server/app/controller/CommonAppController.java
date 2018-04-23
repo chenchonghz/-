@@ -24,6 +24,7 @@ import com.orhonit.admin.server.sys.model.Expertinfo;
 import com.orhonit.admin.server.sys.model.Medicalequipment;
 import com.orhonit.admin.server.sys.model.Medicalequipmentm;
 import com.orhonit.admin.server.sys.model.Newherdsman;
+import com.orhonit.admin.server.sys.model.Slide;
 import com.orhonit.admin.server.sys.model.StudyArticle;
 import com.orhonit.admin.server.sys.model.StudyVideo;
 import com.orhonit.admin.server.sys.model.Studyarticlem;
@@ -37,6 +38,8 @@ import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.service.MedicalequipmentSerivce;
 import com.orhonit.admin.server.sys.service.MedicalequipmentmService;
 import com.orhonit.admin.server.sys.service.NewherdsmanService;
+import com.orhonit.admin.server.sys.service.SlideService;
+import com.orhonit.admin.server.sys.service.SlidemService;
 import com.orhonit.admin.server.sys.service.StudyArticleService;
 import com.orhonit.admin.server.sys.service.StudyVideoService;
 import com.orhonit.admin.server.sys.service.StudyarticlemService;
@@ -204,5 +207,20 @@ public class CommonAppController {
 	@ApiOperation(value="根据牧民的uid获得信息")
 	public Newherdsman getnewherdsman(@PathVariable Long uid){
 		return newherdsmanService.getUid(uid);
+	}
+	
+	@Autowired
+	private SlideService slideService;
+	@GetMapping("/getSlideList")
+	@ApiOperation(value = "拿到汉语轮播图列表")
+	public List<Slide> getSlideList(){
+		return slideService.getSlideList();
+	}
+	@Autowired
+	private SlidemService slidemService;
+	@GetMapping("/getSlidemList")
+	@ApiOperation(value = "拿到蒙语轮播图列表")
+	public List<Slide> getSlidemList(){
+		return slidemService.getSlidemList();
 	}
 }
