@@ -35,6 +35,6 @@ public class User extends BaseEntity<Long> {
 		int VALID = 1;;
 		int LOCKED = 2;
 	}
-	private Integer xinxi;
+	private String regsId;
 
 }

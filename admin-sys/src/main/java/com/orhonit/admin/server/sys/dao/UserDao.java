@@ -17,7 +17,7 @@ import com.orhonit.admin.server.sys.model.User;
 public interface UserDao {
 
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	@Insert("insert into sys_user(username, password, salt, nickname, headImgUrl, phone, telephone, email, birthday, sex, status, createTime, updateTime,type,xinxi) values(#{username}, #{password}, #{salt}, #{nickname}, #{headImgUrl}, #{phone}, #{telephone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now(),#{type},0)")
+	@Insert("insert into sys_user(username, password, salt, nickname, headImgUrl, phone, telephone, email, birthday, sex, status, createTime, updateTime,type,regsId) values(#{username}, #{password}, #{salt}, #{nickname}, #{headImgUrl}, #{phone}, #{telephone}, #{email}, #{birthday}, #{sex}, #{status}, now(), now(),#{type},#{regsId})")
 	int save(User user);
 
 	@Select("select * from sys_user t where t.id = #{id}")
@@ -43,4 +43,6 @@ public interface UserDao {
 	int saveUserRoles(@Param("userId") Long userId, @Param("roleIds") List<Long> roleIds);
 
 	int update(User user);
+	@Update("update sys_user set regsId = #{arg1} where id = #{arg0}")
+	void updateRegsId(Integer id, String regsId);
 }

@@ -7,6 +7,7 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.shiro.crypto.hash.SimpleHash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
 				.md5Hex(UUID.randomUUID().toString() + System.currentTimeMillis() + UUID.randomUUID().toString()));
 		user.setPassword(passwordEncoder(user.getPassword(), user.getSalt()));
 		user.setStatus(Status.VALID);
-		user.setXinxi(0);
+		user.setRegsId(null);
 		userDao.save(user);
 		saveUserRoles(user.getId(), userDto.getRoleIds());
 
@@ -102,6 +103,19 @@ public class UserServiceImpl implements UserService {
 		if (current.getId().equals(id)) {
 			User user = userDao.getById(id);
 			UserUtil.setUserSession(user);
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getRegsId(Integer id, String regsId) {
+		// TODO Auto-generated method stub
+		try {
+			userDao.updateRegsId(id,regsId);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
 		}
 	}
 }

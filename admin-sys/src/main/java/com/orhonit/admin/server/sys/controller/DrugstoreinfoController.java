@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +17,7 @@ import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 
 import io.swagger.annotations.ApiOperation;
 
@@ -38,6 +40,37 @@ public class DrugstoreinfoController {
     @ApiOperation(value = "根据id获取")
     public Drugstoreinfo get(@PathVariable Long id) {
         return drugstoreinfoService.getById(id);
+    }
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月24日
+     * @return  
+     * @Description: 手机端拿到药店详情信息 
+     */
+    @GetMapping("/AppGet")
+    @ApiOperation(value = "app端拿到药店的详情信息")
+    public ResponseEntity<?> AppGet(){
+    	String id = UserUtil.getCurrentUser().getId().toString();
+    	return drugstoreinfoService.AppGet(Integer.parseInt(id));
+    }
+    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月24日
+     * @param drugstoreinfo
+     * @return  
+     * @Description: 手机端完善个人信息 
+     */
+    @PostMapping("/AppSave")
+    @ApiOperation(value = "app端保存药店详情信息")
+    public ResponseEntity<?> AppSave(Drugstoreinfo drugstoreinfo){
+    	return drugstoreinfoService.AppSave(drugstoreinfo);
+    }
+    
+    @PostMapping("/AppUpdate")
+    @ApiOperation(value = "app端修改药店详情信息")
+    public ResponseEntity<?> AppUpdate(Drugstoreinfo drugstoreinfo){
+    	return drugstoreinfoService.AppUpdate(drugstoreinfo);
     }
     
     @GetMapping("drugstoreinfo/{id}")
