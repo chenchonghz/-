@@ -111,7 +111,12 @@ public class ExpertinfoController {
     public TableResponse<Expertinfo> list(TableRequest request) {
     	return expertinfoService.list(request);
     }
-
+    @GetMapping("/AppList")
+    @ApiOperation(value = "App端拿到所有审核通过的专家")
+    public ResponseEntity<?> AppList(){
+    	return expertinfoService.AppList();
+    }
+    
     
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")

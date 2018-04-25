@@ -26,4 +26,6 @@ public interface TaskService {
 
 	ResponseEntity<?> AppDelete(Long id);
 
+	ResponseEntity<?> AppAddTask(Task task);
+
 }

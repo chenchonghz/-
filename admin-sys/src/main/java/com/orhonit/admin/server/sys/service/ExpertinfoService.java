@@ -38,4 +38,6 @@ public interface ExpertinfoService {
 
 	ResponseEntity<?> AppUpdate(Expertinfo expertinfo);
 
+	ResponseEntity<?> AppList();
+
 }

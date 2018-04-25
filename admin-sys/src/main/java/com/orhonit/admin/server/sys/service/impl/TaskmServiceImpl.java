@@ -102,4 +102,18 @@ public class TaskmServiceImpl implements TaskmService {
 		}
 	}
 
+	@Override
+	public ResponseEntity<?> AppAddTaskm(Taskm taskm) {
+		// TODO Auto-generated method stub
+		try {
+			taskm.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			taskmDao.save(taskm);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
 }

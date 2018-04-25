@@ -15,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Newherdsman;
+import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.service.NewherdsmanService;
+import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.service.TaskmService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
 import io.swagger.annotations.ApiOperation;
@@ -100,4 +104,36 @@ public class NewherdsmanController {
     public void delete(@PathVariable Long id) {
     	newherdsmanService.delete(id);
     }
+    
+    @Autowired
+    private TaskService taskService;
+    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月25日
+     * @param task
+     * @return  
+     * @Description: 牧民文字添加汉语诊断 
+     */
+    @PostMapping("/AppAddTask")
+    @ApiOperation(value = "添加汉语诊断")
+    public ResponseEntity<?> AppAddTask(Task task){
+    	return taskService.AppAddTask(task);
+    }
+    @Autowired
+    private TaskmService taskmService;
+    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月25日
+     * @param taskm
+     * @return  
+     * @Description: 牧民文字添加蒙语诊断 
+     */
+    @PostMapping("/AppAddTaskm")
+    @ApiOperation(value = "添加蒙语诊断")
+    public ResponseEntity<?> AppAddTaskm(Taskm taskm){
+    	return taskmService.AppAddTaskm(taskm);
+    }
+    
 }

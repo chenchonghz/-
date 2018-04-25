@@ -101,4 +101,18 @@ public class TaskServiceImpl implements TaskService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> AppAddTask(Task task) {
+		// TODO Auto-generated method stub
+		try {
+			task.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			taskDao.save(task);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
 }

@@ -26,4 +26,7 @@ public interface TaskmService {
 
 	ResponseEntity<?> AppDelete(Long id);
 
+	ResponseEntity<?> AppAddTaskm(Taskm taskm);
+
+
 }

@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,11 @@ public class IllnesscategorymController {
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
     	illnesscategorymService.delete(id);
+    }
+    
+    @GetMapping("AppList")
+    @ApiOperation(value = "App端拿到列表")
+    public ResponseEntity<?> AppList(){
+    	return illnesscategorymService.AppList();
     }
 }

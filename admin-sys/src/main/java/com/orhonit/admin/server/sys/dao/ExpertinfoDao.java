@@ -52,4 +52,6 @@ public interface ExpertinfoDao {
 
     @Update("update expertinfo set expertCertificate=#{expertCertificate},education=#{education},educationMeng=#{educationMeng},personal=#{personal},personalMeng=#{personalMeng},expertise=#{expertise},expertiseMeng=#{expertiseMeng},address=#{address},addressMeng=#{addressMeng},sex=#{sex},headerUrl=#{headerUrl},cardNumber=#{cardNumber},name=#{name},nameMeng=#{nameMeng},status=#{status},updateTime=#{updateTime} where id = #{id}")
 	void AppUpdate(Expertinfo expertinfo);
+    @Select("select * from expertinfo where status = 1")
+	List<Expertinfo> AppList();
 }

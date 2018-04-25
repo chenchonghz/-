@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -58,5 +59,18 @@ public class illnesscategoryServiceImpl implements illnesscategoryService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		illnesscategoryDao.delete(id);
+	}
+
+	@Override
+	public ResponseEntity<?> AppList() {
+		// TODO Auto-generated method stub
+		try {
+			List<Illnesscategory> list = illnesscategoryDao.AppList();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }

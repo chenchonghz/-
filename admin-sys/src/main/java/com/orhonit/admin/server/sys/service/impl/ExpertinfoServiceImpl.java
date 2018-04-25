@@ -196,5 +196,18 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			return ResponseEntity.status(401).body("系统错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> AppList() {
+		// TODO Auto-generated method stub
+		try {
+			List<Expertinfo> list= expertinfoDao.AppList();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
 	 
 }
