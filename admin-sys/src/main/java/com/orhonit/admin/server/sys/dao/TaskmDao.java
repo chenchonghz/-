@@ -16,7 +16,7 @@ import com.orhonit.admin.server.sys.model.Taskm;
 @Mapper
 public interface TaskmDao {
 
-    @Select("select * from taskm t where t.id = #{id}")
+    @Select("select * from taskm t where t.id = #{id} and status != 0")
     Taskm getById(Long id);
 
     @Delete("delete from taskm where id = #{id}")
@@ -34,4 +34,11 @@ public interface TaskmDao {
     List<Taskm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select * from taskm where status = 2 and good = 1 order by id desc limit #{start},10")
 	List<Taskm> ten(long start);
+    @Select("select * from taskm where expertId = #{id} and status != 0")
+	List<Taskm> selectByEid(Long id);
+	@Select("select * from taskm where herdsmanId = #{id} and status != 0")
+	List<Taskm> selectByHid(Long id);
+	@Update("update taskm set status = 0 where id = #{id}")
+	void AppDelete(Long id);
+
 }

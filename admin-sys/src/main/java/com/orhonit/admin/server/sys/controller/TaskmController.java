@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -52,10 +53,28 @@ public class TaskmController {
     public TableResponse<Taskm> list(TableRequest request) {
     	return taskmDaoService.list(request);
     }
+    @GetMapping("/AppList")
+    @ApiOperation("App拿到诊断列表，根据token判断专家还是牧民")
+    public ResponseEntity<?> AppList(){
+    	return taskmDaoService.AppList();
+    }
 
     @DeleteMapping("/{id}")
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
     	taskmDaoService.delete(id);
+    }
+    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月25日
+     * @param id
+     * @return  
+     * @Description:  App端的假删除  
+     */
+    @GetMapping("AppUpdate/{id}")
+    @ApiOperation(value = "app端删除，假删除，改状态")
+    public ResponseEntity<?> AppDelete(@PathVariable Long id){
+    	return taskmDaoService.AppDelete(id);
     }
 }

@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -12,7 +13,9 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.TaskDao;
 import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class TaskServiceImpl implements TaskService {
 	@Autowired
@@ -64,5 +67,38 @@ public class TaskServiceImpl implements TaskService {
 	public List<Task> ten(long start) {
 		// TODO Auto-generated method stub
 		return taskDao.ten(start);
+	}
+
+	@Override
+	public ResponseEntity<?> AppList() {
+		// TODO Auto-generated method stub
+		try {
+			User user = UserUtil.getCurrentUser();
+			if(user.getType() == 1){
+				List<Task> list = taskDao.selectByHid(user.getId());
+				return ResponseEntity.ok(list);
+			}else if(user.getType() == 2){
+				List<Task> list = taskDao.selectByEid(user.getId());
+				return ResponseEntity.ok(list);
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+		return ResponseEntity.ok(null);
+	}
+
+	@Override
+	public ResponseEntity<?> AppDelete(Long id) {
+		// TODO Auto-generated method stub
+		try {
+			taskDao.AppDelete(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }
