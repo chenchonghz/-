@@ -49,4 +49,12 @@ public interface DrugstoreinfoDao {
 	List<Drugstoreinfo> ten(Long start);
     @Update("update drugstoreinfo t set  pharmacyName = #{pharmacyName}, pharmacyNameMeng = #{pharmacyNameMeng}, drugstoreLicense = #{drugstoreLicense}, drugstoreInformation = #{drugstoreInformation}, drugstoreInformationMeng = #{drugstoreInformationMeng}, province = #{province}, provinceMeng = #{provinceMeng}, city = #{city}, cityMeng = #{cityMeng}, area = #{area}, areaMeng = #{areaMeng}, address = #{address}, addressMeng = #{addressMeng}, headerUrl = #{headerUrl}, updateTime = #{updateTime}, status = #{status} where t.id = #{id}")
 	void AppUpdate(Drugstoreinfo drugstoreinfo);
+    @Select("select * from drugstoreinfo where area = #{area} limit 0,10")
+	List<Drugstoreinfo> selectByNewHerdsManArea(Integer area);
+    @Select("select * from drugstoreinfo where city = #{arg0} and area != #{arg1}")
+	List<Drugstoreinfo> selectByNewHerdsManCity(Integer city, Integer area);
+    @Select("select * from drugstoreinfo where areaMeng = #{areaMeng} limit 0,10")
+	List<Drugstoreinfo> selectByNewHerdsManAreaMeng(Integer areaMeng);
+    @Select("select * from drugstoreinfo where cityMeng = #{arg0} and areaMeng != #{arg1}")
+	List<Drugstoreinfo> selectByNewHerdsManCityMeng(Integer cityMeng, Integer areaMeng);
 }

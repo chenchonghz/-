@@ -15,7 +15,13 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.DrugstoreinfoDao;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
+import com.orhonit.admin.server.sys.model.Newherdsman;
+import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
+import com.orhonit.admin.server.sys.service.NewherdsmanService;
+import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.service.TaskmService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
 @Service
@@ -158,6 +164,84 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ResponseEntity.status(401).body(null);
+		}
+	}
+	
+	@Autowired
+	private TaskmService taskmService;
+	@Autowired
+	private NewherdsmanService newherdsmanService;
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月26日
+	 * @param id
+	 * @return 
+	 * @see com.orhonit.admin.server.sys.service.DrugstoreinfoService#getByTaskIdM(java.lang.Integer)
+	 * @Description: 根据诊断id和地区表对比拿到牧民附近的药店 
+	 */
+	@Override
+	public ResponseEntity<?> getByTaskIdM(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			Taskm taskm = taskmService.getById(Long.parseLong(id.toString()));
+			Newherdsman newherdsman = newherdsmanService.getByUid(taskm.getHerdsmanId());
+			System.out.println(newherdsman);
+			List<Drugstoreinfo> list = drugstoreinfoDao.selectByNewHerdsManArea(newherdsman.getArea());
+			for (Drugstoreinfo drugstoreinfo : list) {
+				System.err.println(drugstoreinfo);
+			}
+			if(list.size()<10){
+				List<Drugstoreinfo> list2= drugstoreinfoDao.selectByNewHerdsManCity(newherdsman.getCity(),newherdsman.getArea());
+				int size =10 - list.size();
+				for (int i = 0; i < size; i++) {
+					if(i<list2.size()){
+						list.add(list2.get(i));
+					}
+				}
+			}
+			return ResponseEntity.ok(list);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+	@Autowired
+	private TaskService taskService;
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月26日
+	 * @param id
+	 * @return
+	 * @see com.orhonit.admin.server.sys.service.DrugstoreinfoService#getByTaskId(java.lang.Integer)
+	 * @Description: 根据诊断id和地区表对比拿到牧民附近的药店 汉语  
+	 */
+	@Override
+	public ResponseEntity<?> getByTaskId(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			Task task = taskService.getById(Long.parseLong(id.toString()));
+			System.out.println(task.getHerdsmanId());
+			Newherdsman newherdsman = newherdsmanService.getByUid(task.getHerdsmanId());
+			System.out.println(newherdsman);
+			List<Drugstoreinfo> list = drugstoreinfoDao.selectByNewHerdsManAreaMeng(newherdsman.getAreaMeng());
+			for (Drugstoreinfo drugstoreinfo : list) {
+				System.err.println(drugstoreinfo);
+			}
+			if(list.size()<10){
+				List<Drugstoreinfo> list2= drugstoreinfoDao.selectByNewHerdsManCityMeng(newherdsman.getCityMeng(),newherdsman.getAreaMeng());
+				int size =10 - list.size();
+				for (int i = 0; i < size; i++) {
+					if(i<list2.size()){
+						list.add(list2.get(i));
+					}
+				}
+			}
+			return ResponseEntity.ok(list);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
 		}
 	}
 }

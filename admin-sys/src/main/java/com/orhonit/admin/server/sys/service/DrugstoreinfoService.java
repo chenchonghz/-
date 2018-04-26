@@ -36,4 +36,9 @@ public interface DrugstoreinfoService {
 
 	ResponseEntity<?> AppUpdate(Drugstoreinfo drugstoreinfo);
 
+	ResponseEntity<?> getByTaskIdM(Integer id);
+
+	ResponseEntity<?> getByTaskId(Integer id);
+
+
 }

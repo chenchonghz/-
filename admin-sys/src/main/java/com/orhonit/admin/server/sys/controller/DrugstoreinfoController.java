@@ -116,4 +116,30 @@ public class DrugstoreinfoController {
     public void delete(@PathVariable Long id) {
     	drugstoreinfoService.delete(id);
     }
+    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param id
+     * @return  
+     * @Description: 根据诊断id和地区表对比拿到牧民附近的药店 蒙语
+     */
+    @GetMapping("/App/getByTaskIdM/{id}")
+    @ApiOperation(value = "根据诊断id和地区表对比拿到牧民附近的药店")
+    public ResponseEntity<?> getByTaskIdM(@PathVariable Integer id){
+    	return drugstoreinfoService.getByTaskIdM(id);
+    }
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param id
+     * @return  
+     * @Description: 根据诊断id和地区表对比拿到牧民附近的药店 汉语 
+     */
+    @GetMapping("/App/getByTaskId/{id}")
+    @ApiOperation(value = "根据诊断id和地区表对比拿到牧民附近的药店")
+    public ResponseEntity<?> getByTaskId(@PathVariable Integer id){
+    	return drugstoreinfoService.getByTaskId(id);
+    }
+    
 }
