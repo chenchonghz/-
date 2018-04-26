@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -83,4 +84,9 @@ public class DistrictmController {
     public void delete(@PathVariable Long id) {
     	districtmService.delete(id);
     }
+    @GetMapping("App/getAll")
+	@ApiOperation(value = "App端拿到所有数据")
+	public ResponseEntity<?> getAll(){
+		return districtmService.getAll();
+	}
 }

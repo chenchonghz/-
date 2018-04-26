@@ -2,6 +2,8 @@ package com.orhonit.admin.server.sys.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.District;
@@ -19,5 +21,7 @@ public interface DistrictService {
 	void update(District district);
 
 	TableResponse<District> list(TableRequest request);
+
+	ResponseEntity<?> getAll();
 
 }

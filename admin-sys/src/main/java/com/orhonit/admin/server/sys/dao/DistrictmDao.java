@@ -38,4 +38,6 @@ public interface DistrictmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Districtm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("select * from districtm")
+	List<Districtm> getAll();
 }

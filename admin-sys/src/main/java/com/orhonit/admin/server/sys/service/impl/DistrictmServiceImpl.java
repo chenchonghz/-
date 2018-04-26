@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -13,6 +14,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandle
 import com.orhonit.admin.server.sys.dao.DistrictmDao;
 import com.orhonit.admin.server.sys.model.Districtm;
 import com.orhonit.admin.server.sys.service.DistrictmService;
+
 
 @Service
 public class DistrictmServiceImpl implements DistrictmService {
@@ -66,5 +68,20 @@ public class DistrictmServiceImpl implements DistrictmService {
 		// TODO Auto-generated method stub
 		districtmDao.delete(id);
 	}
+
+	@Override
+	public ResponseEntity<?> getAll() {
+		// TODO Auto-generated method stub
+		try {
+			List<Districtm> list = districtmDao.getAll();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+	
+	
 	
 }
