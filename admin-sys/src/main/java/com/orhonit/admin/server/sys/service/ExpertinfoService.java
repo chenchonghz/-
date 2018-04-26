@@ -7,6 +7,10 @@ import org.springframework.http.ResponseEntity;
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Expertinfo;
+import com.orhonit.admin.server.sys.model.Prescription;
+import com.orhonit.admin.server.sys.model.Prescriptionm;
+import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
 
 public interface ExpertinfoService {
 
@@ -39,5 +43,13 @@ public interface ExpertinfoService {
 	ResponseEntity<?> AppUpdate(Expertinfo expertinfo);
 
 	ResponseEntity<?> AppList();
+
+	void examinem(Taskm taskm, List<Prescriptionm> list);
+
+	void examine(Task task, List<Prescription> list);
+
+	ResponseEntity<?> CreateByPhone(String phone);
+
+	ResponseEntity<?> CreatemByPhone(String phone);
 
 }

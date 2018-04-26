@@ -12,9 +12,11 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.TaskmDao;
+import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.TaskmService;
+import com.orhonit.admin.server.sys.utils.JpushClientUtil;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class TaskmServiceImpl implements TaskmService {
@@ -101,13 +103,16 @@ public class TaskmServiceImpl implements TaskmService {
 			return ResponseEntity.status(401).body(null);
 		}
 	}
-
+	@Autowired
+	private UserDao userDao;
 	@Override
 	public ResponseEntity<?> AppAddTaskm(Taskm taskm) {
 		// TODO Auto-generated method stub
 		try {
 			taskm.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
 			taskmDao.save(taskm);
+			User user = userDao.getById(Long.parseLong(taskm.getExpertId().toString()));
+			JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你有一个新的诊断待完善", "1", "2");
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

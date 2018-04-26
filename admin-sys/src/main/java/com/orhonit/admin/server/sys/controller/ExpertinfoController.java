@@ -2,6 +2,8 @@ package com.orhonit.admin.server.sys.controller;
 
 
 
+import java.util.List;
+
 import org.apache.shiro.authc.UnknownAccountException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSON;
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Expertinfo;
+import com.orhonit.admin.server.sys.model.Prescription;
+import com.orhonit.admin.server.sys.model.Prescriptionm;
+import com.orhonit.admin.server.sys.model.Task;
+import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
@@ -135,6 +142,79 @@ public class ExpertinfoController {
 			throw new UnknownAccountException("系统错误");
 		}
     }
-    
-    
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param taskm
+     * @param json  
+     * @Description: 专家完善蒙语病例并开药 
+     */
+    @PostMapping("/App/updateTaskm")
+    @ApiOperation(value = "专家提交完善的蒙语病例并开药")
+    public ResponseEntity<?> examinem(Taskm taskm,String json){
+    	try {
+			System.out.println(taskm);
+			System.err.println(json);
+			List<Prescriptionm> list = JSON.parseArray(json, Prescriptionm.class);
+			for (Prescriptionm prescriptionm : list) {
+				System.out.println(prescriptionm);
+			}
+			expertinfoService.examinem(taskm,list);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+    }
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param task
+     * @param json
+     * @return  
+     * @Description: 专家提交完善的汉语病例并开药 
+     */
+    @PostMapping("/App/updateTask")
+    @ApiOperation(value = "专家提交完善的汉语病例并开药")
+    public ResponseEntity<?> examine(Task task,String json){
+    	try {
+    		System.out.println(task);
+    		System.err.println(json);
+    		List<Prescription> list = JSON.parseArray(json, Prescription.class);
+    		for (Prescription prescription : list) {
+    			System.out.println(prescription);
+    		}
+    		expertinfoService.examine(task,list);
+    		return ResponseEntity.ok(null);
+    	} catch (Exception e) {
+    		// TODO Auto-generated catch block
+    		e.printStackTrace();
+    		return ResponseEntity.status(401).body("错误");
+    	}
+    }
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param phone
+     * @return  
+     * @Description: 专家根据牧民电话号添加汉语病例 
+     */
+    @GetMapping("/App/CreateTaskByPhone/{phone}")
+    @ApiOperation(value = "专家根据牧民电话号添加病例")
+    public ResponseEntity<?> CreateTaskByPhone(@PathVariable String phone){
+    	return expertinfoService.CreateByPhone(phone);
+    }
+    /**
+     * @author: 孙少辉
+     * @data: 2018年4月26日
+     * @param phone
+     * @return  
+     * @Description: 专家根据牧民电话号添加蒙语病例 
+     */
+    @GetMapping("/App/CreateTaskmByPhone/{phone}")
+    @ApiOperation(value = "专家根据牧民电话号添加病例")
+    public ResponseEntity<?> CreateTaskmByPhone(@PathVariable String phone){
+    	return expertinfoService.CreatemByPhone(phone);
+    }
 }

@@ -12,9 +12,11 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.TaskDao;
+import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.model.Task;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.TaskService;
+import com.orhonit.admin.server.sys.utils.JpushClientUtil;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class TaskServiceImpl implements TaskService {
@@ -101,6 +103,8 @@ public class TaskServiceImpl implements TaskService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+	@Autowired
+	private UserDao userDao;
 
 	@Override
 	public ResponseEntity<?> AppAddTask(Task task) {
@@ -108,6 +112,8 @@ public class TaskServiceImpl implements TaskService {
 		try {
 			task.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
 			taskDao.save(task);
+			User user = userDao.getById(Long.parseLong(task.getExpertId().toString()));
+			JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你有一个新的诊断待完善", "1", "2");
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

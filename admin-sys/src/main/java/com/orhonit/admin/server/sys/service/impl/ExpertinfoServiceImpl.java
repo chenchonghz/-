@@ -1,6 +1,7 @@
 package com.orhonit.admin.server.sys.service.impl;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,15 +15,22 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
+import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.model.Expertinfo;
+import com.orhonit.admin.server.sys.model.Prescription;
+import com.orhonit.admin.server.sys.model.Prescriptionm;
 import com.orhonit.admin.server.sys.model.Task;
 import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.model.Videoconnect;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
+import com.orhonit.admin.server.sys.service.PrescriptionService;
+import com.orhonit.admin.server.sys.service.PrescriptionmService;
 import com.orhonit.admin.server.sys.service.TaskService;
 import com.orhonit.admin.server.sys.service.TaskmService;
+import com.orhonit.admin.server.sys.service.UserService;
 import com.orhonit.admin.server.sys.service.VideoconnectService;
+import com.orhonit.admin.server.sys.utils.JpushClientUtil;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class ExpertinfoServiceImpl implements ExpertinfoService {
@@ -209,5 +217,111 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+	@Autowired
+	private UserDao userDao;
+
+	@Autowired
+	private PrescriptionService prescriptionService;
+	@Autowired
+	private PrescriptionmService prescriptionServicem;
+	@Override
+	@Transactional
+	public void examinem(Taskm taskm, List<Prescriptionm> list) {
+		// TODO Auto-generated method stub
+		taskm.setStatus(2);
+		taskmService.update(taskm);
+		HashSet<Integer> set = new HashSet<>();
+		for (Prescriptionm prescriptionm : list) {
+			set.add(prescriptionm.getDrugstoreId());
+			prescriptionm.setTaskId(Integer.parseInt(taskm.getId().toString()));
+			prescriptionm.setStatus(0);
+			prescriptionServicem.save(prescriptionm);
+		}
+		
+		User user = userDao.getById(Long.parseLong(taskm.getHerdsmanId().toString()));
+		JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你的诊断已完成，请查看药品", "1", "1");
+		for (Integer integer : set) {
+			System.out.println(integer);
+			User user2 = userDao.getById(Long.parseLong(integer.toString()));
+			JpushClientUtil.sendToRegistrationId(user2.getRegsId(), "通知", "你有新的药品订单", "1", "1");
+		}
+		
+	}
+
+	@Override
+	public void examine(Task task, List<Prescription> list) {
+		// TODO Auto-generated method stub
+		task.setStatus(2);
+		taskService.update(task);
+		HashSet<Integer> set = new HashSet<>();
+		for (Prescription prescription : list) {
+			set.add(prescription.getDrugstoreId());
+			prescription.setTaskId(Integer.parseInt(task.getId().toString()));
+			prescription.setStatus(0);
+			prescriptionService.save(prescription);
+		}
+		
+		User user = userDao.getById(Long.parseLong(task.getHerdsmanId().toString()));
+		JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你的诊断已完成，请查看药品", "1", "1");
+		for (Integer integer : set) {
+			System.out.println(integer);
+			User user2 = userDao.getById(Long.parseLong(integer.toString()));
+			JpushClientUtil.sendToRegistrationId(user2.getRegsId(), "通知", "你有新的药品订单", "1", "1");
+		}
+	}
+
+	@Autowired
+	private UserService userService;
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月26日
+	 * @param phone
+	 * @return
+	 * @see com.orhonit.admin.server.sys.service.ExpertinfoService#CreateByPhone(java.lang.String)
+	 * @Description: 专家根据牧民电话号添加病例  汉语
+	 */
+	@Override
+	public ResponseEntity<?> CreateByPhone(String phone) {
+		// TODO Auto-generated method stub
+		try {
+			User user = userService.getUser(phone);
+			Task task = new Task();
+			task.setExpertId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			task.setHerdsmanId(Integer.parseInt(user.getId().toString()));
+			task.setCreateTime(new Date());
+			taskService.save(task);
+			return ResponseEntity.ok(task);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	/**
+	 * @author: 孙少辉
+	 * @data: 2018年4月26日
+	 * @param phone
+	 * @return  
+	 * @Description: 专家根据牧民电话号添加病例 蒙语 
+	 */
+	@Override
+	public ResponseEntity<?> CreatemByPhone(String phone) {
+		// TODO Auto-generated method stub
+		try {
+			User user = userService.getUser(phone);
+			Taskm taskm = new Taskm();
+			taskm.setExpertId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			taskm.setHerdsmanId(Integer.parseInt(user.getId().toString()));
+			taskm.setCreateTime(new Date());
+			taskmService.save(taskm);
+			return ResponseEntity.ok(taskm);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
 	 
 }

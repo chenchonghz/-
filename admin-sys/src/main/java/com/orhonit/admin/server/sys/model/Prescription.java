@@ -20,5 +20,11 @@ public class Prescription extends BaseEntity<Long> {
 	private String drugName;
 	private Integer drugNumber;
 	private Integer status;
+	@Override
+	public String toString() {
+		return "Prescription [taskId=" + taskId + ", drugstoreId=" + drugstoreId + ", drugId=" + drugId + ", drugName="
+				+ drugName + ", drugNumber=" + drugNumber + ", status=" + status + "]";
+	}
+	
 
 }
