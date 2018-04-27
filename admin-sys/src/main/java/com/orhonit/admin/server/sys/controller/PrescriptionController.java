@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,11 @@ public class PrescriptionController {
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
     	prescriptionService.delete(id);
+    }
+    
+    @GetMapping("/App/getP/{taskId}")
+    @ApiOperation(value = "App端拿到药品数据，牧民专家同一个")
+    public ResponseEntity<?> getP(@PathVariable Long taskId){
+    	return prescriptionService.getP(taskId);
     }
 }

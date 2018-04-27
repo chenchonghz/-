@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -11,6 +12,7 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.PrescriptionmDao;
+import com.orhonit.admin.server.sys.dto.PrescriptionmDto;
 import com.orhonit.admin.server.sys.model.Prescriptionm;
 import com.orhonit.admin.server.sys.service.PrescriptionmService;
 @Service
@@ -58,6 +60,19 @@ public class PrescriptionmServiceImpl implements PrescriptionmService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		prescriptionmDao.delete(id);
+	}
+
+	@Override
+	public ResponseEntity<?> getP(Long taskId) {
+		// TODO Auto-generated method stub
+		try {
+			List<PrescriptionmDto> list = prescriptionmDao.getP(taskId);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 	
 }

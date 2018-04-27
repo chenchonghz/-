@@ -13,6 +13,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.TaskmDao;
 import com.orhonit.admin.server.sys.dao.UserDao;
+import com.orhonit.admin.server.sys.dto.TaskmDto;
 import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.TaskmService;
@@ -77,10 +78,10 @@ public class TaskmServiceImpl implements TaskmService {
 		try {
 			User user = UserUtil.getCurrentUser();
 			if(user.getType() == 1){
-				List<Taskm> list = taskmDao.selectByHid(user.getId());
+				List<TaskmDto> list = taskmDao.selectByHid(user.getId());
 				return ResponseEntity.ok(list);
 			}else if(user.getType() == 2){
-				List<Taskm> list = taskmDao.selectByEid(user.getId());
+				List<TaskmDto> list = taskmDao.selectByEid(user.getId());
 				return ResponseEntity.ok(list);
 			}
 		} catch (Exception e) {

@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.orhonit.admin.server.sys.dto.TaskDto;
 import com.orhonit.admin.server.sys.model.Task;
 
 @Mapper
@@ -34,10 +35,10 @@ public interface TaskDao {
     List<Task> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select * from task where status = 2 and good = 1 order by id desc limit #{start},10")
 	List<Task> ten(long start);
-    @Select("select * from task where herdsmanId = #{id} and status != 0")
-	List<Task> selectByHid(Long id);
-    @Select("select * from task where expertId = #{id} and status != 0")
-	List<Task> selectByEid(Long id);
+    @Select("SELECT t.*, e.username AS eusername,h.username AS husername FROM task t LEFT JOIN sys_user e ON e.id = t.expertId LEFT JOIN sys_user h ON h.id = t.herdsmanId WHERE t.herdsmanId = #{id} and t.status != 0")
+	List<TaskDto> selectByHid(Long id);
+    @Select("SELECT t.*, e.username AS eusername,h.username AS husername FROM task t LEFT JOIN sys_user e ON e.id = t.expertId LEFT JOIN sys_user h ON h.id = t.herdsmanId WHERE t.expertId = #{id} and t.status != 0")
+	List<TaskDto> selectByEid(Long id);
     @Update("update task set status = 0 where id = #{id}")
 	void AppDelete(Long id);
 }

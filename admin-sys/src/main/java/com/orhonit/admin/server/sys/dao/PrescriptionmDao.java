@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.orhonit.admin.server.sys.dto.PrescriptionmDto;
 import com.orhonit.admin.server.sys.model.Prescriptionm;
 
 @Mapper
@@ -32,4 +33,6 @@ public interface PrescriptionmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Prescriptionm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("SELECT p.*, d.pharmacyNameMeng, s.username FROM prescriptionm p LEFT JOIN drugstoreinfo d ON p.drugstoreId = d.uid LEFT JOIN sys_user s ON s.id = d.uid WHERE p.taskId = #{taskId}")
+	List<PrescriptionmDto> getP(Long taskId);
 }
