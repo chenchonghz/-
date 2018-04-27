@@ -65,4 +65,10 @@ public class PrescriptionController {
     public ResponseEntity<?> getP(@PathVariable Long taskId){
     	return prescriptionService.getP(taskId);
     }
+    
+    @GetMapping("/App/drugsGetList")
+    @ApiOperation(value = "App端药店查看所有订单,汉语")
+    public ResponseEntity<?> drugsGetList(){
+    	return prescriptionService.drugsGetList();
+    }
 }

@@ -12,6 +12,7 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import com.orhonit.admin.server.sys.dto.PrescriptionDto;
+import com.orhonit.admin.server.sys.dto.drugstoreDto;
 import com.orhonit.admin.server.sys.model.Prescription;
 
 @Mapper
@@ -35,4 +36,8 @@ public interface PrescriptionDao {
     List<Prescription> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("SELECT p.*,d.pharmacyName,s.username FROM prescription p LEFT JOIN drugstoreinfo d ON p.drugstoreId = d.uid LEFT JOIN sys_user s ON s.id = d.uid WHERE p.taskId = #{taskId}")
 	List<PrescriptionDto> getP(Long taskId);
+    @Select("SELECT T.*, N.`name`,S.username FROM (SELECT p.taskId,P.drugstoreId FROM `prescription` AS p WHERE p.drugstoreId = #{userId} GROUP BY p.taskId,P.drugstoreId) AS T LEFT JOIN task AS K ON K.id=T.taskId LEFT JOIN newherdsman AS N ON N.uid = K.herdsmanId LEFT JOIN sys_user AS S ON S.id = N.uid;")
+	List<drugstoreDto> drugsGetList(Long userId);
+	@Select("select * from prescription p where p.taskId=#{arg0} and p.drugstoreId = #{arg1}")
+	List<Prescription> selectPre(int taskId, int drugstoreId);
 }

@@ -13,8 +13,10 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.PrescriptionmDao;
 import com.orhonit.admin.server.sys.dto.PrescriptionmDto;
+import com.orhonit.admin.server.sys.dto.drugstoremDto;
 import com.orhonit.admin.server.sys.model.Prescriptionm;
 import com.orhonit.admin.server.sys.service.PrescriptionmService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class PrescriptionmServiceImpl implements PrescriptionmService {
 
@@ -67,6 +69,24 @@ public class PrescriptionmServiceImpl implements PrescriptionmService {
 		// TODO Auto-generated method stub
 		try {
 			List<PrescriptionmDto> list = prescriptionmDao.getP(taskId);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> drugsGetList() {
+		// TODO Auto-generated method stub
+		try {
+			Long userId = UserUtil.getCurrentUser().getId();
+			List<drugstoremDto> list = prescriptionmDao.drugsGetList(userId);
+			for (drugstoremDto drugstoremDto : list) {
+				List<Prescriptionm> prescriptionms = prescriptionmDao.selectPro(drugstoremDto.getTaskId(),drugstoremDto.getDrugstoreId());
+				drugstoremDto.setPrescriptionms(prescriptionms);
+			}
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

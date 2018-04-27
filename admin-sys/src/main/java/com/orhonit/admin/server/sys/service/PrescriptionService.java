@@ -20,4 +20,6 @@ public interface PrescriptionService {
 
 	ResponseEntity<?> getP(Long taskId);
 
+	ResponseEntity<?> drugsGetList();
+
 }

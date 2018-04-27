@@ -13,8 +13,10 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandl
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.PrescriptionDao;
 import com.orhonit.admin.server.sys.dto.PrescriptionDto;
+import com.orhonit.admin.server.sys.dto.drugstoreDto;
 import com.orhonit.admin.server.sys.model.Prescription;
 import com.orhonit.admin.server.sys.service.PrescriptionService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class PrescriptionServiceImpl implements PrescriptionService {
 	@Autowired
@@ -66,6 +68,24 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 		// TODO Auto-generated method stub
 		try {
 			List<PrescriptionDto> list = prescriptionDao.getP(taskId);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> drugsGetList() {
+		// TODO Auto-generated method stub
+		try {
+			Long userId = UserUtil.getCurrentUser().getId();
+			List<drugstoreDto> list = prescriptionDao.drugsGetList(userId);
+			for (drugstoreDto drugstoreDto : list) {
+				List<Prescription> prescriptions= prescriptionDao.selectPre(drugstoreDto.getTaskId(),drugstoreDto.getDrugstoreId());
+				drugstoreDto.setPrescriptions(prescriptions);
+			}
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
