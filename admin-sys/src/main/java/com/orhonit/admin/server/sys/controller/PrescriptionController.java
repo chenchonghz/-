@@ -71,4 +71,10 @@ public class PrescriptionController {
     public ResponseEntity<?> drugsGetList(){
     	return prescriptionService.drugsGetList();
     }
+    
+    @GetMapping("/App/updateStatus/{taskId}")
+    @ApiOperation(value = "药店点击确认后改变状态")
+    public ResponseEntity<?> updateStatus(@PathVariable Long taskId){
+    	return prescriptionService.updateStatus(taskId);
+    }
 }

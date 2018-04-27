@@ -40,4 +40,6 @@ public interface PrescriptionmDao {
 	List<drugstoremDto> drugsGetList(Long userId);
 	@Select("select * from prescriptionm p where p.taskId=#{arg0} and p.drugstoreId = #{arg1}")
 	List<Prescriptionm> selectPro(int taskId, int drugstoreId);
+	@Select("update prescriptionm set status = 1 where taskId = #{arg0} and drugstoreId = #{arg1}")
+	void updateStatus(Long taskId, Long userId);
 }

@@ -237,7 +237,6 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			prescriptionm.setStatus(0);
 			prescriptionServicem.save(prescriptionm);
 		}
-		
 		User user = userDao.getById(Long.parseLong(taskm.getHerdsmanId().toString()));
 		JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你的诊断已完成，请查看药品", "1", "1");
 		for (Integer integer : set) {

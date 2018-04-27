@@ -22,5 +22,7 @@ public interface PrescriptionmService {
 
 	ResponseEntity<?> drugsGetList();
 
+	ResponseEntity<?> updateStatus(Long taskId);
+
 
 }

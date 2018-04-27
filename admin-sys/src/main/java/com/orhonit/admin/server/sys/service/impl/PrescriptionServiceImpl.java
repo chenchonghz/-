@@ -93,5 +93,19 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> updateStatus(Long taskId) {
+		// TODO Auto-generated method stub
+		try {
+			Long userId = UserUtil.getCurrentUser().getId();
+			prescriptionDao.updateStatus(taskId,userId);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body(null);
+		}
+	}
 	
 }
