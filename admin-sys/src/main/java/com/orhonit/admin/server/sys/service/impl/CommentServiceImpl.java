@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -13,6 +14,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandle
 import com.orhonit.admin.server.sys.dao.CommentDao;
 import com.orhonit.admin.server.sys.model.Comment;
 import com.orhonit.admin.server.sys.service.CommentService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class CommentServiceImpl implements CommentService {
 	@Autowired
@@ -58,5 +60,21 @@ public class CommentServiceImpl implements CommentService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		commentDao.delete(id);
+	}
+
+	@Override
+	public ResponseEntity<?> saveCom(Comment comment) {
+		// TODO Auto-generated method stub
+		try {
+			Long userId = UserUtil.getCurrentUser().getId();
+			comment.setHerdsmanId(Integer.parseInt(userId.toString()));
+			comment.setStatus(0);
+			commentDao.save(comment);
+			return ResponseEntity.ok(null);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }
