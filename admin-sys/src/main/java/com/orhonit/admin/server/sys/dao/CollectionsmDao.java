@@ -32,6 +32,6 @@ public interface CollectionsmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Collectionsm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select * from collectionsm where herdsmanId = #{id}")
-	List<Collectionsm> Applook(Long id);
+    @Select("select * from collectionsm where herdsmanId = #{arg0} and cateId= #{arg1}")
+	List<Collectionsm> Applook(Long id, Integer cateId);
 }

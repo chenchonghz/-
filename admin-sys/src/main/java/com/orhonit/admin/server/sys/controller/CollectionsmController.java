@@ -66,8 +66,8 @@ public class CollectionsmController {
     }
     @GetMapping("App/look")
     @ApiOperation(value = "当前用户查看自己的收藏")
-    public ResponseEntity<?> Applook(){
-    	return collectionsmService.Applook();
+    public ResponseEntity<?> Applook(Integer cateId){
+    	return collectionsmService.Applook(cateId);
     }
     @GetMapping("App/delete")
     @ApiOperation(value = "当前用户删除自己的收藏")

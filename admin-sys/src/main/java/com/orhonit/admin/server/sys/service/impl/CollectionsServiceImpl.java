@@ -80,11 +80,11 @@ public class CollectionsServiceImpl implements CollectionsService {
 	}
 
 	@Override
-	public ResponseEntity<?> Applook() {
+	public ResponseEntity<?> Applook(Integer cateId) {
 		// TODO Auto-generated method stub
 		try {
 			Long id = UserUtil.getCurrentUser().getId();
-			List<Collections> list = collectionsDao.Applook(id);
+			List<Collections> list = collectionsDao.Applook(id,cateId);
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
 			// TODO: handle exception

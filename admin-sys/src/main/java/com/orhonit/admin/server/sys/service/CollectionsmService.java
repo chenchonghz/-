@@ -20,7 +20,7 @@ public interface CollectionsmService {
 
 	ResponseEntity<?> appAdd(Integer cateId, Integer chlidrenId);
 
-	ResponseEntity<?> Applook();
+	ResponseEntity<?> Applook(Integer cateId);
 
 	ResponseEntity<?> AppDelete(Long id);
 

@@ -79,11 +79,11 @@ public class CollectionsmServiceImpl implements CollectionsmService {
 	}
 
 	@Override
-	public ResponseEntity<?> Applook() {
+	public ResponseEntity<?> Applook(Integer cateId) {
 		// TODO Auto-generated method stub
 		try {
 			Long id = UserUtil.getCurrentUser().getId();
-			List<Collectionsm> list = collectionsmDao.Applook(id);
+			List<Collectionsm> list = collectionsmDao.Applook(id,cateId);
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
 			// TODO: handle exception
