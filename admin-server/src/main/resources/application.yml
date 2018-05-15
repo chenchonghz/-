@@ -30,8 +30,8 @@ spring:
     servlet:
       load-on-startup: 1
   redis:
-    host: 116.117.157.186
-    port: 25819
+    host: 127.0.0.1
+    port: 6379
 mybatis:
   type-aliases-package: com.orhonit.admin.server.sys.model
   mapper-locations: classpath*:/mybatis-mappers/*

@@ -20,4 +20,8 @@ public interface CommentmService {
 
 	ResponseEntity<?> saveCom(Commentm commentm);
 
+	ResponseEntity<?> examine(Integer id);
+
+	ResponseEntity<?> getList();
+
 }

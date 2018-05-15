@@ -32,4 +32,8 @@ public interface CommentmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Commentm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Update("update commentm set status = 1 where id = #{id}")
+	void examine(Integer id);
+    @Select("select * from commentm where status = 1")
+	List<Commentm> getList();
 }

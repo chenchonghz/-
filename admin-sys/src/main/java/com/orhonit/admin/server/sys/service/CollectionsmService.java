@@ -4,17 +4,17 @@ import org.springframework.http.ResponseEntity;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
-import com.orhonit.admin.server.sys.model.Collections;
+import com.orhonit.admin.server.sys.model.Collectionsm;
 
-public interface CollectionsService {
+public interface CollectionsmService {
 
-	void save(Collections collections);
+	void save(Collectionsm collectionsm);
 
-	Collections getById(Long id);
+	Collectionsm getById(Long id);
 
-	void update(Collections collections);
+	void update(Collectionsm collectionsm);
 
-	TableResponse<Collections> list(TableRequest request);
+	TableResponse<Collectionsm> list(TableRequest request);
 
 	void delete(Long id);
 

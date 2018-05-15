@@ -11,67 +11,66 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
-import com.orhonit.admin.server.sys.dao.CollectionsDao;
-import com.orhonit.admin.server.sys.model.Collections;
-import com.orhonit.admin.server.sys.service.CollectionsService;
+import com.orhonit.admin.server.sys.dao.CollectionsmDao;
+import com.orhonit.admin.server.sys.model.Collectionsm;
+import com.orhonit.admin.server.sys.service.CollectionsmService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
-public class CollectionsServiceImpl implements CollectionsService {
+public class CollectionsmServiceImpl implements CollectionsmService {
 	@Autowired
-    private CollectionsDao collectionsDao;
+    private CollectionsmDao collectionsmDao;
 
 	@Override
-	public void save(Collections collections) {
+	public void save(Collectionsm collectionsm) {
 		// TODO Auto-generated method stub
-		collectionsDao.save(collections);
+		collectionsmDao.save(collectionsm);
 	}
 
 	@Override
-	public Collections getById(Long id) {
+	public Collectionsm getById(Long id) {
 		// TODO Auto-generated method stub
-		return collectionsDao.getById(id);
+		return collectionsmDao.getById(id);
 	}
 
 	@Override
-	public void update(Collections collections) {
+	public void update(Collectionsm collectionsm) {
 		// TODO Auto-generated method stub
-		collectionsDao.update(collections);
+		collectionsmDao.update(collectionsm);
 	}
 
 	@Override
-	public TableResponse<Collections> list(TableRequest request) {
+	public TableResponse<Collectionsm> list(TableRequest request) {
 		// TODO Auto-generated method stub
-		 return TableRequestHandler.<Collections> builder().countHandler(new CountHandler() {
+		return TableRequestHandler.<Collectionsm> builder().countHandler(new CountHandler() {
 
-	            @Override
-	            public int count(TableRequest request) {
-	                return collectionsDao.count(request.getParams());
-	            }
-	        }).listHandler(new ListHandler<Collections>() {
+            @Override
+            public int count(TableRequest request) {
+                return collectionsmDao.count(request.getParams());
+            }
+        }).listHandler(new ListHandler<Collectionsm>() {
 
-	            @Override
-	            public List<Collections> list(TableRequest request) {
-	                return collectionsDao.list(request.getParams(), request.getStart(), request.getLength());
-	            }
-	        }).build().handle(request);
+            @Override
+            public List<Collectionsm> list(TableRequest request) {
+                return collectionsmDao.list(request.getParams(), request.getStart(), request.getLength());
+            }
+        }).build().handle(request);
 	}
 
 	@Override
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
-		collectionsDao.delete(id);
+		collectionsmDao.delete(id);
 	}
 
 	@Override
 	public ResponseEntity<?> appAdd(Integer cateId, Integer chlidrenId) {
-		// TODO Auto-generated method stub
 		try {
 			Long id = UserUtil.getCurrentUser().getId();
-			Collections collections = new Collections();
+			Collectionsm collections = new Collectionsm();
 			collections.setCateId(cateId);
 			collections.setChlidrenId(chlidrenId);
 			collections.setHerdsmanId(Integer.parseInt(id.toString()));
-			collectionsDao.save(collections);
+			collectionsmDao.save(collections);
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -84,7 +83,7 @@ public class CollectionsServiceImpl implements CollectionsService {
 		// TODO Auto-generated method stub
 		try {
 			Long id = UserUtil.getCurrentUser().getId();
-			List<Collections> list = collectionsDao.Applook(id);
+			List<Collectionsm> list = collectionsmDao.Applook(id);
 			return ResponseEntity.ok(list);
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -96,12 +95,11 @@ public class CollectionsServiceImpl implements CollectionsService {
 	public ResponseEntity<?> AppDelete(Long id) {
 		// TODO Auto-generated method stub
 		try {
-			collectionsDao.delete(id);
+			collectionsmDao.delete(id);
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {
 			// TODO: handle exception
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
-
 }

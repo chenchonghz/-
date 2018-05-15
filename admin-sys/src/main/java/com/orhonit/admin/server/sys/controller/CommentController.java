@@ -59,10 +59,20 @@ public class CommentController {
     public void delete(@PathVariable Long id) {
     	commentService.delete(id);
     }
+    @GetMapping("/examine")
+    @ApiOperation(value = "后台审核")
+    public ResponseEntity<?> examine(Integer id){
+    	return commentService.examine(id);
+    }
     
     @PostMapping("/App/saveCom")
     @ApiOperation(value = "/App端发起文章评论汉语")
     public ResponseEntity<?> saveCom(Comment comment){
 		return commentService.saveCom(comment);
+    }
+    @GetMapping("/App/getList")
+    @ApiOperation(value = "手机端拿到所有审核通过的")
+    public ResponseEntity<?> AppGetList(){
+    	return commentService.getList();
     }
 }

@@ -63,6 +63,7 @@ public class CommentmServiceImpl implements CommentmService {
 		// TODO Auto-generated method stub
 		commentmDao.delete(id);
 	}
+	
 
 	@Override
 	public ResponseEntity<?> saveCom(Commentm commentm) {
@@ -77,6 +78,30 @@ public class CommentmServiceImpl implements CommentmService {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> examine(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			commentmDao.examine(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getList() {
+		// TODO Auto-generated method stub
+		try {
+			List<Commentm> list= commentmDao.getList();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			return ResponseEntity.status(401).body("错误");
+			// TODO: handle exception
 		}
 	}
 	

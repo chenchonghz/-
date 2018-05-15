@@ -112,6 +112,8 @@ public class TaskServiceImpl implements TaskService {
 		// TODO Auto-generated method stub
 		try {
 			task.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			task.setStatus(1);
+			task.setType(1);
 			taskDao.save(task);
 			User user = userDao.getById(Long.parseLong(task.getExpertId().toString()));
 			JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你有一个新的诊断待完善", "1", "2");

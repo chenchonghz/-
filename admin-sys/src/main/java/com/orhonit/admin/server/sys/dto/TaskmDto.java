@@ -6,6 +6,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class TaskmDto {
+	private Long id;
 	private Integer herdsmanId;
 	private String husername;
 	private Integer expertId;

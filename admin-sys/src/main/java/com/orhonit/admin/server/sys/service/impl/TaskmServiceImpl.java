@@ -111,8 +111,12 @@ public class TaskmServiceImpl implements TaskmService {
 		// TODO Auto-generated method stub
 		try {
 			taskm.setHerdsmanId(Integer.parseInt(UserUtil.getCurrentUser().getId().toString()));
+			taskm.setStatus(1);
+			taskm.setType(1);
 			taskmDao.save(taskm);
-			User user = userDao.getById(Long.parseLong(taskm.getExpertId().toString()));
+			String eid = taskm.getExpertId().toString();
+			System.err.println(eid);
+			User user = userDao.getById(Long.parseLong(eid));
 			JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你有一个新的诊断待完善", "1", "2");
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {

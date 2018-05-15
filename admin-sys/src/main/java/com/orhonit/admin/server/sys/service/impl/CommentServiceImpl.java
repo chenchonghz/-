@@ -77,4 +77,28 @@ public class CommentServiceImpl implements CommentService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> examine(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			commentDao.examine(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getList() {
+		// TODO Auto-generated method stub
+		try {
+			List<Comment> list= commentDao.getList();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			return ResponseEntity.status(401).body("错误");
+			// TODO: handle exception
+		}
+	}
 }
