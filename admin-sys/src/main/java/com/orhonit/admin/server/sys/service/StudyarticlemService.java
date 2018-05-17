@@ -2,6 +2,8 @@ package com.orhonit.admin.server.sys.service;
 
 import java.util.List;
 
+import org.springframework.http.ResponseEntity;
+
 import com.orhonit.admin.server.common.datatables.TableRequest;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.sys.model.Studyarticlem;
@@ -19,5 +21,11 @@ public interface StudyarticlemService {
 	void delete(Long id);
 
 	List<Studyarticlem> ten(long l);
+
+	ResponseEntity<?> AppAdd(Studyarticlem studyArticle);
+
+	ResponseEntity<?> getAll();
+
+	ResponseEntity<?> getByUid();
 
 }

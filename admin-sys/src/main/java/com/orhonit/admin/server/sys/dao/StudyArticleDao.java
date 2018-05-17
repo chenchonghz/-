@@ -43,4 +43,8 @@ public interface StudyArticleDao {
     List<StudyArticle> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select * from studyArticle where status = 1 order by id desc limit #{start},10")
 	List<StudyArticle> ten(long start);
+    @Select("select * from studyArticle")
+	List<StudyArticle> getAll();
+    @Select("select * from studyArticle where uid = #{uid}")
+	List<StudyArticle> getByUid(Long uid);
 }

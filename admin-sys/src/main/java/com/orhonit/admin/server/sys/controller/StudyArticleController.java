@@ -1,6 +1,7 @@
 package com.orhonit.admin.server.sys.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -70,4 +71,21 @@ public class StudyArticleController {
     public int studyArticlePassFail(@RequestParam("id")Long id,@RequestParam("reason")String reason) {
     	return studyArticleService.studyArticlePassFail(id,reason);
     }
+    
+    @PostMapping("/App/add")
+    @ApiOperation(value = "手机端专家添加文章")
+    public ResponseEntity<?> AppAdd(StudyArticle studyArticle){
+    	return studyArticleService.AppAdd(studyArticle);
+    }
+    @GetMapping("/App/getAll")
+    @ApiOperation(value = "文章列表")
+    public ResponseEntity<?> getAll(){
+    	return studyArticleService.getAll();
+    }
+    @GetMapping("/App/getByUid")
+    @ApiOperation(value = "文章列表")
+    public ResponseEntity<?> getByUid(){
+    	return studyArticleService.getByUid();
+    }
+    
 }

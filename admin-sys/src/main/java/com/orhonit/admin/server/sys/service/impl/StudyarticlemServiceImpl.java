@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -13,6 +14,8 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandle
 import com.orhonit.admin.server.sys.dao.StudyarticlemDao;
 import com.orhonit.admin.server.sys.model.Studyarticlem;
 import com.orhonit.admin.server.sys.service.StudyarticlemService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
+
 @Service
 public class StudyarticlemServiceImpl implements StudyarticlemService {
 	@Autowired
@@ -64,6 +67,50 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
 	public List<Studyarticlem> ten(long l) {
 		// TODO Auto-generated method stub
 		return studyarticlemDao.ten(l);
+	}
+
+	@Override
+	public ResponseEntity<?> AppAdd(Studyarticlem studyArticle) {
+		// TODO Auto-generated method stub
+		try {
+			Long uId = UserUtil.getCurrentUser().getId();
+			studyArticle.setUid(Integer.parseInt(uId.toString()));
+			studyArticle.setStatus(0);
+			studyArticle.setClicks(0);
+			studyarticlemDao.save(studyArticle);
+			return ResponseEntity.ok(null);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getAll() {
+		// TODO Auto-generated method stub
+		try {
+			List<Studyarticlem> list =studyarticlemDao.getAll();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getByUid() {
+		// TODO Auto-generated method stub
+		try {
+			Long uid = UserUtil.getCurrentUser().getId();
+			List<Studyarticlem> list =studyarticlemDao.getByUid(uid);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 	
 }

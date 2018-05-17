@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -99,6 +100,50 @@ public class StudyArticleServiceImpl implements StudyArticleService {
 	public List<StudyArticle> ten(long start) {
 		// TODO Auto-generated method stub
 		return studyArticleDao.ten(start);
+	}
+
+	@Override
+	public ResponseEntity<?> AppAdd(StudyArticle studyArticle) {
+		// TODO Auto-generated method stub
+		try {
+			Long uId = UserUtil.getCurrentUser().getId();
+			studyArticle.setUid(Integer.parseInt(uId.toString()));
+			studyArticle.setStatus(0);
+			studyArticle.setClicks(0);
+			studyArticleDao.save(studyArticle);
+			return ResponseEntity.ok(null);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getAll() {
+		// TODO Auto-generated method stub
+		try {
+			List<StudyArticle> list =studyArticleDao.getAll();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getByUid() {
+		// TODO Auto-generated method stub
+		try {
+			Long uid = UserUtil.getCurrentUser().getId();
+			List<StudyArticle> list =studyArticleDao.getByUid(uid);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
     
 }

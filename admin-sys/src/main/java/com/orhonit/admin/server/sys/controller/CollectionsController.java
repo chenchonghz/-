@@ -66,12 +66,12 @@ public class CollectionsController {
     	return collectionsService.appAdd(cateId,chlidrenId);
     }
     @GetMapping("App/look")
-    @ApiOperation(value = "当前用户查看自己的收藏")
+    @ApiOperation(value = "当前用户查看自己的收藏,根据cateId的分类查询，分辨什么类型")
     public ResponseEntity<?> Applook(Integer cateId){
     	return collectionsService.Applook(cateId);
     }
     @GetMapping("App/delete")
-    @ApiOperation(value = "当前用户删除自己的收藏")
+    @ApiOperation(value = "当前用户删除自己的收藏，根据cateId的来区分")
     public ResponseEntity<?> AppDelete(Long id){
     	return collectionsService.AppDelete(id);
     }
