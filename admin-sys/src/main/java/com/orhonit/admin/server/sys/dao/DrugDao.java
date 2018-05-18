@@ -32,6 +32,12 @@ public interface DrugDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Drug> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select * from drug where uid=#{uid} and status = 0")
+    @Select("select * from drug where uid=#{uid}")
 	List<Drug> getByUid(Long uid);
+    @Select("select * from drug t where t.uid = #{did} and t.status = 0")
+	List<Drug> getByDid(Integer did);
+    @Update("update drug t set t.number = t.number - 1 where id = #{drugId} ")
+	void updateNumber(Integer drugId);
+    @Update("update drug t set t.status = #{arg1} where t.id = #{arg0}")
+	void updateStatus(Integer id, Integer status);
 }

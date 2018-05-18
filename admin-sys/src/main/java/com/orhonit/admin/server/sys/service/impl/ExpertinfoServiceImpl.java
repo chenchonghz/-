@@ -14,6 +14,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.DrugDao;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.model.Expertinfo;
@@ -224,6 +225,8 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	private PrescriptionService prescriptionService;
 	@Autowired
 	private PrescriptionmService prescriptionServicem;
+	@Autowired
+	private DrugDao drugDao;
 	@Override
 	@Transactional
 	public void examinem(Taskm taskm, List<Prescriptionm> list) {
@@ -236,6 +239,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			prescriptionm.setTaskId(Integer.parseInt(taskm.getId().toString()));
 			prescriptionm.setStatus(0);
 			prescriptionServicem.save(prescriptionm);
+			drugDao.updateNumber(prescriptionm.getDrugId());
 		}
 		User user = userDao.getById(Long.parseLong(taskm.getHerdsmanId().toString()));
 		JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你的诊断已完成，请查看药品", "1", "1");
@@ -258,6 +262,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			prescription.setTaskId(Integer.parseInt(task.getId().toString()));
 			prescription.setStatus(0);
 			prescriptionService.save(prescription);
+			drugDao.updateNumber(prescription.getDrugId());
 		}
 		
 		User user = userDao.getById(Long.parseLong(task.getHerdsmanId().toString()));

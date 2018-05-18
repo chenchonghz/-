@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -13,6 +14,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandle
 import com.orhonit.admin.server.sys.dao.DrugDao;
 import com.orhonit.admin.server.sys.model.Drug;
 import com.orhonit.admin.server.sys.service.DrugService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class DrugServiceImpl implements DrugService {
 	@Autowired
@@ -64,5 +66,45 @@ public class DrugServiceImpl implements DrugService {
 	public List<Drug> getByUid(Long uid) {
 		// TODO Auto-generated method stub
 		return drugDao.getByUid(uid);
+	}
+
+	@Override
+	public ResponseEntity<?> AppAdd(Drug drug) {
+		// TODO Auto-generated method stub
+		try {
+			Long id = UserUtil.getCurrentUser().getId();
+			drug.setUid(Integer.parseInt(id.toString()));
+			drug.setStatus(1);
+			drugDao.save(drug);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getByDid(Integer did) {
+		// TODO Auto-generated method stub
+		try {
+			List<Drug> list = drugDao.getByDid(did);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> updateStatus(Integer id,Integer status) {
+		// TODO Auto-generated method stub
+		try {
+			drugDao.updateStatus(id,status);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }
