@@ -40,4 +40,6 @@ public interface DrugDao {
 	void updateNumber(Integer drugId);
     @Update("update drug t set t.status = #{arg1} where t.id = #{arg0}")
 	void updateStatus(Integer id, Integer status);
+    @Update("update drug t set t.number = #{arg1} where t.id = #{arg0}")
+	void updateByNumber(Integer id, Integer number);
 }

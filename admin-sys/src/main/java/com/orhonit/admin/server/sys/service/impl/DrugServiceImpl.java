@@ -107,4 +107,16 @@ public class DrugServiceImpl implements DrugService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> updateNumber(Integer id, Integer number) {
+		// TODO Auto-generated method stub
+		try {
+			drugDao.updateByNumber(id,number);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
 }

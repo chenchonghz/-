@@ -96,4 +96,9 @@ public class DrugController {
     public ResponseEntity<?> updateStatus(Integer id, Integer status){
     	return drugService.updateStatus(id,status);
     }
+    @GetMapping("/App/updateNumber")
+    @ApiOperation("手机端修改数量")
+    public ResponseEntity<?> updateNumber(Integer id,Integer number){
+    	return drugService.updateNumber(id,number);
+    }
 }

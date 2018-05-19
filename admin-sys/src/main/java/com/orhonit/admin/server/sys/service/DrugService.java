@@ -28,5 +28,7 @@ public interface DrugService {
 
 	ResponseEntity<?> updateStatus(Integer status, Integer status2);
 
+	ResponseEntity<?> updateNumber(Integer id, Integer number);
+
 
 }
