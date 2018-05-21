@@ -15,7 +15,7 @@ public interface UserService {
 
 	User getUser(String username);
 
-	void changePassword(String username, String oldPassword, String newPassword);
+	void changePassword(String username, String newPassword);
 
 	ResponseEntity<?> getRegsId(Integer id, String regsId);
 

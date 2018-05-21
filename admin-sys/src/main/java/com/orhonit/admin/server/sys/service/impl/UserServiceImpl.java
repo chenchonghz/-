@@ -68,14 +68,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void changePassword(String username, String oldPassword, String newPassword) {
+	public void changePassword(String username, String newPassword) {
 		User u = userDao.getUser(username);
 		if (u == null) {
 			throw new IllegalArgumentException("用户不存在");
-		}
-
-		if (!u.getPassword().equals(passwordEncoder(oldPassword, u.getSalt()))) {
-			throw new IllegalArgumentException("密码错误");
 		}
 
 		userDao.changePassword(u.getId(), passwordEncoder(newPassword, u.getSalt()));

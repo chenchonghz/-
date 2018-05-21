@@ -147,6 +147,7 @@ public class CommonAppController {
 	@Autowired
 	private RedisTemplate<String, String> redisTemplate;
 	private static final String PHONE_PREFIX = "Phones:";
+	private static final String CHANGE_PASSWORD ="Cpass:";
 	@GetMapping("/sendMsg/{phone}")
 	@ApiOperation(value="发送验证码")
 	public String sendMsg(@PathVariable String phone){
@@ -192,6 +193,37 @@ public class CommonAppController {
 		}
 
 		return userService.saveUser(userDto);
+	}
+	@PostMapping("/ChangPassword")
+	@ApiOperation(value = "验证验证码修改密码")
+	public void checkMsg(String username,String pass,String code){
+		String phone = redisTemplate.opsForValue().get(CHANGE_PASSWORD + username);
+		if(phone == null){
+			throw new UnknownAccountException("验证码已过期");
+		}
+		if(!phone.equals(code)){
+			throw new IncorrectCredentialsException("验证码有误");
+		}
+		userService.changePassword(username, pass);
+	}
+	@GetMapping("/ChangePassword/{phone}")
+	@ApiOperation(value="发送修改密码的验证码")
+	public String ChangePassword(@PathVariable String phone){
+		User u = userService.getUser(phone);
+		if (u == null) {
+			throw new IllegalArgumentException("没有这个用户");
+		}
+		String code =String.valueOf(RandomCode.genCode());
+		redisTemplate.opsForValue().set(CHANGE_PASSWORD + phone, code, 300, TimeUnit.SECONDS);
+		
+		try {
+			SMSutil.sendSmsChang(phone, code);
+		} catch (ClientException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return "验证码发送失败";
+		}
+		return "验证码发送成功";
 	}
 	
 	@Autowired

@@ -86,13 +86,7 @@ public class UserController {
 		log.debug("{}修改了头像", user.getUsername());
 	}
 
-	@LogAnnotation
-	@PutMapping("/{username}")
-	@ApiOperation(value = "修改密码")
-	@RequiresPermissions("sys:user:password")
-	public void changePassword(@PathVariable String username, String oldPassword, String newPassword) {
-		userService.changePassword(username, oldPassword, newPassword);
-	}
+	
 
 	@GetMapping
 	@ApiOperation(value = "用户列表")
