@@ -2,6 +2,7 @@ package com.orhonit.admin.server.sys.controller;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -57,5 +58,16 @@ public class LiveshowmController {
     @ApiOperation(value = "删除")
     public void delete(@PathVariable Long id) {
     	liveshowmService.delete(id);
+    }
+    
+    @PostMapping("/App/AddLiveShow")
+    @ApiOperation(value = "手机端专家申请一个直播")
+    public ResponseEntity<?> AddLiveShow(Liveshowm liveshowm){
+    	return liveshowmService.AddLiveShow(liveshowm);
+    }
+    @GetMapping("/App/getLiveNow")
+    @ApiOperation(value = "拿到当前时间正在直播的")
+    public ResponseEntity<?> getLiveNow(){
+    	return liveshowmService.getLiveNow();
     }
 }

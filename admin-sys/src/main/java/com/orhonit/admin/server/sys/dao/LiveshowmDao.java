@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.orhonit.admin.server.sys.model.Liveshow;
 import com.orhonit.admin.server.sys.model.Liveshowm;
 
 @Mapper
@@ -32,4 +33,6 @@ public interface LiveshowmDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Liveshowm> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("select * from liveshowm where startTime < #{time} and endTime > #{time}")
+	List<Liveshow> getLiveNow(String time);
 }

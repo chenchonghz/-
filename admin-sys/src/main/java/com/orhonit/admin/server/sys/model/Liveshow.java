@@ -3,6 +3,8 @@ package com.orhonit.admin.server.sys.model;
 import com.orhonit.admin.server.common.model.BaseEntity;
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +21,9 @@ public class Liveshow extends BaseEntity<Long> {
 	private Integer onlineQuantity;
 	private String videoName;
 	private String liveHome;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date startTime;
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date endTime;
 
 }

@@ -1,8 +1,11 @@
 package com.orhonit.admin.server.sys.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -11,8 +14,10 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.LiveshowmDao;
+import com.orhonit.admin.server.sys.model.Liveshow;
 import com.orhonit.admin.server.sys.model.Liveshowm;
 import com.orhonit.admin.server.sys.service.LiveshowmService;
+import com.orhonit.admin.server.sys.utils.UserUtil;
 @Service
 public class LiveshowmServiceImpl implements LiveshowmService {
 	@Autowired
@@ -57,5 +62,37 @@ public class LiveshowmServiceImpl implements LiveshowmService {
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
 		liveshowmDao.delete(id);
+	}
+
+	@Override
+	public ResponseEntity<?> AddLiveShow(Liveshowm liveshowm) {
+		// TODO Auto-generated method stub
+		try {
+			Long userId = UserUtil.getCurrentUser().getId();
+			liveshowm.setOnlineApplyId(Integer.parseInt(userId.toString()));
+			liveshowm.setOnlineQuantity(0);
+			liveshowm.setLiveHome("假数据--直播房间");
+			liveshowmDao.save(liveshowm);
+			return ResponseEntity.ok(liveshowm.getLiveHome());
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getLiveNow() {
+		// TODO Auto-generated method stub
+		try {
+			Date date = new Date();
+			SimpleDateFormat formatter=new SimpleDateFormat("yyyy-MM-dd HH:mm"); 
+			String time = formatter.format(date);
+			List<Liveshow> list = liveshowmDao.getLiveNow(time);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }

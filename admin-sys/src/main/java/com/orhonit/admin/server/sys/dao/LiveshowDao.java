@@ -32,4 +32,6 @@ public interface LiveshowDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Liveshow> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
+    @Select("select * from liveshow where startTime < #{time} and endTime > #{time}")
+	List<Liveshow> getLiveNow(String time);
 }
