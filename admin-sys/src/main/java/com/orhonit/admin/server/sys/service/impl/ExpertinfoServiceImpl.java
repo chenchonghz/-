@@ -239,19 +239,20 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			prescriptionm.setTaskId(Integer.parseInt(taskm.getId().toString()));
 			prescriptionm.setStatus(0);
 			prescriptionServicem.save(prescriptionm);
-			drugDao.updateNumber(prescriptionm.getDrugId());
+			drugDao.updateNumber(prescriptionm.getDrugId(),prescriptionm.getDrugNumber());
 		}
-		User user = userDao.getById(Long.parseLong(taskm.getHerdsmanId().toString()));
+		/*User user = userDao.getById(Long.parseLong(taskm.getHerdsmanId().toString()));
 		JpushClientUtil.sendToRegistrationId(user.getRegsId(), "通知", "你的诊断已完成，请查看药品", "1", "1");
 		for (Integer integer : set) {
 			System.out.println(integer);
 			User user2 = userDao.getById(Long.parseLong(integer.toString()));
 			JpushClientUtil.sendToRegistrationId(user2.getRegsId(), "通知", "你有新的药品订单", "1", "1");
-		}
+		}*/
 		
 	}
 
 	@Override
+	@Transactional
 	public void examine(Task task, List<Prescription> list) {
 		// TODO Auto-generated method stub
 		task.setStatus(2);
@@ -262,7 +263,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 			prescription.setTaskId(Integer.parseInt(task.getId().toString()));
 			prescription.setStatus(0);
 			prescriptionService.save(prescription);
-			drugDao.updateNumber(prescription.getDrugId());
+			drugDao.updateNumber(prescription.getDrugId(),prescription.getDrugNumber());
 		}
 		
 		User user = userDao.getById(Long.parseLong(task.getHerdsmanId().toString()));

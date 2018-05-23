@@ -36,8 +36,8 @@ public interface DrugDao {
 	List<Drug> getByUid(Long uid);
     @Select("select * from drug t where t.uid = #{did} and t.status = 0")
 	List<Drug> getByDid(Integer did);
-    @Update("update drug t set t.number = t.number - 1 where id = #{drugId} ")
-	void updateNumber(Integer drugId);
+    @Update("update drug t set t.number = t.number - #{arg1} where t.id = #{arg0} ")
+	void updateNumber(Integer drugId, Integer number);
     @Update("update drug t set t.status = #{arg1} where t.id = #{arg0}")
 	void updateStatus(Integer id, Integer status);
     @Update("update drug t set t.number = #{arg1} where t.id = #{arg0}")
