@@ -34,4 +34,8 @@ public interface LiveshowDao {
     List<Liveshow> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select * from liveshow where startTime < #{time} and endTime > #{time}")
 	List<Liveshow> getLiveNow(String time);
+    @Update("update liveshow set onlineQuantity = onlineQuantity + 1 where id = #{id}")
+	void addPeople(Integer id);
+    @Update("update liveshow set onlineQuantity = onlineQuantity - 1 where id = #{id}")
+	void lessPeople(Integer id);
 }

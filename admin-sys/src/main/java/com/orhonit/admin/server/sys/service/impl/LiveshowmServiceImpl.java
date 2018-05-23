@@ -95,4 +95,30 @@ public class LiveshowmServiceImpl implements LiveshowmService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> addPeople(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			liveshowmDao.addPeople(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> lessPeople(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			liveshowmDao.lessPeople(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
 }

@@ -1,6 +1,9 @@
 package com.orhonit.admin.server.sys.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,9 +14,12 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.DrugstoreinfoDao;
 import com.orhonit.admin.server.sys.dao.PrescriptionDao;
+import com.orhonit.admin.server.sys.dto.DrugPre2;
 import com.orhonit.admin.server.sys.dto.PrescriptionDto;
 import com.orhonit.admin.server.sys.dto.drugstoreDto;
+import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Prescription;
 import com.orhonit.admin.server.sys.service.PrescriptionService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
@@ -62,13 +68,32 @@ public class PrescriptionServiceImpl implements PrescriptionService {
 		// TODO Auto-generated method stub
 		prescriptionDao.save(prescription);
 	}
-
+	@Autowired
+	private DrugstoreinfoDao drugstoreinfoDao;
 	@Override
 	public ResponseEntity<?> getP(Long taskId) {
 		// TODO Auto-generated method stub
 		try {
+			Set<Integer> set = new HashSet<>();
 			List<PrescriptionDto> list = prescriptionDao.getP(taskId);
-			return ResponseEntity.ok(list);
+			for (PrescriptionDto prescriptionDto : list) {
+				set.add(prescriptionDto.getDrugstoreId());
+			}
+			List<DrugPre2> drugPre2s = new ArrayList<>();
+			for (Integer i : set) {
+				DrugPre2 drugPre2 = new DrugPre2();
+				Drugstoreinfo drugstoreinfo = drugstoreinfoDao.getByUid(i);
+				drugPre2.setDrugstoreinfo(drugstoreinfo);
+				ArrayList<PrescriptionDto> arrayList = new ArrayList<>();
+				for (PrescriptionDto prescriptionDto : list) {
+					if(prescriptionDto.getDrugstoreId() == drugstoreinfo.getUid()){
+						arrayList.add(prescriptionDto);
+					}
+				}
+				drugPre2.setPrescriptionDtos(arrayList);
+				drugPre2s.add(drugPre2);
+			}
+			return ResponseEntity.ok(drugPre2s);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

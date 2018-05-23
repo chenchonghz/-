@@ -22,4 +22,8 @@ public interface LiveshowmService {
 
 	ResponseEntity<?> getLiveNow();
 
+	ResponseEntity<?> addPeople(Integer id);
+
+	ResponseEntity<?> lessPeople(Integer id);
+
 }

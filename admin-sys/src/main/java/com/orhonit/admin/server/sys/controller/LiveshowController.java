@@ -72,4 +72,15 @@ public class LiveshowController {
     public ResponseEntity<?> getLiveNow(){
     	return liveshowService.getLiveNow();
     }
+    @GetMapping("/App/addPeople")
+    @ApiOperation(value = "直播间添加人")
+    public ResponseEntity<?> addPeople(Integer id){
+    	return liveshowService.addPeople(id);
+    }
+    @GetMapping("/App/lessPeople")
+    @ApiOperation(value = "直播间减少人")
+    public ResponseEntity<?> lessPeople(Integer id){
+    	return liveshowService.lessPeople(id);
+    }
+    
 }
