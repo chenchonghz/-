@@ -3,6 +3,7 @@ package com.orhonit.admin.server.sys.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -71,5 +72,17 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 	public List<Studyvideom> ten(long l) {
 		// TODO Auto-generated method stub
 		return studyvideomDao.ten(l);
+	}
+
+	@Override
+	public ResponseEntity<?> getAll() {
+		// TODO Auto-generated method stub
+		try {
+			List<Studyvideom> list = studyvideomDao.getAll();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
 	}
 }

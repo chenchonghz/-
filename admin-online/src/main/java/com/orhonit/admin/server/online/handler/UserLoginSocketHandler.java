@@ -188,6 +188,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 			});
 
 		}else if(EventType.NEW_VIDEO == adminEvent.getEventType()){
+			System.err.println("NEW_VIDEO测试");
 			Videoconnect videoconnect = (Videoconnect) adminEvent.getSource();
 			VideoDto videoDto = new VideoDto();
 			videoDto.setType(EventType.NEW_VIDEO.name());
@@ -195,6 +196,7 @@ public class UserLoginSocketHandler implements WebSocketHandler, ApplicationList
 			String msg = JsonUtil.toJson(videoDto);
 			sessions.forEach((k, v) -> {
 				if (k==Long.parseLong(videoconnect.getEid().toString())) {
+					System.err.println(k);
 					sendMsg(v, msg);
 				}
 			});

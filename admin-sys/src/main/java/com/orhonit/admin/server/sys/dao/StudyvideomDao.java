@@ -36,4 +36,6 @@ public interface StudyvideomDao {
 	Studyvideom frist();
 	@Select("select * from studyVideom where status=1 order by id desc limit #{start},10")
 	List<Studyvideom> ten(long start);
+	@Select("select * from studyVideom where status = 1")
+	List<Studyvideom> getAll();
 }

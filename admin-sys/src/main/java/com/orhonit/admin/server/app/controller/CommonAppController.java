@@ -262,4 +262,24 @@ public class CommonAppController {
 	public ResponseEntity<?> getRegsId(Integer id,String regsId){
 		return userService.getRegsId(id,regsId);
 	}
+	@GetMapping("/getStudyArticle")
+	@ApiOperation(value = "前端拿到文章")
+	public ResponseEntity<?> getStudyArticle(){
+		return studyArticleService.getAll();
+	}
+	@GetMapping("/getStudyArticlem")
+	@ApiOperation(value = "前端拿到文章蒙语")
+	public ResponseEntity<?> getStudyArticlem(){
+		return studyarticlemService.getAll();
+	}
+	@GetMapping("/getStudyVideo")
+	@ApiOperation(value = "前端拿到文章")
+	public ResponseEntity<?> getStudyVideo(){
+		return studyVideoService.getAll();
+	}
+	@GetMapping("/getStudyVideom")
+	@ApiOperation(value = "前端拿到文章蒙语")
+	public ResponseEntity<?> getStudyVideom(){
+		return studyvideomService.getAll();
+	}
 }
