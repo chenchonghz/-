@@ -32,4 +32,6 @@ public interface StudyArticleService {
 
 	ResponseEntity<?> getByUid();
 
+	ResponseEntity<?> addStudyArticle(Integer id);
+
 }

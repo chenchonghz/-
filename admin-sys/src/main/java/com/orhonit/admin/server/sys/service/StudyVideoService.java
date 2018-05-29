@@ -30,4 +30,6 @@ public interface StudyVideoService {
 
 	ResponseEntity<?> getAll();
 
+	ResponseEntity<?> addStudyVideo(Integer id);
+
 }

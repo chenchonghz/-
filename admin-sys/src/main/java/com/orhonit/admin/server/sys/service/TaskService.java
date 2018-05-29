@@ -28,4 +28,6 @@ public interface TaskService {
 
 	ResponseEntity<?> AppAddTask(Task task);
 
+	ResponseEntity<?> getAll();
+
 }

@@ -48,4 +48,6 @@ public interface StudyVideoDao {
 	StudyVideo frist();
     @Select("select * from studyVideo where status = 1")
 	List<StudyVideo> getAll();
+    @Update("update studyVideo set clicks = clicks + 1 where id = #{id}")
+	void addStudyVideo(Integer id);
 }

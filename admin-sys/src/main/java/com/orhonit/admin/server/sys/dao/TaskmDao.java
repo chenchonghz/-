@@ -41,5 +41,7 @@ public interface TaskmDao {
 	List<TaskmDto> selectByHid(Long id);
 	@Update("update taskm set status = 0 where id = #{id}")
 	void AppDelete(Long id);
+	@Select("select * from taskm where good = 1")
+	List<Taskm> getAll();
 
 }

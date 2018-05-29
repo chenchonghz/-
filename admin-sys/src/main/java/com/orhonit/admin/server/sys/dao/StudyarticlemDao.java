@@ -38,5 +38,7 @@ public interface StudyarticlemDao {
 	List<Studyarticlem> getAll();
     @Select("select * from studyarticlem where uid = #{uid} and status = 1")
 	List<Studyarticlem> getByUid(Long uid);
+    @Update("update studyarticlem set clicks = clicks + 1 where id = #{id}")
+	void addStudyArticlem(Integer id);
 
 }

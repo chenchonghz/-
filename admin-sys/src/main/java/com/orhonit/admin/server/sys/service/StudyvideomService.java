@@ -26,4 +26,6 @@ public interface StudyvideomService {
 
 	ResponseEntity<?> getAll();
 
+	ResponseEntity<?> addStudyVideom(Integer id);
+
 }

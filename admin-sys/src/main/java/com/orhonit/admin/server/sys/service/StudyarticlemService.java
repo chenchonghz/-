@@ -28,4 +28,6 @@ public interface StudyarticlemService {
 
 	ResponseEntity<?> getByUid();
 
+	ResponseEntity<?> addStudyArticlem(Integer id);
+
 }

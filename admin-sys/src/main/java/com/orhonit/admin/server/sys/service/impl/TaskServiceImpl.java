@@ -124,4 +124,16 @@ public class TaskServiceImpl implements TaskService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> getAll() {
+		// TODO Auto-generated method stub
+		try {
+			List<Task> list = taskDao.getAll();
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
 }

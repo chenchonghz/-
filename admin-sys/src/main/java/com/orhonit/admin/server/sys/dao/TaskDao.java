@@ -41,4 +41,6 @@ public interface TaskDao {
 	List<TaskDto> selectByEid(Long id);
     @Update("update task set status = 0 where id = #{id}")
 	void AppDelete(Long id);
+    @Select("select * from task where good = 1")
+	List<Task> getAll();
 }

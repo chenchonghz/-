@@ -115,5 +115,17 @@ public class StudyVideoServiceImpl implements StudyVideoService {
 			return ResponseEntity.status(401).body("错误");
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> addStudyVideo(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			studyVideoDao.addStudyVideo(id);
+			return ResponseEntity.ok(null);
+		} catch (Exception e) {
+			// TODO: handle exception
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
     
 }

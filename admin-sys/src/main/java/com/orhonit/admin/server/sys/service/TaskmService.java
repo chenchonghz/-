@@ -28,5 +28,7 @@ public interface TaskmService {
 
 	ResponseEntity<?> AppAddTaskm(Taskm taskm);
 
+	ResponseEntity<?> getAll();
+
 
 }

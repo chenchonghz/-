@@ -38,4 +38,6 @@ public interface StudyvideomDao {
 	List<Studyvideom> ten(long start);
 	@Select("select * from studyVideom where status = 1")
 	List<Studyvideom> getAll();
+	@Update("update studyvideom set clicks = clicks + 1 where id = #{id}")
+	void addStudyVideom(Integer id);
 }

@@ -267,19 +267,49 @@ public class CommonAppController {
 	public ResponseEntity<?> getStudyArticle(){
 		return studyArticleService.getAll();
 	}
+	@GetMapping("/addStudyArticle")
+	@ApiOperation("文章点击量增加")
+	public ResponseEntity<?> addStudyArticle(Integer id){
+		return studyArticleService.addStudyArticle(id);
+	}
 	@GetMapping("/getStudyArticlem")
 	@ApiOperation(value = "前端拿到文章蒙语")
 	public ResponseEntity<?> getStudyArticlem(){
 		return studyarticlemService.getAll();
 	}
+	@GetMapping("/addStudyArticlem")
+	@ApiOperation("文章点击量增加蒙")
+	public ResponseEntity<?> addStudyArticlem(Integer id){
+		return studyarticlemService.addStudyArticlem(id);
+	}
 	@GetMapping("/getStudyVideo")
-	@ApiOperation(value = "前端拿到文章")
+	@ApiOperation(value = "前端拿到视频")
 	public ResponseEntity<?> getStudyVideo(){
 		return studyVideoService.getAll();
 	}
+	@GetMapping("/addStudyVideo")
+	@ApiOperation(value = "视频添加点击量")
+	public ResponseEntity<?> addStudyVideo(Integer id){
+		return studyVideoService.addStudyVideo(id);
+	}
 	@GetMapping("/getStudyVideom")
-	@ApiOperation(value = "前端拿到文章蒙语")
+	@ApiOperation(value = "前端拿到视频蒙语")
 	public ResponseEntity<?> getStudyVideom(){
 		return studyvideomService.getAll();
+	}
+	@GetMapping("/addStudyVideom")
+	@ApiOperation(value = "视频添加点击量蒙")
+	public ResponseEntity<?> addStudyVideom(Integer id){
+		return studyvideomService.addStudyVideom(id);
+	}
+	@GetMapping("/getTask")
+	@ApiOperation(value = "前端拿到病例")
+	public ResponseEntity<?> getTask(){
+		return taskService.getAll();
+	}
+	@GetMapping("/getTaskm")
+	@ApiOperation(value = "前端拿到病例蒙语")
+	public ResponseEntity<?> getTaskm(){
+		return taskmService.getAll();
 	}
 }
