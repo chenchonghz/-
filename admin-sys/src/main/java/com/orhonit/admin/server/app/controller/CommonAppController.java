@@ -95,7 +95,7 @@ public class CommonAppController {
 	@Autowired
     private StudyVideoService studyVideoService;
 	@GetMapping("/studyvideo/frist")
-	@ApiOperation("观看最多的1条视频学习")
+	@ApiOperation("观看最多的2条视频学习")
 	public StudyVideo frist(){
 		return studyVideoService.frist();
 	}
@@ -107,7 +107,7 @@ public class CommonAppController {
 	@Autowired
 	private StudyvideomService studyvideomService;
 	@GetMapping("/studyvideom/frist")
-	@ApiOperation("蒙语观看最多的1条视频学习")
+	@ApiOperation("蒙语观看最多的2条视频学习")
 	public Studyvideom fristm(){
 		return studyvideomService.frist();
 	}

@@ -44,7 +44,7 @@ public interface StudyVideoDao {
    
     @Select("select * from studyVideo where status=1 order by id desc limit #{start},10")
 	List<StudyVideo> ten(Long start);
-    @Select("select s.* from studyVideo s,category c where c.parentId = 11 and s.categoryId = c.id  and s.status = 1 order by s.clicks desc limit 0,1")
+    @Select("select s.* from studyVideo s,category c where c.parentId = 11 and s.categoryId = c.id  and s.status = 1 order by s.clicks desc limit 0,2")
 	StudyVideo frist();
     @Select("select * from studyVideo where status = 1")
 	List<StudyVideo> getAll();
