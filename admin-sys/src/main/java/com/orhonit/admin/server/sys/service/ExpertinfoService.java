@@ -24,7 +24,7 @@ public interface ExpertinfoService {
 
 	int getUid(Long id);
 
-	int getFailUid(Long id);
+	int getFailUid(Long id,String pass);
 
 	TableResponse<Expertinfo> list(TableRequest request);
 

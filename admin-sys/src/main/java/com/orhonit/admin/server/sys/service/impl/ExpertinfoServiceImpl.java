@@ -41,6 +41,11 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	@Override
 	public void save(Expertinfo expertinfo) {
 		// TODO Auto-generated method stub
+		expertinfo.setState(1);
+		expertinfo.setDealingProblems(0);
+		expertinfo.setActivity(0);
+		expertinfo.setVideoDiagnosis(0);
+		expertinfo.setPhoneDiagnosis(0);
 		expertinfoDao.save(expertinfo);
 	}
 
@@ -72,10 +77,11 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	}
 
 	@Override
-	public int getFailUid(Long id) {
+	public int getFailUid(Long id,String pass) {
 		// TODO Auto-generated method stub
 		Expertinfo expert=expertinfoDao.ById(id);
     	expert.setStatus(2);
+    	expert.setReason(pass);
     	return expertinfoDao.update(expert);
 	}
 

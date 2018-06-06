@@ -107,10 +107,10 @@ public class ExpertinfoController {
     	return expertinfoService.getUid(id);
     }
     
-    @GetMapping("/failExpert/{id}")
+    @GetMapping("/failExpert/{id}/{pass}")
     @ApiOperation(value="专家审核失败")
-    public int getFailUid(@PathVariable Long id) {
-    	return expertinfoService.getFailUid(id);
+    public int getFailUid(@PathVariable Long id,@PathVariable String pass) {
+    	return expertinfoService.getFailUid(id,pass);
     }
     
     @GetMapping

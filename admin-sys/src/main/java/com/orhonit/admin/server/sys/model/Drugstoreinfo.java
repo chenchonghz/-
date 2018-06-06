@@ -36,6 +36,7 @@ public class Drugstoreinfo extends BaseEntity<Long> {
 	private String provinceNameMeng;
 	private String cityNameMeng;
 	private String areaNameMeng;
+	private String reason;
 	@Override
 	public String toString() {
 		return "Drugstoreinfo [uid=" + uid + ", pharmacyName=" + pharmacyName + ", pharmacyNameMeng=" + pharmacyNameMeng

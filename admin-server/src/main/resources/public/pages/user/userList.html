@@ -67,6 +67,7 @@
 </body>
 </html>
 
+
 <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
 <script type="text/javascript" src="../../js/layer.js"></script>
@@ -224,6 +225,23 @@ function expertPass(id){
 	
 }
 function expertFail(id){
+	layer.prompt({
+		title: '审核失败原因', 
+		formType: 2
+		},
+		function(pass, index){
+			$.ajax({
+				type : 'get',
+				url : '/expertinfos/failExpert/' + id +'/'+pass,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("操作成功");
+					layer.close(index);
+				}
+			});
+		});
+	
+/* 
 	layer.confirm('确定审核失败吗？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
@@ -237,7 +255,7 @@ function expertFail(id){
 		});
 
 		layer.close(1);
-	});
+	}); */
 	
 	
 }
@@ -260,7 +278,23 @@ function drugstorePass(id){
 	
 }
 function drugstoreFail(id){
-	layer.confirm('确定审核失败吗？', {
+	layer.prompt({
+		title: '审核失败原因', 
+		formType: 2
+		},
+		function(pass, index){
+			$.ajax({
+				type : 'get',
+				url : '/drugstoreinfos/failDrugstore/' + id +'/'+pass,
+				success : function(data) {
+					example.ajax.reload();
+					layer.msg("操作成功");
+					layer.close(index);
+				}
+			});
+		});
+	
+	/* layer.confirm('确定审核失败吗？', {
 		btn : [ '确定', '取消' ]
 	}, function() {
 		$.ajax({
@@ -273,7 +307,7 @@ function drugstoreFail(id){
 		});
 
 		layer.close(1);
-	});
+	}); */
 	
 	
 }

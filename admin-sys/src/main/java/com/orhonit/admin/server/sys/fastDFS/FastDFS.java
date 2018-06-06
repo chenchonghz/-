@@ -56,6 +56,7 @@ public class FastDFS {
 		String[] str;
 		try {
 			str = storageClient.upload_file(file.getBytes(),ext, null);
+			System.err.println(str);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -63,6 +64,7 @@ public class FastDFS {
 			String json = MAPPER.writeValueAsString(fastDFSEntity);
 			return json;
 		}
+		System.err.println(str);
 		if(str != null){
 			fastDFSEntity.setState(1);
 			String url = str[0]+"&"+str[1];

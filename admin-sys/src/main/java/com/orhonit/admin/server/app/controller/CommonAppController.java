@@ -33,6 +33,8 @@ import com.orhonit.admin.server.sys.model.Studyvideom;
 import com.orhonit.admin.server.sys.model.Task;
 import com.orhonit.admin.server.sys.model.Taskm;
 import com.orhonit.admin.server.sys.model.User;
+import com.orhonit.admin.server.sys.service.CommentService;
+import com.orhonit.admin.server.sys.service.CommentmService;
 import com.orhonit.admin.server.sys.service.DrugService;
 import com.orhonit.admin.server.sys.service.DrugstoreinfoService;
 import com.orhonit.admin.server.sys.service.ExpertinfoService;
@@ -311,5 +313,19 @@ public class CommonAppController {
 	@ApiOperation(value = "前端拿到病例蒙语")
 	public ResponseEntity<?> getTaskm(){
 		return taskmService.getAll();
+	}
+	@Autowired
+	private CommentmService commentmService;
+	@PostMapping("/commentm/getCBycid")
+	@ApiOperation(value = "前端根据cateid和childrenid拿到list")
+	public ResponseEntity<?> getCBycid(Integer cateId,Integer childrenId){
+		return commentmService.getCBycid(cateId,childrenId);
+	}
+	@Autowired
+	private CommentService commentService;
+	@PostMapping("/comment/getCBycid")
+	@ApiOperation(value = "前端根据cateid和childrenid拿到list")
+	public ResponseEntity<?> getCBycidm(Integer cateId,Integer childrenId){
+		return commentService.getCBycid(cateId,childrenId);
 	}
 }

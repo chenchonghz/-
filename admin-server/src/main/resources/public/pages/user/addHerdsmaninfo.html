@@ -59,6 +59,14 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">蒙语姓名</label>
+					<div class="col-md-8">
+						<div class="form-control" id="nameMeng1">
+						
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">身份证号码</label>
 					<div class="col-md-8">
 						<div class="form-control" id="cardNumber1">
@@ -93,9 +101,34 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">省(蒙)</label>
+					<div class="col-md-2">
+						<div class="form-control" id="provinceMeng1">
+						
+						</div>
+					</div>
+					<label class="col-md-1 control-label">市(蒙)</label>
+					<div class="col-md-2">
+						<div class="form-control" id="cityMeng1">
+						</div>
+					</div>					
+					<label class="col-md-1 control-label">县/区(蒙)</label>
+					<div class="col-md-2">
+						<div class="form-control"  id="areaMeng1">
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">详细地址</label>
 					<div class="col-md-8" >
 						<div class="form-control" id="address1" >
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙)</label>
+					<div class="col-md-8" >
+						<div class="form-control" id="addressMeng1" >
 						</div>
 					</div>
 				</div>
@@ -118,8 +151,14 @@
 					<label class="col-md-2 control-label">姓名</label>
 					<div class="col-md-8">
 						<input class="form-control" placeholder="姓名" type="text"
-							name="name" id="name" data-bv-notempty="true"
-							data-bv-notempty-message="姓名不能为空">
+							name="name" id="name" >
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">姓名</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="姓名(蒙语)" type="text"
+							name="nameMeng" id="nameMeng" >
 					</div>
 				</div>
 				<div class="form-group">
@@ -174,11 +213,39 @@
 					</div>
 				</div>
 				<div class="form-group">
+					<label class="col-md-2 control-label">省(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="provinceMeng" id="provinceMeng">
+							
+						</select>
+
+
+					</div>
+					<label class="col-md-1 control-label">市(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="cityMeng" id="cityMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+					<label class="col-md-1 control-label">县/区(蒙)</label>
+					<div class="col-sm-2">
+						<select class="form-control" name="areaMeng" id="areaMeng">
+							<option>==请选择===</option>
+						</select>
+					</div>
+				</div>
+				<div class="form-group">
 					<label class="col-md-2 control-label">详细地址</label>
 					<div class="col-md-8">
 						<input class="form-control" placeholder="详细地址" type="text"
-							name="address" id="address" data-bv-notempty="true"
-							data-bv-notempty-message="详细地址不能为空">
+							name="address" id="address">
+					</div>
+				</div>
+				<div class="form-group">
+					<label class="col-md-2 control-label">详细地址(蒙)</label>
+					<div class="col-md-8">
+						<input class="form-control" placeholder="详细地址(蒙)" type="text"
+							name="addressMeng" id="addressMeng">
 					</div>
 				</div>
 				<div class="form-actions">
@@ -204,6 +271,7 @@
 	<script type="text/javascript" src="../../js/common.js"></script>
 	<script type="text/javascript" src="../../js/layer.js"></script>
 	<script type="text/javascript" src="../../js/my/district.js"></script>
+	<script type="text/javascript" src="../../js/my/districtm.js"></script>
 	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
 	<script type="text/javascript" src="../../layui/layui.js"></script>
 	<script type="text/javascript">
@@ -214,6 +282,7 @@
 	initData();
 	$(function(){
 		ProviceBind();
+		ProviceMengBind();
 	})
 	function initData() {
 		var id = getUrlParam("id");
@@ -236,7 +305,7 @@
 		if (id != "") {
 			$.ajax({
 						type : 'get',
-						url : '/herdsmaninfos/herdsmaninfo/' + id,
+						url : '/newherdsmans/newherdsman/han/' + id,
 						async : false,
 						success : function(data) {
 							if(data==""){
@@ -246,6 +315,7 @@
 								$("#addinfo").hide();
 								$("#herdsmaninfo2").show();
 								$("#name1").html(data.name);
+								$("#nameMeng1").html(data.nameMeng);
 								$("#cardNumber1").html(data.cardNumber);
 								if(data.sex==1){
 									$("#sex1").html("男");
@@ -256,6 +326,10 @@
 								$("#address1").html(data.address);
 								$("#city1").html(data.cityName);
 								$("#area1").html(data.areaName);
+								$("#provinceMeng1").html(data.provinceNamem);
+								$("#addressMeng1").html(data.addressMeng);
+								$("#cityMeng1").html(data.cityNamem);
+								$("#areaMeng1").html(data.areaNamem);
 								 var src = domain + "/files"+data.headerUrl;
 								 var width="width:100px;height:100px";
 				                 var a = "<img src='" + src + "' style="+width+"></img>";
@@ -284,7 +358,7 @@
 			var formdata = $("#form").serializeObject();
 			$.ajax({
 				type : 'post',
-				url : '/herdsmaninfos',
+				url : '/newherdsmans',
 				contentType : "application/json; charset=utf-8",
 				data : JSON.stringify(formdata),
 				success : function(data) {

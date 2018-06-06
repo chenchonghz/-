@@ -36,4 +36,6 @@ public interface CommentDao {
 	void examine(Integer id);
     @Select("select * from comment where status = 1")
 	List<Comment> getList();
+    @Select("select * from comment where cateId = #{arg0} and chlidrenId = #{arg1} and status =1")
+	List<Comment> getCBycid(Integer cateId, Integer childrenId);
 }

@@ -65,10 +65,11 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 
 	@Override
 	@Transactional
-	public int getDrugstoreFailUid(Long id) {
+	public int getDrugstoreFailUid(Long id,String pass) {
 		// TODO Auto-generated method stub
 		Drugstoreinfo drugstore=drugstoreinfoDao.ById(id);
     	drugstore.setStatus(2);
+    	drugstore.setReason(pass);
     	return drugstoreinfoDao.update(drugstore);
 	}
 

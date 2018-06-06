@@ -91,10 +91,10 @@ public class DrugstoreinfoController {
     	return drugstoreinfoService.getDrugstoreUid(id);
     }
     
-    @GetMapping("/failDrugstore/{id}")
+    @GetMapping("/failDrugstore/{id}/{pass}")
     @ApiOperation(value="药店审核失败")
-    public int getDrugstoreFailUid(@PathVariable Long id) {
-    	return drugstoreinfoService.getDrugstoreFailUid(id);
+    public int getDrugstoreFailUid(@PathVariable Long id,@PathVariable String pass) {
+    	return drugstoreinfoService.getDrugstoreFailUid(id,pass);
 	
     }
     

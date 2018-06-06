@@ -104,6 +104,18 @@ public class CommentmServiceImpl implements CommentmService {
 			// TODO: handle exception
 		}
 	}
+
+	@Override
+	public ResponseEntity<?> getCBycid(Integer cateId, Integer childrenId) {
+		// TODO Auto-generated method stub
+		try {
+			List<Commentm> list= commentmDao.getCBycid(cateId,childrenId);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			return ResponseEntity.status(401).body("错误");
+			// TODO: handle exception
+		}
+	}
 	
 	
 }

@@ -24,4 +24,6 @@ public interface CommentService {
 
 	ResponseEntity<?> getList();
 
+	ResponseEntity<?> getCBycid(Integer cateId, Integer childrenId);
+
 }

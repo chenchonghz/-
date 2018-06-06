@@ -20,7 +20,7 @@ public interface DrugstoreinfoService {
 
 	int getDrugstoreUid(Long id);
 
-	int getDrugstoreFailUid(Long id);
+	int getDrugstoreFailUid(Long id, String pass);
 
 	void update(Drugstoreinfo drugstoreinfo);
 
@@ -39,6 +39,7 @@ public interface DrugstoreinfoService {
 	ResponseEntity<?> getByTaskIdM(Integer id);
 
 	ResponseEntity<?> getByTaskId(Integer id);
+
 
 
 }

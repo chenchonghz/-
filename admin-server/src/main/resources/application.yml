@@ -49,6 +49,10 @@ token:
   expire:
     seconds: 86400
 server:
-  port: 80
+  port: 8081
+#  ssl:
+#    key-store: classpath:your-name.jks
+#   key-password: 1527749284886
+#   key-store-type: JKS
 videoconnect:
   path: https://sphy.etkqqzhdj.gov.cn:25783/r/
