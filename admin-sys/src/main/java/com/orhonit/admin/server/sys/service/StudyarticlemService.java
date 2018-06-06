@@ -30,4 +30,8 @@ public interface StudyarticlemService {
 
 	ResponseEntity<?> addStudyArticlem(Integer id);
 
+	int studyArticlePass(Long id);
+
+	int studyArticlePassFail(Long id, String reason);
+
 }

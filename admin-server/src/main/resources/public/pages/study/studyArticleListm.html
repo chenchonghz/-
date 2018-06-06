@@ -77,7 +77,7 @@ function init(){
         	"processing": false,
         	"serverSide" : true,
         	"ajax": {
-        		"url" : "/studyArticles",
+        		"url" : "/studyarticlems",
         		"type":"get",
         		"data":function(d){
     			}
@@ -131,11 +131,11 @@ function init(){
 					"render":function(data,type,row){
 						
 						var id=row['id'];
-						var href="articleView.html?id="+id;
-						var del = buttonDel(id,"sys:studyArticle:del",pers);
-						var pass=buttonPass(id,"sys:studyArticle:pass",pers);
-						var fail=buttonFail(id,"sys:studyArticle:fail",pers);
-						var view=buttonVeiw(href,"sys:studyArticle:view",pers);
+						var href="articleViewm.html?id="+id;
+						var del = buttonDel(id,"sys:studyArticlem:del",pers);
+						var pass=buttonPass(id,"sys:studyArticlem:pass",pers);
+						var fail=buttonFail(id,"sys:studyArticlem:fail",pers);
+						var view=buttonVeiw(href,"sys:studyArticlem:view",pers);
 						var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
 						var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
 						if(row['status']==0){
@@ -157,7 +157,7 @@ function pass(id){
 	layer.confirm('确定要通过审核吗？',{btn:['确定','取消']},function(){
 		$.ajax({
 			type:'get',
-			url:'/studyArticles/pass/'+id,
+			url:'/studyarticlems/pass/'+id,
 			success:function(data){
 				 example.ajax.reload();
 	                layer.msg("审核通过");
@@ -176,7 +176,7 @@ function fail(id){
 		}, function(value, index, elem){
 			$.ajax({
 				type:'get',
-				url:'/studyArticles/fail/?id='+id+'&reason='+value,
+				url:'/studyarticlems/fail/?id='+id+'&reason='+value,
 				success:function(data){
 					 example.ajax.reload();
 		                layer.msg("操作成功");
@@ -205,7 +205,7 @@ function del(id){
     }, function() {
     	$.ajax({
             type : 'delete',
-            url : '/studyArticles/'+id,
+            url : '/studyarticlems/'+id,
             success : function(data) {
                 example.ajax.reload();
                 layer.msg("删除成功");

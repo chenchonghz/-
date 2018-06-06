@@ -12,7 +12,6 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
-import com.orhonit.admin.server.sys.dao.CategoryDao;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.StudyArticleDao;
 import com.orhonit.admin.server.sys.model.StudyArticle;
@@ -27,8 +26,7 @@ public class StudyArticleServiceImpl implements StudyArticleService {
     @Autowired
     private ExpertinfoDao expertinfoDao;
     
-    @Autowired
-    private CategoryDao categoryDao;
+    
 
 	@Override
 	public void save(StudyArticle studyArticle) {
@@ -58,7 +56,7 @@ public class StudyArticleServiceImpl implements StudyArticleService {
 	            	List<StudyArticle> studyArticleList=studyArticleDao.list(request.getParams(), request.getStart(), request.getLength());
 	            		for(StudyArticle studyArticle : studyArticleList) {
 	            		studyArticle.setName(expertinfoDao.ByUid(studyArticle.getUid()).getName()); 
-	            		studyArticle.setCategoryName(categoryDao.getByParentId(studyArticle.getCategoryId()).getName());	
+//	            		studyArticle.setCategoryName(categoryDao.getByParentId(studyArticle.getCategoryId()).getName());	
 	            		}
 	            		return studyArticleList;
 	            }
@@ -110,6 +108,7 @@ public class StudyArticleServiceImpl implements StudyArticleService {
 			studyArticle.setUid(Integer.parseInt(uId.toString()));
 			studyArticle.setStatus(0);
 			studyArticle.setClicks(0);
+			studyArticle.setCategoryId(null);
 			studyArticleDao.save(studyArticle);
 			return ResponseEntity.ok(null);
 		} catch (NumberFormatException e) {

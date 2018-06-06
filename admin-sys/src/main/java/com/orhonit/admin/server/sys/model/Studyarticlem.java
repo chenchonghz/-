@@ -22,6 +22,7 @@ public class Studyarticlem extends BaseEntity<Long> {
 	private Integer status;
 	private String enclosure;
 	private String reason;
+	private String name;
 	private Integer categoryId;
 
 }

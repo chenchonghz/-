@@ -11,6 +11,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.StudyarticlemDao;
 import com.orhonit.admin.server.sys.model.Studyarticlem;
 import com.orhonit.admin.server.sys.service.StudyarticlemService;
@@ -20,6 +21,10 @@ import com.orhonit.admin.server.sys.utils.UserUtil;
 public class StudyarticlemServiceImpl implements StudyarticlemService {
 	@Autowired
     private StudyarticlemDao studyarticlemDao;
+	
+    @Autowired
+    private ExpertinfoDao expertinfoDao;
+    
 
 	@Override
 	public void save(Studyarticlem studyarticlem) {
@@ -30,7 +35,7 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
 	@Override
 	public Studyarticlem getById(Long id) {
 		// TODO Auto-generated method stub
-		return studyarticlemDao.getById(id);
+		return studyarticlemDao.getId(id);
 	}
 
 	@Override
@@ -52,7 +57,11 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
 
             @Override
             public List<Studyarticlem> list(TableRequest request) {
-                return studyarticlemDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Studyarticlem> studyarticlems = studyarticlemDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Studyarticlem studyarticlem : studyarticlems) {
+                	studyarticlem.setName(expertinfoDao.ByUid(studyarticlem.getUid()).getName());
+				}
+                return studyarticlems;
             }
         }).build().handle(request);
 	}
@@ -123,6 +132,23 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
 			// TODO: handle exception
 			return ResponseEntity.status(401).body("错误");
 		}
+	}
+
+	@Override
+	public int studyArticlePass(Long id) {
+		// TODO Auto-generated method stub
+		Studyarticlem studyarticlem = studyarticlemDao.getById(id);
+		studyarticlem.setStatus(1);
+		return studyarticlemDao.updatePass(studyarticlem);
+	}
+
+	@Override
+	public int studyArticlePassFail(Long id, String reason) {
+		// TODO Auto-generated method stub
+		Studyarticlem studyarticlem = studyarticlemDao.getById(id);
+		studyarticlem.setStatus(2);
+		studyarticlem.setReason(reason);
+		return studyarticlemDao.updateFail(studyarticlem);
 	}
 	
 }

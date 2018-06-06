@@ -62,13 +62,13 @@ public class StudyArticleController {
     
     @GetMapping("pass/{id}")
     @ApiOperation(value="文章审核通过")
-    public int studyArticlePass(@PathVariable Long id) {
+    public int studyArticmlePass(@PathVariable Long id) {
     	return studyArticleService.studyArticlePass(id);
     }
     
     @GetMapping("fail/")
     @ApiOperation(value="文章审核失败")
-    public int studyArticlePassFail(@RequestParam("id")Long id,@RequestParam("reason")String reason) {
+    public int studyArticlemPassFail(@RequestParam("id")Long id,@RequestParam("reason")String reason) {
     	return studyArticleService.studyArticlePassFail(id,reason);
     }
     
