@@ -26,4 +26,8 @@ public interface CommentService {
 
 	ResponseEntity<?> getCBycid(Integer cateId, Integer childrenId);
 
+	int commentPass(Long id);
+
+	int commentFail(Long id);
+
 }

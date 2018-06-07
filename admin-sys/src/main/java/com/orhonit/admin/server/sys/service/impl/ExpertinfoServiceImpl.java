@@ -71,7 +71,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	@Transactional
 	public int getUid(Long id) {
 		// TODO Auto-generated method stub
-		Expertinfo expert=expertinfoDao.ById(id);
+		Expertinfo expert=expertinfoDao.getUId(id);
     	expert.setStatus(1);
     	return expertinfoDao.update(expert);
 	}
@@ -79,7 +79,7 @@ public class ExpertinfoServiceImpl implements ExpertinfoService {
 	@Override
 	public int getFailUid(Long id,String pass) {
 		// TODO Auto-generated method stub
-		Expertinfo expert=expertinfoDao.ById(id);
+		Expertinfo expert=expertinfoDao.getUId(id);
     	expert.setStatus(2);
     	expert.setReason(pass);
     	return expertinfoDao.update(expert);

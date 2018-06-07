@@ -59,6 +59,17 @@ public class CommentController {
     public void delete(@PathVariable Long id) {
     	commentService.delete(id);
     }
+    @GetMapping("pass/{id}")
+    @ApiOperation(value="文章审核通过")
+    public int CommentPass(@PathVariable Long id) {
+    	return commentService.commentPass(id);
+    }
+    
+    @GetMapping("fail/{id}")
+    @ApiOperation(value="文章审核失败")
+    public int CommentPassFail(@PathVariable Long id) {
+    	return commentService.commentFail(id);
+    }
     @GetMapping("/examine")
     @ApiOperation(value = "后台审核")
     public ResponseEntity<?> examine(Integer id){

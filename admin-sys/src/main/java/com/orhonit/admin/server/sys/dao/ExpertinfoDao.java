@@ -20,7 +20,7 @@ public interface ExpertinfoDao {
     Expertinfo getById(Long id);
 
     @Select("select * from expertinfo t where t.uid = #{id}")
-    Expertinfo ById(Long id);
+    Expertinfo getUId(Long id);
 
     @Select("select t.*,a.name as educationName,b.name as educationMengName from expertinfo t left join education a on t.education=a.id left join educationm b on t.educationMeng=b.id where t.uid = #{id}")
     Expertinfo ByUid(int id);

@@ -37,12 +37,12 @@
                                 <tr>
                                 </tr>                       
                                 <tr>
-									<th>id</th>
-									<th>herdsmanId</th>
-									<th>content</th>
-									<th>status</th>
-									<th>cateId</th>
-									<th>chlidrenId</th>
+									<th>序号</th>
+									<th>发布者</th>
+									<th>状态</th>
+									<th>所属分类</th>
+									<th>评论标题</th>
+									<th>操作</th>
 
                                 </tr>
                             </thead>
@@ -59,11 +59,13 @@
 
 <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
-<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript">
+<script type="text/javascript" src="../../js/my/permission.js"></script>
 
+<script type="text/javascript">
+var pers = checkPermission();
 var example;
 function init(){
 	example = 
@@ -81,27 +83,133 @@ function init(){
         	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
             "columns": [
 				{"data" : "id", "defaultContent" : ""},
-				{"data" : "herdsmanId", "defaultContent" : ""},
-				{"data" : "content", "defaultContent" : ""},
+				{"data" : "name", "defaultContent" : ""},
 				{"data" : "status", "defaultContent" : ""},
 				{"data" : "cateId", "defaultContent" : ""},
-				{"data" : "chlidrenId", "defaultContent" : ""},
-
+				{"data" : "title", "defaultContent" : ""},
                 
             ],
             "columnDefs": [
 				{"name" : "id", "targets" : "0"},
-				{"name" : "herdsmanId", "targets" : "1"},
-				{"name" : "content", "targets" : "2"},
-				{"name" : "status", "targets" : "3"},
-				{"name" : "cateId", "targets" : "4"},
-				{"name" : "chlidrenId", "targets" : "5"},
+				{"name" : "name", "targets" : "1"},
+				{"name" : "status", 
+					"targets" : 2,
+					"render":function(data,type,row){
+						
+						if(row['status']==0){
+							return "未审核";
+						}else if(row['status']==1){
+							return "审核通过";
+						}else{
+							return "审核失败";
+						}
+					}
+				},
+				{"name" : "cateId",
+					"targets" : 3,
+					"render":function(data,type,row){
+						
+						if(row['cateId']==1){
+							return "汉语文章评论";
+						}else if(row['cateId']==2){
+							return "汉语视频评论";
+						}else{
+							return "汉语病例评论";
+						}
+					}
+				},
+				{"name" : "title", "targets" : "4"},
+				{
+					"targets":5,
+					"render":function(data,type,row){
+						var id=row['id'];
+						var del = buttonDel(id,"sys:comment:del",pers);
+						var view=showView(id,"sys:comment:view",pers);
+						var view1=showView1(id,"sys:comment:view",pers);
+						var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
+						var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
+						var string3='<span class="layui-badge layui-bg-blud">等待审核</span>';
+						if(row['status']==0){
+							return view + del + string3;	
+						}else if(row['status']==1){
+							return view1 + del +string;
+						}else{
+							return view1 + del+string2;
+						}
+					}
+				},
 
               ],
            "order": [[ 0, "asc" ]]
         } );
 }
-
+function show(id){
+	$.ajax({
+        type : 'get',
+        url : '/comments/'+id,
+        success : function(data) {
+        	layer.prompt({  
+                type: 0,//弹出框类型  
+                title: '评论详情',  
+                area : ['50%' , '90%'],//弹出框大小  
+                shift:1,//弹出框动画效果  
+                content: data.content,
+                btn : [ '审核通过', '审核失败' ],
+                yes: function(index, layero){
+                	pass(id);
+                },
+                btn2: function(index, layero){
+                	fail(id);
+                }
+            });  
+        }
+    });
+	
+}
+function show1(id){
+	$.ajax({
+        type : 'get',
+        url : '/comments/'+id,
+        success : function(data) {
+        	layer.prompt({  
+                type: 0,//弹出框类型  
+                title: '评论详情',  
+                area : ['50%' , '90%'],//弹出框大小  
+                shift:1,//弹出框动画效果  
+                content: data.content,
+                btn : ["返回"],
+                yes:function(index, layero){
+               		layer.close(index);
+                }
+            });  
+        }
+    });
+	
+}
+function pass(id){
+	layer.confirm('确定要通过审核吗？',{btn:['确定','取消']},function(){
+		$.ajax({
+			type:'get',
+			url:'/comments/pass/'+id,
+			success:function(data){
+				 example.ajax.reload();
+	                layer.msg("审核通过");
+			}
+		})
+	})
+}
+function fail(id){
+	layer.confirm('确定要审核失败吗？',{btn:['确定','取消']},function(){
+		$.ajax({
+			type:'get',
+			url:'/comments/fail/'+id,
+			success:function(data){
+				 example.ajax.reload();
+	                layer.msg("审核失败");
+			}
+		})
+	})
+}
 function del(id){
 	layer.confirm('确定要删除吗？', {
         btn : [ '确定', '取消' ]

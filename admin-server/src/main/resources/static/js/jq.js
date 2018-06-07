@@ -126,6 +126,23 @@ function buttonFail(data, permission, pers){
 	var btn = $("<button class='layui-btn layui-btn-mini' title='审核失败' onclick='fail(\"" + data +"\")'>审核失败</button>");
 	return btn.prop("outerHTML");
 }
+//详情带审核
+function showView(data, permission, pers){
+	if ($.inArray(permission, pers) < 0) {
+		return "";
+	}
+	
+	var btn = $("<button class='layui-btn layui-btn-mini' title='预览详情' onclick='show(\"" + data +"\")'><i class='layui-icon'>&#xe6b2;</i></button>");
+	return btn.prop("outerHTML");
+}
+function showView1(data, permission, pers){
+	if ($.inArray(permission, pers) < 0) {
+		return "";
+	}
+	
+	var btn = $("<button class='layui-btn layui-btn-mini' title='预览详情' onclick='show1(\"" + data +"\")'><i class='layui-icon'>&#xe6b2;</i></button>");
+	return btn.prop("outerHTML");
+}
 //视频通讯测试
 function buttonVideo(data){
 	

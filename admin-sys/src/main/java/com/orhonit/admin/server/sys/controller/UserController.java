@@ -105,7 +105,7 @@ public class UserController {
 				List<User> list = userDao.list(request.getParams(), request.getStart(), request.getLength());
 				for(User user:list) {
 					if(user.getType()==2) {
-						Expertinfo expert= expertinfoDao.ById(user.getId());
+						Expertinfo expert= expertinfoDao.getUId(user.getId());
 						if(expert!=null) {
 							user.setTypestatus(expert.getStatus());
             			}

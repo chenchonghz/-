@@ -18,6 +18,9 @@ public interface DrugstoreinfoDao {
 
     @Select("select * from drugstoreinfo t where t.id = #{id}")
     Drugstoreinfo getById(Long id);
+    
+    @Select("select * from drugstoreinfo t where t.uid = #{id}")
+    Drugstoreinfo getUId(Long id);
 
     @Delete("delete from drugstoreinfo where id = #{id}")
     int delete(Long id);
