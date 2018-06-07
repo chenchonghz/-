@@ -11,7 +11,6 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
-import com.orhonit.admin.server.sys.dao.CategoryDao;
 import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.StudyVideoDao;
 import com.orhonit.admin.server.sys.model.StudyVideo;
@@ -24,9 +23,6 @@ public class StudyVideoServiceImpl implements StudyVideoService {
     @Autowired
     private ExpertinfoDao expertinfoDao;
     
-    @Autowired
-    private CategoryDao categoryDao;
-
 	@Override
 	public void save(StudyVideo studyVideo) {
 		// TODO Auto-generated method stub
@@ -36,7 +32,7 @@ public class StudyVideoServiceImpl implements StudyVideoService {
 	@Override
 	public StudyVideo getById(Long id) {
 		// TODO Auto-generated method stub
-		return studyVideoDao.getById(id);
+		return studyVideoDao.getId(id);
 	}
 
 	@Override
@@ -61,7 +57,7 @@ public class StudyVideoServiceImpl implements StudyVideoService {
 	               List<StudyVideo> studyVideoList= studyVideoDao.list(request.getParams(), request.getStart(), request.getLength());
 	               for(StudyVideo studyVideo:studyVideoList) {
 	            	   studyVideo.setName(expertinfoDao.ByUid(studyVideo.getUid()).getName()); 
-	            	   studyVideo.setCategoryName(categoryDao.getByParentId(studyVideo.getCategoryId()).getName());
+//	            	   studyVideo.setCategoryName(categoryDao.getByParentId(studyVideo.getCategoryId()).getName());
 	               };
 	               return studyVideoList;
 	               
@@ -99,7 +95,7 @@ public class StudyVideoServiceImpl implements StudyVideoService {
 	}
 
 	@Override
-	public StudyVideo frist() {
+	public List<StudyVideo> frist() {
 		// TODO Auto-generated method stub
 		return studyVideoDao.frist();
 	}

@@ -20,12 +20,16 @@ public interface StudyvideomService {
 
 	void delete(Long id);
 
-	Studyvideom frist();
+	List<Studyvideom> frist();
 
 	List<Studyvideom> ten(long l);
 
 	ResponseEntity<?> getAll();
 
 	ResponseEntity<?> addStudyVideom(Integer id);
+
+	int studyArticlePass(Long id);
+
+	int studyArticlePassFail(Long id, String reason);
 
 }

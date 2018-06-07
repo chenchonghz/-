@@ -26,7 +26,7 @@ public interface StudyVideoService {
 
 	List<StudyVideo> ten(Long start);
 
-	StudyVideo frist();
+	List<StudyVideo> frist();
 
 	ResponseEntity<?> getAll();
 

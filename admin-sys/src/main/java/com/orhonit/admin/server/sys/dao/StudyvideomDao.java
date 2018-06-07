@@ -22,6 +22,9 @@ public interface StudyvideomDao {
     @Delete("delete from studyvideom where id = #{id}")
     int delete(Long id);
 
+    @Select("select a.*,b.name as name from studyvideom as a left join expertinfo b on a.uid = b.uid where a.id=#{id}")
+    Studyvideom getId(Long id);
+    
     @Update("update studyvideom t set uid = #{uid}, categoryId = #{categoryId}, videoUrl = #{videoUrl}, title = #{title}, content = #{content}, coverPhoto = #{coverPhoto}, clicks = #{clicks}, status = #{status}, reason = #{reason} where t.id = #{id}")
     int update(Studyvideom studyvideom);
     
@@ -32,12 +35,16 @@ public interface StudyvideomDao {
     int count(@Param("params") Map<String, Object> params);
 
     List<Studyvideom> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
-    @Select("select s.* from studyVideom s,category c where c.parentId = 11 and s.categoryId = c.id  and s.status = 1 order by s.clicks desc limit 0,2")
-	Studyvideom frist();
+    @Select("select s.* from studyVideom s where  s.status = 1 order by s.clicks desc limit 0,2")
+    List<Studyvideom> frist();
 	@Select("select * from studyVideom where status=1 order by id desc limit #{start},10")
 	List<Studyvideom> ten(long start);
 	@Select("select * from studyVideom where status = 1")
 	List<Studyvideom> getAll();
 	@Update("update studyvideom set clicks = clicks + 1 where id = #{id}")
 	void addStudyVideom(Integer id);
+    @Update("update studyvideom t set status = #{status} where t.id = #{id}")
+	int updatePass(Studyvideom studyvideom);
+	@Update("update studyvideom t set status = #{status},reason=#{reason} where t.id = #{id}")
+	int updateFail(Studyvideom studyvideom);
 }

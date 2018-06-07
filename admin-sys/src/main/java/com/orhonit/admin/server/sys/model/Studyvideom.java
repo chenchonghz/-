@@ -23,5 +23,6 @@ public class Studyvideom extends BaseEntity<Long> {
 	private Integer clicks;
 	private Integer status;
 	private String reason;
+	private String name;
 
 }

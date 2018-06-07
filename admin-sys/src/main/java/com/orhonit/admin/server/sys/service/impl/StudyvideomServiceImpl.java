@@ -11,6 +11,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.StudyvideomDao;
 import com.orhonit.admin.server.sys.model.Studyvideom;
 import com.orhonit.admin.server.sys.service.StudyvideomService;
@@ -19,7 +20,9 @@ import com.orhonit.admin.server.sys.service.StudyvideomService;
 public class StudyvideomServiceImpl implements StudyvideomService {
 	@Autowired
     private StudyvideomDao studyvideomDao;
-
+	@Autowired
+	private ExpertinfoDao expertinfoDao;
+	
 	@Override
 	public void save(Studyvideom studyvideom) {
 		// TODO Auto-generated method stub
@@ -29,7 +32,7 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 	@Override
 	public Studyvideom getById(Long id) {
 		// TODO Auto-generated method stub
-		return studyvideomDao.getById(id);
+		return studyvideomDao.getId(id);
 	}
 
 	@Override
@@ -51,7 +54,11 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 
             @Override
             public List<Studyvideom> list(TableRequest request) {
-                return studyvideomDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Studyvideom> list = studyvideomDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Studyvideom studyvideom : list) {
+					studyvideom.setName(expertinfoDao.ByUid(studyvideom.getUid()).getName());
+				}
+                return list;
             }
         }).build().handle(request);
 	}
@@ -63,7 +70,7 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 	}
 
 	@Override
-	public Studyvideom frist() {
+	public List<Studyvideom> frist() {
 		// TODO Auto-generated method stub
 		return studyvideomDao.frist();
 	}
@@ -96,5 +103,22 @@ public class StudyvideomServiceImpl implements StudyvideomService {
 			// TODO: handle exception
 			return ResponseEntity.status(401).body("错误");
 		}
+	}
+
+	@Override
+	public int studyArticlePass(Long id) {
+		// TODO Auto-generated method stub
+		Studyvideom studyvideom = studyvideomDao.getById(id);
+		studyvideom.setStatus(1);
+		return studyvideomDao.updatePass(studyvideom);
+	}
+
+	@Override
+	public int studyArticlePassFail(Long id, String reason) {
+		// TODO Auto-generated method stub
+		Studyvideom studyvideom = studyvideomDao.getById(id);
+		studyvideom.setStatus(2);
+		studyvideom.setReason(reason);
+		return studyvideomDao.updateFail(studyvideom);
 	}
 }

@@ -75,6 +75,7 @@ public class DrugServiceImpl implements DrugService {
 			Long id = UserUtil.getCurrentUser().getId();
 			drug.setUid(Integer.parseInt(id.toString()));
 			drug.setStatus(1);
+			drug.setCategoryId(null);
 			drugDao.save(drug);
 			return ResponseEntity.ok(null);
 		} catch (Exception e) {

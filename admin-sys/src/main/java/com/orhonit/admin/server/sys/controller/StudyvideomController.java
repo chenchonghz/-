@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.orhonit.admin.server.common.datatables.TableRequest;
@@ -58,4 +59,18 @@ public class StudyvideomController {
     public void delete(@PathVariable Long id) {
     	studyvideomService.delete(id);
     }
+    
+    @GetMapping("pass/{id}")
+    @ApiOperation(value="文章审核通过")
+    public int studyArticlePass(@PathVariable Long id) {
+    	return studyvideomService.studyArticlePass(id);
+    }
+    
+    @GetMapping("fail/")
+    @ApiOperation(value="文章审核失败")
+    public int studyArticlePassFail(@RequestParam("id")Long id,@RequestParam("reason")String reason) {
+    	return studyvideomService.studyArticlePassFail(id,reason);
+    }
+    
+    
 }

@@ -78,7 +78,7 @@ function init(){
         	"processing": false,
         	"serverSide" : true,
         	"ajax": {
-        		"url" : "/studyVideos",
+        		"url" : "/studyvideoms",
         		"type":"get",
         		"data":function(d){
     			
@@ -133,11 +133,11 @@ function init(){
 					"targets":6,
 					"render":function(data,type,row){
 						var id=row['id'];
-						var href="videoView.html?id="+id;
-						var del = buttonDel(id,"sys:studyVideo:del",pers);
-						var pass=buttonPass(id,"sys:studyVideo:pass",pers);
-						var fail=buttonFail(id,"sys:studyVideo:fail",pers);
-						var view=buttonVeiw(href,"sys:studyVideo:view",pers);
+						var href="videoViewm.html?id="+id;
+						var del = buttonDel(id,"sys:studyVideom:del",pers);
+						var pass=buttonPass(id,"sys:studyVideom:pass",pers);
+						var fail=buttonFail(id,"sys:studyVideom:fail",pers);
+						var view=buttonVeiw(href,"sys:studyVideom:view",pers);
 						var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
 						var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
 						if(row['status']==0){
@@ -162,7 +162,7 @@ function pass(id){
 	layer.confirm('确定要通过审核吗？',{btn:['确定','取消']},function(){
 		$.ajax({
 			type:'get',
-			url:'/studyVideos/pass/'+id,
+			url:'/studyvideoms/pass/'+id,
 			success:function(data){
 				 example.ajax.reload();
 	                layer.msg("审核通过");
@@ -181,7 +181,7 @@ function fail(id){
 		}, function(value, index, elem){
 			$.ajax({
 				type:'get',
-				url:'/studyVideos/fail/?id='+id+'&reason='+value,
+				url:'/studyvideoms/fail/?id='+id+'&reason='+value,
 				success:function(data){
 					 example.ajax.reload();
 		                layer.msg("操作成功");
@@ -197,7 +197,7 @@ function del(id){
     }, function() {
     	$.ajax({
             type : 'delete',
-            url : '/studyVideos/'+id,
+            url : '/studyvideoms/'+id,
             success : function(data) {
                 example.ajax.reload();
                 layer.msg("删除成功");
