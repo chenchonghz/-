@@ -12,7 +12,15 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.CommentmDao;
+import com.orhonit.admin.server.sys.dao.DrugstoreinfoDao;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
+import com.orhonit.admin.server.sys.dao.NewherdsmanDao;
+import com.orhonit.admin.server.sys.dao.StudyarticlemDao;
+import com.orhonit.admin.server.sys.dao.StudyvideomDao;
+import com.orhonit.admin.server.sys.dao.TaskmDao;
+import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.model.Commentm;
+import com.orhonit.admin.server.sys.model.User;
 import com.orhonit.admin.server.sys.service.CommentmService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
 
@@ -39,7 +47,20 @@ public class CommentmServiceImpl implements CommentmService {
 		// TODO Auto-generated method stub
 		commentmDao.update(commentm);
 	}
-
+	@Autowired
+	private UserDao userDao;
+	@Autowired
+	private NewherdsmanDao newherdsmanDao;
+	@Autowired
+	private ExpertinfoDao expertinfoDao;
+	@Autowired
+	private DrugstoreinfoDao drugstoreinfoDao;
+	@Autowired
+	private StudyarticlemDao studyarticlemDao;
+	@Autowired
+	private StudyvideomDao studyvideomDao;
+	@Autowired
+	private TaskmDao taskmDao;
 	@Override
 	public TableResponse<Commentm> list(TableRequest request) {
 		// TODO Auto-generated method stub
@@ -53,7 +74,26 @@ public class CommentmServiceImpl implements CommentmService {
 
             @Override
             public List<Commentm> list(TableRequest request) {
-                return commentmDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Commentm> list = commentmDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Commentm commentm : list) {
+                	User user = userDao.getById(Long.parseLong(commentm.getHerdsmanId().toString()));
+					if(user.getType() == 1){
+						commentm.setName(newherdsmanDao.getUid(user.getId()).getNameMeng()+"(牧民)");
+					}else if(user.getType() == 2){
+						commentm.setName(expertinfoDao.getUId(user.getId()).getNameMeng()+"(专家)");
+					}else{
+						commentm.setName(drugstoreinfoDao.getUId(user.getId()).getPharmacyNameMeng()+"(药店)");
+					}
+					
+					if(commentm.getCateId() == 1){
+						commentm.setTitle(studyarticlemDao.getById(Long.parseLong(commentm.getChlidrenId().toString())).getTitle());
+					}else if(commentm.getCateId() == 2){
+						commentm.setTitle(studyvideomDao.getById(Long.parseLong(commentm.getChlidrenId().toString())).getTitle());
+					}else{
+						commentm.setTitle(taskmDao.getById(Long.parseLong(commentm.getChlidrenId().toString())).getTitle());
+					}
+				}
+                return list;
             }
         }).build().handle(request);
 	}
@@ -115,6 +155,22 @@ public class CommentmServiceImpl implements CommentmService {
 			return ResponseEntity.status(401).body("错误");
 			// TODO: handle exception
 		}
+	}
+
+	@Override
+	public int commentmFail(Long id) {
+		// TODO Auto-generated method stub
+		Commentm commentm = commentmDao.getById(id);
+		commentm.setStatus(2);
+		return commentmDao.updateStatus(commentm);
+	}
+
+	@Override
+	public int commentmPass(Long id) {
+		// TODO Auto-generated method stub
+		Commentm commentm = commentmDao.getById(id);
+		commentm.setStatus(1);
+		return commentmDao.updateStatus(commentm);
 	}
 	
 	

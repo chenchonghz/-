@@ -19,5 +19,7 @@ public class Commentm extends BaseEntity<Long> {
 	private Integer status;
 	private Integer cateId;
 	private Integer chlidrenId;
+	private String name;
+	private String title;
 
 }

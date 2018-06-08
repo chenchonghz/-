@@ -40,7 +40,7 @@ public interface StudyarticlemDao {
 	List<Studyarticlem> getByUid(Long uid);
     @Update("update studyarticlem set clicks = clicks + 1 where id = #{id}")
 	void addStudyArticlem(Integer id);
-    @Select("select a.*,b.name as name,c.name as categoryName from studyarticlem as a left join expertinfo b on a.uid = b.uid left join category c on a.categoryId=c.id where a.id=#{id}")
+    @Select("select a.*,b.nameMeng as name,c.name as categoryName from studyarticlem as a left join expertinfo b on a.uid = b.uid left join category c on a.categoryId=c.id where a.id=#{id}")
 	Studyarticlem getId(Long id);
     @Update("update studyarticlem t set status = #{status} where t.id = #{id}")
 	int updatePass(Studyarticlem studyarticlem);

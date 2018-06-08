@@ -38,4 +38,6 @@ public interface CommentmDao {
 	List<Commentm> getList();
     @Select("select * from commentm where cateId = #{arg0} and chlidrenId = #{arg1} and status =1")
 	List<Commentm> getCBycid(Integer cateId, Integer childrenId);
+    @Update("update commentm t set t.status = #{status} where t.id = #{id}")
+	int updateStatus(Commentm commentm);
 }

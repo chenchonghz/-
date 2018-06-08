@@ -56,7 +56,7 @@ public class StudyvideomServiceImpl implements StudyvideomService {
             public List<Studyvideom> list(TableRequest request) {
                 List<Studyvideom> list = studyvideomDao.list(request.getParams(), request.getStart(), request.getLength());
                 for (Studyvideom studyvideom : list) {
-					studyvideom.setName(expertinfoDao.ByUid(studyvideom.getUid()).getName());
+					studyvideom.setName(expertinfoDao.ByUid(studyvideom.getUid()).getNameMeng());
 				}
                 return list;
             }

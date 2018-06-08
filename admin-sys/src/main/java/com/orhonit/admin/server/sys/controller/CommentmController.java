@@ -59,6 +59,17 @@ public class CommentmController {
     public void delete(@PathVariable Long id) {
     	commentmDaoService.delete(id);	
     }
+    @GetMapping("pass/{id}")
+    @ApiOperation(value="文章审核通过")
+    public int CommentmPass(@PathVariable Long id) {
+    	return commentmDaoService.commentmPass(id);
+    }
+    
+    @GetMapping("fail/{id}")
+    @ApiOperation(value="文章审核失败")
+    public int CommentmPassFail(@PathVariable Long id) {
+    	return commentmDaoService.commentmFail(id);
+    }
     @GetMapping("/examine")
     @ApiOperation(value = "后台审核")
     public ResponseEntity<?> examine(Integer id){

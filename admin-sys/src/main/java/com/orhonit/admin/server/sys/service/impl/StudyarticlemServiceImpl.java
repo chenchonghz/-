@@ -59,7 +59,7 @@ public class StudyarticlemServiceImpl implements StudyarticlemService {
             public List<Studyarticlem> list(TableRequest request) {
                 List<Studyarticlem> studyarticlems = studyarticlemDao.list(request.getParams(), request.getStart(), request.getLength());
                 for (Studyarticlem studyarticlem : studyarticlems) {
-                	studyarticlem.setName(expertinfoDao.ByUid(studyarticlem.getUid()).getName());
+                	studyarticlem.setName(expertinfoDao.ByUid(studyarticlem.getUid()).getNameMeng());
 				}
                 return studyarticlems;
             }

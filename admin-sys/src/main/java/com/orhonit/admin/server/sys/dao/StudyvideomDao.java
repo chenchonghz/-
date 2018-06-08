@@ -22,7 +22,7 @@ public interface StudyvideomDao {
     @Delete("delete from studyvideom where id = #{id}")
     int delete(Long id);
 
-    @Select("select a.*,b.name as name from studyvideom as a left join expertinfo b on a.uid = b.uid where a.id=#{id}")
+    @Select("select a.*,b.nameMeng as name from studyvideom as a left join expertinfo b on a.uid = b.uid where a.id=#{id}")
     Studyvideom getId(Long id);
     
     @Update("update studyvideom t set uid = #{uid}, categoryId = #{categoryId}, videoUrl = #{videoUrl}, title = #{title}, content = #{content}, coverPhoto = #{coverPhoto}, clicks = #{clicks}, status = #{status}, reason = #{reason} where t.id = #{id}")
