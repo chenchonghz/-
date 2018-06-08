@@ -21,12 +21,15 @@ public interface LiveshowDao {
 
     @Delete("delete from liveshow where id = #{id}")
     int delete(Long id);
+    
+    @Select("select t.*,e.name as name from liveshow t left join expertinfo e on e.uid = t.onlineApplyId where t.id = #{id}")
+    Liveshow getId(Long id);
 
-    @Update("update liveshow t set coverPhoto = #{coverPhoto}, onlineApplyId = #{onlineApplyId}, onlineQuantity = #{onlineQuantity}, videoName = #{videoName}, liveHome = #{liveHome}, startTime = #{startTime}, endTime = #{endTime} where t.id = #{id}")
+    @Update("update liveshow t set coverPhoto = #{coverPhoto}, onlineApplyId = #{onlineApplyId}, onlineQuantity = #{onlineQuantity}, videoName = #{videoName}, liveHome = #{liveHome}, startTime = #{startTime}, endTime = #{endTime}, status = #{status} where t.id = #{id}")
     int update(Liveshow liveshow);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into liveshow(coverPhoto, onlineApplyId, onlineQuantity, videoName, liveHome, startTime, endTime) values(#{coverPhoto}, #{onlineApplyId}, #{onlineQuantity}, #{videoName}, #{liveHome}, #{startTime}, #{endTime})")
+    @Insert("insert into liveshow(coverPhoto, onlineApplyId, onlineQuantity, videoName, liveHome, startTime, endTime) values(#{coverPhoto}, #{onlineApplyId}, #{onlineQuantity}, #{videoName}, #{liveHome}, #{startTime}, #{endTime},#{status})")
     int save(Liveshow liveshow);
     
     int count(@Param("params") Map<String, Object> params);
@@ -38,4 +41,6 @@ public interface LiveshowDao {
 	void addPeople(Integer id);
     @Update("update liveshow set onlineQuantity = onlineQuantity - 1 where id = #{id}")
 	void lessPeople(Integer id);
+    @Update("update liveshow t set t.status = #{status} where t.id = #{id}")
+	int updateStatus(Liveshow liveshow);
 }

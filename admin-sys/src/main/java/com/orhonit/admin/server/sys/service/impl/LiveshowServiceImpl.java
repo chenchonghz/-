@@ -12,6 +12,7 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
 import com.orhonit.admin.server.sys.dao.LiveshowDao;
 import com.orhonit.admin.server.sys.model.Liveshow;
 import com.orhonit.admin.server.sys.service.LiveshowService;
@@ -30,7 +31,7 @@ public class LiveshowServiceImpl implements LiveshowService {
 	@Override
 	public Liveshow getById(Long id) {
 		// TODO Auto-generated method stub
-		return liveshowDao.getById(id);
+		return liveshowDao.getId(id);
 	}
 
 	@Override
@@ -38,7 +39,9 @@ public class LiveshowServiceImpl implements LiveshowService {
 		// TODO Auto-generated method stub
 		liveshowDao.update(liveshow);
 	}
-
+	
+	@Autowired
+	private ExpertinfoDao expertinfoDao;
 	@Override
 	public TableResponse<Liveshow> list(TableRequest request) {
 		// TODO Auto-generated method stub
@@ -52,7 +55,11 @@ public class LiveshowServiceImpl implements LiveshowService {
 
             @Override
             public List<Liveshow> list(TableRequest request) {
-                return liveshowDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Liveshow> list = liveshowDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Liveshow liveshow : list) {
+					liveshow.setName(expertinfoDao.getUId(Long.parseLong(liveshow.getOnlineApplyId().toString())).getName());
+				}
+                return list;
             }
         }).build().handle(request);
 	}
@@ -71,6 +78,7 @@ public class LiveshowServiceImpl implements LiveshowService {
 			liveshow.setOnlineApplyId(Integer.parseInt(userId.toString()));
 			liveshow.setOnlineQuantity(0);
 			liveshow.setLiveHome("假数据--直播房间");
+			liveshow.setStatus(0);
 			liveshowDao.save(liveshow);
 			return ResponseEntity.ok(liveshow.getLiveHome());
 		} catch (NumberFormatException e) {
@@ -121,5 +129,21 @@ public class LiveshowServiceImpl implements LiveshowService {
 			e.printStackTrace();
 			return ResponseEntity.status(401).body("错误");
 		}
+	}
+
+	@Override
+	public int liveshowPass(Long id) {
+		// TODO Auto-generated method stub
+		Liveshow liveshow = liveshowDao.getById(id);
+		liveshow.setStatus(1);
+		return liveshowDao.updateStatus(liveshow);
+	}
+
+	@Override
+	public int liveshowFail(Long id) {
+		// TODO Auto-generated method stub
+		Liveshow liveshow = liveshowDao.getById(id);
+		liveshow.setStatus(2);
+		return liveshowDao.updateStatus(liveshow);
 	}
 }

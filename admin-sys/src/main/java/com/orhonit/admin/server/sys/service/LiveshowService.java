@@ -26,4 +26,8 @@ public interface LiveshowService {
 
 	ResponseEntity<?> lessPeople(Integer id);
 
+	int liveshowPass(Long id);
+
+	int liveshowFail(Long id);
+
 }

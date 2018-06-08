@@ -25,5 +25,7 @@ public class Liveshow extends BaseEntity<Long> {
 	private Date startTime;
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm")
 	private Date endTime;
+	private int status;
+	private String name;
 
 }

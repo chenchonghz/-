@@ -35,7 +35,7 @@ public interface StudyVideoDao {
     int updateFail(StudyVideo studyVideo);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into studyVideo(uid, categoryId, videoUrl, title, content, coverPhoto, clicks, status, reason) values(#{uid}, #{categoryId}, #{videoUrl}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{reason})")
+    @Insert("insert into studyVideo(uid, categoryId, videoUrl, title, content, coverPhoto, clicks, status, reason, createTime, updateTime) values(#{uid}, #{categoryId}, #{videoUrl}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{reason}, #{createTime}, #{updateTime})")
     int save(StudyVideo studyVideo);
     
     int count(@Param("params") Map<String, Object> params);

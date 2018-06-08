@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>文章预览</title>
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" media="screen"
+	href="../../css/dataTables.bootstrap.min.css">
+<link rel="stylesheet" href="../../layui/css/layui.css" media="all" />
+
+</head>
+<body>
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12" id="articleView">
+		<form class="form-horizontal">
+			<div class="form-group">
+				<label class="col-md-2 control-label">直播专家</label>
+				<div class="col-md-8">
+					<div class="form-control" id="name"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">直播标题</label>
+				<div class="col-md-8">
+					<div class="form-control" id="videoName"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">直播房间</label>
+				<div class="col-md-8">
+					<div class="form-control" id="liveHome"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">封面图片</label>
+				<div class="col-md-8">
+					<div class="col-md-6" id="coverPhoto"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">开始时间</label>
+				<div class="col-md-8">
+					<div class="form-control" id="startTime"></div>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-md-2 control-label">结束时间</label>
+				<div class="col-md-8">
+					<div class="form-control" id="endTime"></div>
+				</div>
+			</div>
+			<div class="form-actions">
+				<div class="row" align="center">
+					<div class="col-md-12">
+						<button type="button" class="btn btn-primary"
+							onclick="javascript:history.back(-1);">返回</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	<script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
+	<script type="text/javascript" src="../../js/jq.js"></script>
+	<script type="text/javascript" src="../../js/plugin/bootstrapvalidator/bootstrapValidator.min.js"></script>
+	<script type="text/javascript" src="../../js/common.js"></script>
+	<script type="text/javascript" src="../../js/layer.js"></script>
+	<script type="text/javascript" src="../../js/my/ztree-menu.js"></script>
+	<script type="text/javascript" src="../../layui/layui.js"></script>
+	<script type="text/javascript" src="../../js/player/cyberplayer.js"></script>
+	<script type="text/javascript" src="../../js/player/videojs/video.min.js"></script>
+	<script type="text/javascript">
+		var pro = window.location.protocol;
+		var host = window.location.host;
+		var domain = pro + "//" + host;
+		var example;
+		var videoUrl;
+		initData();
+		
+		function initData() {
+			var id = getUrlParam("id");
+			if (id != "") {
+				$.ajax({
+							type : 'get',
+							url : '/liveshows/' + id,
+							 async: false,
+							success : function(data) {
+								var src = domain + "/files";
+								$("#name").html(data.name);
+								$("#videoName").html(data.videoName);
+								$("#liveHome").html(data.liveHome);
+								$("#startTime").html(data.startTime);
+								$("#endTime").html(data.endTime);
+								videoUrl=src+data.coverPhoto;
+								var width = "width:100px;height:100px";
+								var a = "<img src='"+src + data.coverPhoto + "' style="+width+"></img>";
+								$("#coverPhoto").html(a);
+
+							}
+						})
+
+			}
+
+		}
+		
+		var player = cyberplayer("playercontainer").setup({
+	        width: 680,
+	        height: 448,
+	        file:videoUrl, // <—rtmp直播地址
+	        autostart: false,
+	        stretching: "uniform",
+	        volume: 100,
+	        controls: true,
+	        controlbar: {
+	            barLogo: false
+	        },
+	        isLive: true,
+	        rtmp: {
+	            reconnecttime: 5, // rtmp直播的重连次数
+	            bufferlength: 1 // 缓冲多少秒之后开始播放 默认1秒
+	        },
+	        ak: "c17507c679084d5591a127b2ca9804e2" // 公有云平台注册即可获得accessKey
+	    });
+		
+	</script>
+</body>
+</html>

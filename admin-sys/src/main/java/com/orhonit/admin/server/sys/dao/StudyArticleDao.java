@@ -35,7 +35,7 @@ public interface StudyArticleDao {
     int updateFail(StudyArticle studyArticle);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into studyArticle(uid, title, content, coverPhoto, clicks, status, enclosure, categoryId) values(#{uid}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{enclosure},#{categoryId})")
+    @Insert("insert into studyArticle(uid, title, content, coverPhoto, clicks, status, enclosure, categoryId, createTime, updateTime) values(#{uid}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{enclosure},#{categoryId},#{createTime},#{updateTime})")
     int save(StudyArticle studyArticle);
     
     int count(@Param("params") Map<String, Object> params);

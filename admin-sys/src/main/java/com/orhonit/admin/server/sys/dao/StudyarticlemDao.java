@@ -26,7 +26,7 @@ public interface StudyarticlemDao {
     int update(Studyarticlem studyarticlem);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into studyarticlem(uid, title, content, coverPhoto, clicks, status, enclosure, reason, categoryId) values(#{uid}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{enclosure}, #{reason}, #{categoryId})")
+    @Insert("insert into studyarticlem(uid, title, content, coverPhoto, clicks, status, enclosure, reason, categoryId, createTime, updateTime) values(#{uid}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{enclosure}, #{reason}, #{categoryId}, #{createTime}, #{updateTime})")
     int save(Studyarticlem studyarticlem);
     
     int count(@Param("params") Map<String, Object> params);

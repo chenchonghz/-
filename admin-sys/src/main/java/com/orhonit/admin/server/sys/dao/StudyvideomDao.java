@@ -29,7 +29,7 @@ public interface StudyvideomDao {
     int update(Studyvideom studyvideom);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into studyvideom(uid, categoryId, videoUrl, title, content, coverPhoto, clicks, status, reason) values(#{uid}, #{categoryId}, #{videoUrl}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{reason})")
+    @Insert("insert into studyvideom(uid, categoryId, videoUrl, title, content, coverPhoto, clicks, status, reason, createTime, updateTime) values(#{uid}, #{categoryId}, #{videoUrl}, #{title}, #{content}, #{coverPhoto}, #{clicks}, #{status}, #{reason}, #{createTime}, #{updateTime})")
     int save(Studyvideom studyvideom);
     
     int count(@Param("params") Map<String, Object> params);

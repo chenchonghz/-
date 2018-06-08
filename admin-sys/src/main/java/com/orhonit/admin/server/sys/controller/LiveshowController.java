@@ -60,7 +60,17 @@ public class LiveshowController {
     public void delete(@PathVariable Long id) {
     	liveshowService.delete(id);
     }
+    @GetMapping("pass/{id}")
+    @ApiOperation(value="文章审核通过")
+    public int LiveShowPass(@PathVariable Long id) {
+    	return liveshowService.liveshowPass(id);
+    }
     
+    @GetMapping("fail/{id}")
+    @ApiOperation(value="文章审核失败")
+    public int LiveShowPassFail(@PathVariable Long id) {
+    	return liveshowService.liveshowFail(id);
+    }
     @PostMapping("/App/AddLiveShow")
     @ApiOperation(value = "手机端专家申请一个直播")
     public ResponseEntity<?> AddLiveShow(Liveshow liveshow){
