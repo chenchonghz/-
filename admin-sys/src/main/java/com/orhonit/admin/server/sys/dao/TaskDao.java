@@ -20,6 +20,9 @@ public interface TaskDao {
     @Select("select * from task t where t.id = #{id} and status != 0")
     Task getById(Long id);
 
+    @Select("select t.*,e.name as nameE,h.name as nameH from task t left join expertinfo e on e.uid = t.expertId left join newherdsman h on h.uid = t.herdsmanId where t.id = #{id}")
+	Task getId(Long id);
+
     @Delete("delete from task where id = #{id}")
     int delete(Long id);
 
@@ -43,4 +46,7 @@ public interface TaskDao {
 	void AppDelete(Long id);
     @Select("select * from task where good = 1")
 	List<Task> getAll();
+    @Update("update task set good = #{good} where id = #{id}")
+	int updateGood(Task task);
+
 }

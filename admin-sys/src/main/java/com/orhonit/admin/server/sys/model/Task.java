@@ -25,4 +25,7 @@ public class Task extends BaseEntity<Long> {
 	private Integer type;
 	private Integer good;
 
+	private String nameH;
+	private String nameE;
+	private String nameI;
 }

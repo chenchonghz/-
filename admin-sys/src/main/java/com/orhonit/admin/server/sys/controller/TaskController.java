@@ -30,16 +30,18 @@ public class TaskController {
     @ApiOperation(value = "保存")
     public Task save(@RequestBody Task task) {
     	taskService.save(task);
-
         return task;
     }
-
     @GetMapping("/{id}")
     @ApiOperation(value = "根据id获取")
     public Task get(@PathVariable Long id) {
         return taskService.getById(id);
     }
-
+    @GetMapping("/updateGood")
+    @ApiOperation(value = "设置病例是否为优秀")
+    public int updateGood(Long id,Integer good){
+    	return taskService.updateGood(id,good);
+    }
     @PutMapping
     @ApiOperation(value = "修改")
     public Task update(@RequestBody Task task) {

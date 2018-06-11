@@ -19,6 +19,9 @@ public interface LiveshowmDao {
 
     @Select("select * from liveshowm t where t.id = #{id}")
     Liveshowm getById(Long id);
+    
+    @Select("select t.*,e.nameMeng as name from liveshowm t left join expertinfo e on e.uid = t.onlineApplyId where t.id = #{id}")
+    Liveshowm getId(Long id);
 
     @Delete("delete from liveshowm where id = #{id}")
     int delete(Long id);
@@ -27,7 +30,7 @@ public interface LiveshowmDao {
     int update(Liveshowm liveshowm);
     
     @Options(useGeneratedKeys = true, keyProperty = "id")
-    @Insert("insert into liveshowm(coverPhoto, onlineApplyId, onlineQuantity, videoName, liveHome, startTime, endTime) values(#{coverPhoto}, #{onlineApplyId}, #{onlineQuantity}, #{videoName}, #{liveHome}, #{startTime}, #{endTime})")
+    @Insert("insert into liveshowm(coverPhoto, onlineApplyId, onlineQuantity, videoName, liveHome, startTime, endTime,status) values(#{coverPhoto}, #{onlineApplyId}, #{onlineQuantity}, #{videoName}, #{liveHome}, #{startTime}, #{endTime},#{status})")
     int save(Liveshowm liveshowm);
     
     int count(@Param("params") Map<String, Object> params);
@@ -39,4 +42,6 @@ public interface LiveshowmDao {
 	void addPeople(Integer id);
     @Update("update liveshowm set onlineQuantity = onlineQuantity - 1 where id = #{id}")
 	void lessPeople(Integer id);
+    @Update("update liveshowm t set t.status = #{status} where t.id = #{id}")
+	int updateStatus(Liveshowm liveshowm);
 }

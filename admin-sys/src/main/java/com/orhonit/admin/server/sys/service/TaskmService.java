@@ -30,5 +30,7 @@ public interface TaskmService {
 
 	ResponseEntity<?> getAll();
 
+	int updateGood(Long id, Integer good);
+
 
 }

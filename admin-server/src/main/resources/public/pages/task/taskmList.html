@@ -37,29 +37,15 @@
                                 <tr>
                                 </tr>                       
                                 <tr>
-									<th>id</th>
-									<th>herdsmanId</th>
-									<th>expertId</th>
-									<th>title</th>
-									<th>content</th>
-									<th>illnessCategoryId</th>
-									<th>processingMethod</th>
-									<th>enclosure</th>
-									<th>status</th>
-									<th>type</th>
-									<th>good</th>
-									<th>id</th>
-									<th>herdsmanId</th>
-									<th>expertId</th>
-									<th>title</th>
-									<th>content</th>
-									<th>illnessCategoryId</th>
-									<th>processingMethod</th>
-									<th>enclosure</th>
-									<th>status</th>
-									<th>type</th>
-									<th>good</th>
-
+									<th>序号</th>
+									<th>牧民</th>
+									<th>专家</th>
+									<th>标题</th>
+									<th>病情分类</th>
+									<th>状态</th>
+									<th>类型</th>
+									<th>是否为优秀病例</th>
+									<th>操作</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -75,10 +61,12 @@
 
 <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
-<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
 <script type="text/javascript">
+var pers = checkPermission();
 
 var example;
 function init(){
@@ -100,21 +88,7 @@ function init(){
 				{"data" : "herdsmanId", "defaultContent" : ""},
 				{"data" : "expertId", "defaultContent" : ""},
 				{"data" : "title", "defaultContent" : ""},
-				{"data" : "content", "defaultContent" : ""},
 				{"data" : "illnessCategoryId", "defaultContent" : ""},
-				{"data" : "processingMethod", "defaultContent" : ""},
-				{"data" : "enclosure", "defaultContent" : ""},
-				{"data" : "status", "defaultContent" : ""},
-				{"data" : "type", "defaultContent" : ""},
-				{"data" : "good", "defaultContent" : ""},
-				{"data" : "id", "defaultContent" : ""},
-				{"data" : "herdsmanId", "defaultContent" : ""},
-				{"data" : "expertId", "defaultContent" : ""},
-				{"data" : "title", "defaultContent" : ""},
-				{"data" : "content", "defaultContent" : ""},
-				{"data" : "illnessCategoryId", "defaultContent" : ""},
-				{"data" : "processingMethod", "defaultContent" : ""},
-				{"data" : "enclosure", "defaultContent" : ""},
 				{"data" : "status", "defaultContent" : ""},
 				{"data" : "type", "defaultContent" : ""},
 				{"data" : "good", "defaultContent" : ""},
@@ -123,31 +97,107 @@ function init(){
             ],
             "columnDefs": [
 				{"name" : "id", "targets" : "0"},
-				{"name" : "herdsmanId", "targets" : "1"},
-				{"name" : "expertId", "targets" : "2"},
+				{"name" : "herdsmanId",
+					"targets" : 1,
+					"render":function(data,type,row){
+						return row['nameH'];
+					}
+				},
+				{"name" : "expertId", 
+					"targets" : 2,
+					"render":function(data,type,row){
+						return row['nameE'];
+					}
+				},
 				{"name" : "title", "targets" : "3"},
-				{"name" : "content", "targets" : "4"},
-				{"name" : "illnessCategoryId", "targets" : "5"},
-				{"name" : "processingMethod", "targets" : "6"},
-				{"name" : "enclosure", "targets" : "7"},
-				{"name" : "status", "targets" : "8"},
-				{"name" : "type", "targets" : "9"},
-				{"name" : "good", "targets" : "10"},
-				{"name" : "id", "targets" : "11"},
-				{"name" : "herdsmanId", "targets" : "12"},
-				{"name" : "expertId", "targets" : "13"},
-				{"name" : "title", "targets" : "14"},
-				{"name" : "content", "targets" : "15"},
-				{"name" : "illnessCategoryId", "targets" : "16"},
-				{"name" : "processingMethod", "targets" : "17"},
-				{"name" : "enclosure", "targets" : "18"},
-				{"name" : "status", "targets" : "19"},
-				{"name" : "type", "targets" : "20"},
-				{"name" : "good", "targets" : "21"},
-
+				{"name" : "illnessCategoryId", 
+					"targets" : 4,
+					"render":function(data,type,row){
+						return row['nameI'];
+					}
+				},
+				{"name" : "status", 
+					"targets" : 5,
+					"render":function(data,type,row){
+						if(row['status']==1){
+							return "未完成";
+						}else{
+							return "已完成";
+						}
+					}
+				},
+				{"name" : "type", 
+					"targets" : 6,
+					"render":function(data,type,row){
+						if(row['type']==1){
+							return "文字提交";
+						}else if(row['type']==2){
+							return "视频提交";
+						}else{
+							return "电话提交";
+						}
+					}
+				},
+				{"name" : "good", 
+					"targets" : 7,
+					"render":function(data,type,row){
+						if(row['good']==0){
+							return "不是优秀病例";
+						}else{
+							return "是优秀病例";
+						}
+					}
+				},
+				{
+					"targets":8,
+					"render":function(data,type,row){
+						var id=row['id'];
+						var href="taskmView.html?id="+id;
+						var taskGoodbutton=taskGood(id,"sys:taskm:goodTask",pers);
+						var delTakebutton=delTake(id,"sys:taskm:delGoodTask",pers);
+						var view=buttonVeiw(href,"sys:taskm:view",pers);
+						if(row['good']==0){
+							return view + taskGoodbutton;
+						}else{
+							return view + delTakebutton;
+						} 
+					}
+				}
               ],
            "order": [[ 0, "asc" ]]
         } );
+}
+function toGood(id){
+	layer.confirm('确定要设置为优秀病例吗？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+    	$.ajax({
+            type : 'get',
+            url : '/taskms/updateGood?id='+id+'&good=1',
+            success : function(data) {
+                example.ajax.reload();
+                layer.msg("设置成功");
+            }
+        });
+        
+        layer.close(1);
+    });
+}
+function quGood(id){
+	layer.confirm('确定要取消优秀病例吗？', {
+        btn : [ '确定', '取消' ]
+    }, function() {
+    	$.ajax({
+            type : 'get',
+            url : '/taskms/updateGood?id='+id+'&good=0',
+            success : function(data) {
+                example.ajax.reload();
+                layer.msg("取消成功");
+            }
+        });
+        
+        layer.close(1);
+    });
 }
 
 function del(id){

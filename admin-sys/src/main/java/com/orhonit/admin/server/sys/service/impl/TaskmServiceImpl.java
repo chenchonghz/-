@@ -11,6 +11,9 @@ import com.orhonit.admin.server.common.datatables.TableRequestHandler;
 import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
+import com.orhonit.admin.server.sys.dao.ExpertinfoDao;
+import com.orhonit.admin.server.sys.dao.IllnesscategorymDao;
+import com.orhonit.admin.server.sys.dao.NewherdsmanDao;
 import com.orhonit.admin.server.sys.dao.TaskmDao;
 import com.orhonit.admin.server.sys.dao.UserDao;
 import com.orhonit.admin.server.sys.dto.TaskmDto;
@@ -33,7 +36,7 @@ public class TaskmServiceImpl implements TaskmService {
 	@Override
 	public Taskm getById(Long id) {
 		// TODO Auto-generated method stub
-		return taskmDao.getById(id);
+		return taskmDao.getId(id);
 	}
 
 	@Override
@@ -41,7 +44,12 @@ public class TaskmServiceImpl implements TaskmService {
 		// TODO Auto-generated method stub
 		taskmDao.update(taskm);
 	}
-
+	@Autowired
+	private NewherdsmanDao newherdsmanDao;
+	@Autowired
+	private ExpertinfoDao expertinfoDao;
+	@Autowired
+	private IllnesscategorymDao illnesscategorymDao;
 	@Override
 	public TableResponse<Taskm> list(TableRequest request) {
 		// TODO Auto-generated method stub
@@ -55,7 +63,13 @@ public class TaskmServiceImpl implements TaskmService {
 
             @Override
             public List<Taskm> list(TableRequest request) {
-                return taskmDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Taskm> list = taskmDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Taskm taskm : list) {
+                	taskm.setNameE(expertinfoDao.getUId(Long.parseLong(taskm.getExpertId().toString())).getNameMeng());
+                	taskm.setNameH(newherdsmanDao.getByUid(taskm.getHerdsmanId()).getNameMeng());
+                	taskm.setNameI(illnesscategorymDao.getById(Long.parseLong(taskm.getIllnessCategoryId().toString())).getName());
+				}
+                return list;
             }
         }).build().handle(request);
 	}
@@ -136,6 +150,14 @@ public class TaskmServiceImpl implements TaskmService {
 			// TODO: handle exception
 			return ResponseEntity.status(401).body("错误");
 		}
+	}
+
+	@Override
+	public int updateGood(Long id, Integer good) {
+		// TODO Auto-generated method stub
+		Taskm taskm = taskmDao.getById(id);
+		taskm.setGood(good);
+		return taskmDao.updateGood(taskm);
 	}
 
 }

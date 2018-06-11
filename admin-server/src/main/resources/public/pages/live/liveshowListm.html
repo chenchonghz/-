@@ -15,12 +15,12 @@
 					 <div align="left">
                         <table style="width: 100%">
                             <tr>
-                               <!--  <td>
+                                <!-- <td>
                                    <button class="layui-btn layui-btn-small"
-										onclick="location.href='addVideo.html'"
-										permission="sys:studyVideo:add">
+										onclick="location.href='addArticle.html'"
+										permission="sys:studyArticle:add">
 										<i class="layui-icon">&#xe608;</i> 添加
-									</button>  
+									</button>
                                 </td> -->
                                 <td align="right">
                                     <form class="form-inline" onsubmit="return false">
@@ -44,9 +44,10 @@
 									<th>序号</th>
 									<th>发布者</th>
 									<th>标题</th>
-									<th>点击量</th>
+									<th>在线量</th>
 									<th>状态</th>
-									<th>创建时间</th>
+									<th>开始时间</th>
+									<th>结束时间</th>
 									<th>操作</th>
                                 </tr>
                             </thead>
@@ -69,7 +70,6 @@
 <script type="text/javascript" src="../../js/my/permission.js"></script>
 <script type="text/javascript">
 var pers = checkPermission();
-
 var example;
 function init(){
 	example = 
@@ -78,42 +78,41 @@ function init(){
         	"processing": false,
         	"serverSide" : true,
         	"ajax": {
-        		"url" : "/studyVideos",
+        		"url" : "/liveshowms",
         		"type":"get",
         		"data":function(d){
-    			
     			}
         	},
         	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
             "columns": [
 				{"data" : "id", "defaultContent" : ""},
-				{"data" : "uid", "defaultContent" : ""},
-				{"data" : "title", "defaultContent" : ""},
-				{"data" : "clicks", "defaultContent" : ""},
+				{"data" : "onlineApplyId", "defaultContent" : ""},
+				{"data" : "videoName", "defaultContent" : ""},
+				{"data" : "onlineQuantity", "defaultContent" : ""},
 				{"data" : "status", "defaultContent" : ""},
-				{"data" : "createTime", "defaultContent" : ""},
-                
+				{"data" : "startTime", "defaultContent" : ""},
+				{"data" : "endTime", "defaultContent" : ""},
             ],
             "columnDefs": [
 				{"name" : "id", "targets" : "0"},
-				{"name" : "uid", 
+				{"name" : "onlineApplyId", 
 					"targets" : 1,
 					"render":function(data,type,row){
 						return row['name'];
-					}},
-				
-				{"name" : "title",
-					"targets" : 2,
-					"render":function(data,type,row,mate){
-						if(data.length>8){
-							return data.substr(0,7)+"...";
-						}else{
-							return data;
+					}
+					},
+				{"name" : "videoName", 
+						"targets" : 2,
+						"render":function(data,type,row,mate){
+							if(data.length>8){
+								return data.substr(0,7)+"...";
+							}else{
+								return data;
+							}
+							
 						}
-						
-					}	
-				},
-				{"name" : "clicks", "targets" : "3"},
+						},
+				{"name" : "onlineQuantity", "targets" : "3"},
 				{"name" : "status", 
 					"targets" : 4,
 					"render":function(data,type,row){
@@ -127,36 +126,40 @@ function init(){
 						}
 					}
 				},
-				{"name" : "createTime", "targets" : "5"},
+				{"data" : "startTime", "targets" : "5"},
+				{"data" : "endTime", "targets" : "6"},
 				{
-					"targets":6,
+					"targets":7,
 					"render":function(data,type,row){
+						
 						var id=row['id'];
-						var href="videoView.html?id="+id;
-						var del = buttonDel(id,"sys:studyVideo:del",pers);
-						var pass=buttonPass(id,"sys:studyVideo:pass",pers);
-						var fail=buttonFail(id,"sys:studyVideo:fail",pers);
-						var view=buttonVeiw(href,"sys:studyVideo:view",pers);
+						var href="liveshowViewm.html?id="+id;
+						var del = buttonDel(id,"sys:liveshowm:del",pers);
+						var pass=buttonPass(id,"sys:liveshowm:pass",pers);
+						var fail=buttonFail(id,"sys:liveshowm:fail",pers);
+						var view=buttonVeiw(href,"sys:liveshowm:view",pers);
 						var string='<span class="layui-badge layui-bg-green" >已通过审核</span>';
 						var string2='<span class="layui-badge layui-bg-black">审核失败</span>';
 						if(row['status']==0){
+							console.log(fail)
 							return view + del + pass + fail;	
 						}else if(row['status']==1){
 							return view + del +string;
 						}else{
+							
 							return view + del+string2;
 						}
 					}
-				},
+				}
               ],
            "order": [[ 0, "asc" ]]
-        });
+        } );
 }
 function pass(id){
 	layer.confirm('确定要通过审核吗？',{btn:['确定','取消']},function(){
 		$.ajax({
 			type:'get',
-			url:'/studyVideos/pass/'+id,
+			url:'/liveshowms/pass/'+id,
 			success:function(data){
 				 example.ajax.reload();
 	                layer.msg("审核通过");
@@ -168,14 +171,14 @@ function pass(id){
 
 function fail(id){
 	
-	layer.prompt({
+/* 	layer.prompt({
 		  formType: 2,
 		  title:'请填写审核失败的原因',
 		  area: ['500px', '200px'] //自定义文本域宽高
 		}, function(value, index, elem){
 			$.ajax({
 				type:'get',
-				url:'/studyVideos/fail/?id='+id+'&reason='+value,
+				url:'/studyArticles/fail/?id='+id+'&reason='+value,
 				success:function(data){
 					 example.ajax.reload();
 		                layer.msg("操作成功");
@@ -183,21 +186,33 @@ function fail(id){
 			})
 		 //得到value
 		  layer.close(index);
-		});
+		}); */
+	
+	layer.confirm('确定要审核失败吗？',{btn:['确定','取消']},function(){
+		$.ajax({
+			type:'get',
+			url:'/liveshowms/fail/'+id,
+			success:function(data){
+				 example.ajax.reload();
+	                layer.msg("审核失败");
+			}
+		})
+	}) 
 }
+
+
 function del(id){
 	layer.confirm('确定要删除吗？', {
         btn : [ '确定', '取消' ]
     }, function() {
     	$.ajax({
             type : 'delete',
-            url : '/studyVideos/'+id,
+            url : '/liveshowms/'+id,
             success : function(data) {
                 example.ajax.reload();
                 layer.msg("删除成功");
             }
         });
-        
         layer.close(1);
     });
 }

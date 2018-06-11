@@ -22,7 +22,6 @@ function buttonDel(data, permission, pers){
 	if ($.inArray(permission, pers) < 0) {
 		return "";
 	}
-	
 	var btn = $("<button class='layui-btn layui-btn-mini' title='删除' onclick='del(\"" + data +"\")'><i class='layui-icon'>&#xe640;</i></button>");
 	return btn.prop("outerHTML");
 }
@@ -141,6 +140,22 @@ function showView1(data, permission, pers){
 	}
 	
 	var btn = $("<button class='layui-btn layui-btn-mini' title='预览详情' onclick='show1(\"" + data +"\")'><i class='layui-icon'>&#xe6b2;</i></button>");
+	return btn.prop("outerHTML");
+}
+//设置优秀病例
+function taskGood(data, permission, pers){
+	if ($.inArray(permission, pers) < 0) {
+		return "";
+	}
+	var btn = $("<button class='layui-btn layui-btn-mini' title='设置优秀' onclick='toGood(\"" + data +"\")'>设为优秀</button>");
+	return btn.prop("outerHTML");
+}
+//取消优秀病例
+function delTake(data, permission, pers){
+	if ($.inArray(permission, pers) < 0) {
+		return "";
+	}
+	var btn = $("<button class='layui-btn layui-btn-mini' title='取消优秀' onclick='quGood(\"" + data +"\")'>取消优秀</button>");
 	return btn.prop("outerHTML");
 }
 //视频通讯测试

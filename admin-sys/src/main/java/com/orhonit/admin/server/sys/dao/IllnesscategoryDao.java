@@ -34,4 +34,5 @@ public interface IllnesscategoryDao {
     List<Illnesscategory> list(@Param("params") Map<String, Object> params, @Param("start") Integer start, @Param("length") Integer length);
     @Select("select * from illnesscategory")
 	List<Illnesscategory> AppList();
+
 }

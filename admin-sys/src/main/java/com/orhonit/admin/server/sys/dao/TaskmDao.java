@@ -19,7 +19,10 @@ public interface TaskmDao {
 
     @Select("select * from taskm t where t.id = #{id} and status != 0")
     Taskm getById(Long id);
-
+   
+    @Select("select t.*,e.nameMeng as nameE,h.nameMeng as nameH from taskm t left join expertinfo e on e.uid = t.expertId left join newherdsman h on h.uid = t.herdsmanId where t.id = #{id}")
+    Taskm getId(Long id);
+    
     @Delete("delete from taskm where id = #{id}")
     int delete(Long id);
 
@@ -43,5 +46,9 @@ public interface TaskmDao {
 	void AppDelete(Long id);
 	@Select("select * from taskm where good = 1")
 	List<Taskm> getAll();
+	@Update("update taskm set good = #{good} where id = #{id}")
+	int updateGood(Taskm taskm);
+
+	
 
 }

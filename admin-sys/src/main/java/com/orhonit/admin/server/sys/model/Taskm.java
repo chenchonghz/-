@@ -24,6 +24,11 @@ public class Taskm extends BaseEntity<Long> {
 	private Integer status;
 	private Integer type;
 	private Integer good;
+	
+	
+	private String nameH;
+	private String nameE;
+	private String nameI;
 	@Override
 	public String toString() {
 		return "Taskm [herdsmanId=" + herdsmanId + ", expertId=" + expertId + ", title=" + title + ", content="

@@ -47,7 +47,11 @@ public class TaskmController {
 
         return taskm;
     }
-
+    @GetMapping("/updateGood")
+    @ApiOperation(value = "设置病例是否为优秀")
+    public int updateGood(Long id,Integer good){
+    	return taskmDaoService.updateGood(id,good);
+    }
     @GetMapping
     @ApiOperation(value = "列表")
     public TableResponse<Taskm> list(TableRequest request) {

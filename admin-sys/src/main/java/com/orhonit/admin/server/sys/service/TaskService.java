@@ -30,4 +30,6 @@ public interface TaskService {
 
 	ResponseEntity<?> getAll();
 
+	int updateGood(Long id, Integer good);
+
 }
