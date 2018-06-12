@@ -8,6 +8,9 @@
 			<if test="params.title != null and params.title != ''">
 				and t.title like concat('%', #{params.title}, '%')
 			</if>
+			<if test="params.titleMeng != null and params.titleMeng != ''">
+				and t.titleMeng like concat('%', #{params.titleMeng}, '%')
+			</if>
 			<if test="params.status != null and params.status != ''">
 				and t.status = #{params.status}
 			</if>

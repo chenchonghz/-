@@ -22,11 +22,11 @@ public interface ArticlesDao {
 	@Delete("delete from articles where id = #{id}")
 	int delete(Long id);
 
-	@Update("update articles t set title = #{title}, content = #{content}, status = #{status}, updateTime = #{updateTime} where t.id = #{id}")
+	@Update("update articles t set title = #{title},titleMeng = #{titleMeng}, contentMeng = #{contentMeng}, content = #{content}, status = #{status}, updateTime = #{updateTime} where t.id = #{id}")
 	int update(Articles articles);
 
 	@Options(useGeneratedKeys = true, keyProperty = "id")
-	@Insert("insert into articles(title, content, status, createTime, updateTime) values(#{title}, #{content}, #{status}, #{createTime}, #{updateTime})")
+	@Insert("insert into articles(title, titleMeng, content, contentMeng, status, createTime, updateTime) values(#{title}, #{titleMeng}, #{content}, #{contentMeng}, #{status}, #{createTime}, #{updateTime})")
 	int save(Articles articles);
 
 	int count(@Param("params") Map<String, Object> params);

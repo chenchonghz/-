@@ -40,6 +40,8 @@ public interface DrugstoreinfoService {
 
 	ResponseEntity<?> getByTaskId(Integer id);
 
+	ResponseEntity<?> getDrug(Integer id);
+
 
 
 }

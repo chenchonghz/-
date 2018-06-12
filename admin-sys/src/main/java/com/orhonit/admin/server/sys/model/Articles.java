@@ -12,6 +12,8 @@ public class Articles extends BaseEntity<Long> {
 	private static final long serialVersionUID = -4401913568806243090L;
 
 	private String title;
+	private String titleMeng;
+	private String contentMeng;
 	private String content;
 	private Integer status;
 

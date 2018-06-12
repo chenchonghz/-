@@ -11,6 +11,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.orhonit.admin.server.sys.model.Drug;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 
 @Mapper
@@ -60,4 +61,6 @@ public interface DrugstoreinfoDao {
 	List<Drugstoreinfo> selectByNewHerdsManAreaMeng(Integer areaMeng);
     @Select("select * from drugstoreinfo where cityMeng = #{arg0} and areaMeng != #{arg1}")
 	List<Drugstoreinfo> selectByNewHerdsManCityMeng(Integer cityMeng, Integer areaMeng);
+    @Select("select * from drug where uid = #{id}")
+	List<Drug> getDrug(Integer id);
 }

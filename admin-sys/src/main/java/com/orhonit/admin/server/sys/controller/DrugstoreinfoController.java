@@ -142,4 +142,10 @@ public class DrugstoreinfoController {
     	return drugstoreinfoService.getByTaskId(id);
     }
     
+    @GetMapping("/App/getDrug/{id}")
+    @ApiOperation(value = "根据药店id拿到药品")
+    public ResponseEntity<?> getDrug(@PathVariable("id") Integer id){
+    	return drugstoreinfoService.getDrug(id);
+    }
+    
 }

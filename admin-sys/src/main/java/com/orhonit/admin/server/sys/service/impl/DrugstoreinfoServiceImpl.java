@@ -14,6 +14,7 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.DrugstoreinfoDao;
+import com.orhonit.admin.server.sys.model.Drug;
 import com.orhonit.admin.server.sys.model.Drugstoreinfo;
 import com.orhonit.admin.server.sys.model.Newherdsman;
 import com.orhonit.admin.server.sys.model.Task;
@@ -242,6 +243,18 @@ public class DrugstoreinfoServiceImpl implements DrugstoreinfoService {
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseEntity.status(401).body("错误");
+		}
+	}
+
+	@Override
+	public ResponseEntity<?> getDrug(Integer id) {
+		// TODO Auto-generated method stub
+		try {
+			List<Drug> list = drugstoreinfoDao.getDrug(id);
+			return ResponseEntity.ok(list);
+		} catch (Exception e) {
+			// TODO: handle exception
 			return ResponseEntity.status(401).body("错误");
 		}
 	}

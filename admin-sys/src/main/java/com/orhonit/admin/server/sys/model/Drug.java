@@ -23,5 +23,6 @@ public class Drug extends BaseEntity<Long> {
 	private Integer uid;
 	private Integer number;
 	private Integer status;
+	private String nameD;
 
 }

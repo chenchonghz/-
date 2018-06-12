@@ -37,16 +37,16 @@
                                 <tr>
                                 </tr>                       
                                 <tr>
-									<th>id</th>
-									<th>categoryId</th>
-									<th>title</th>
-									<th>titlemeng</th>
-									<th>content</th>
-									<th>contentmeng</th>
-									<th>drugUrl</th>
-									<th>uid</th>
-									<th>number</th>
-									<th>status</th>
+									<th>序号</th>
+									<th>药名</th>
+									<th>药名(蒙)</th>
+									<th>描述</th>
+									<th>描述(蒙)</th>
+									<th>图片</th>
+									<th>药店</th>
+									<th>剩余</th>
+									<th>状态</th>
+									<th>操作</th>
 
                                 </tr>
                             </thead>
@@ -61,13 +61,19 @@
 </body>
 </html>
 
+
 <script type="text/javascript" src="../../js/libs/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
-<script type="text/javascript" src="../../layui/layui.js"></script>
+<script type="text/javascript" src="../../js/layer.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="../../js/plugin/datatables/dataTables.bootstrap.min.js"></script>
+<script type="text/javascript" src="../../js/my/permission.js"></script>
 <script type="text/javascript">
+var pers = checkPermission();
 
+var pro = window.location.protocol;
+var host = window.location.host;
+var domain = pro + "//" + host;
 var example;
 function init(){
 	example = 
@@ -85,7 +91,6 @@ function init(){
         	"dom": "<'dt-toolbar'r>t<'dt-toolbar-footer'<'col-sm-10 col-xs-12 hidden-xs'i><'col-xs-12 col-sm-10' p v>>",	
             "columns": [
 				{"data" : "id", "defaultContent" : ""},
-				{"data" : "categoryId", "defaultContent" : ""},
 				{"data" : "title", "defaultContent" : ""},
 				{"data" : "titlemeng", "defaultContent" : ""},
 				{"data" : "content", "defaultContent" : ""},
@@ -99,16 +104,45 @@ function init(){
             ],
             "columnDefs": [
 				{"name" : "id", "targets" : "0"},
-				{"name" : "categoryId", "targets" : "1"},
-				{"name" : "title", "targets" : "2"},
-				{"name" : "titlemeng", "targets" : "3"},
-				{"name" : "content", "targets" : "4"},
-				{"name" : "contentmeng", "targets" : "5"},
-				{"name" : "drugUrl", "targets" : "6"},
-				{"name" : "uid", "targets" : "7"},
-				{"name" : "number", "targets" : "8"},
-				{"name" : "status", "targets" : "9"},
-
+				{"name" : "title", "targets" : "1"},
+				{"name" : "titlemeng", "targets" : "2"},
+				{"name" : "content", "targets" : "3"},
+				{"name" : "contentmeng", "targets" : "4"},
+				{"name" : "drugUrl", 
+					"targets" : 5,
+					"render": function (data, type, row) {
+                		var url = row['drugUrl'];
+                		var src = domain + "/files" + url;
+                		var u = "<a target='_blank' href='" + src +"'><img width='30' src='" + src + "'></img></a>";
+                    	return u;
+					}
+				},
+				{"name" : "uid", 
+					"targets" : 6,
+					"render": function (data, type, row) {
+                		return row["nameD"];
+					}
+				},
+				{"name" : "number", "targets" : "7"},
+				{"name" : "status", 
+					"targets" : 8,
+					"render": function (data, type, row) {
+                		if(row['status']==0){
+                			return "上架";
+                		}else{
+                			return "下架";
+                		}
+                		
+					}
+				},
+				{ 
+                	"targets": 9,
+                	"render": function (data, type, row) {
+                		var id = row['id'];
+                        var del = buttonDel(id, "sys:drug:del", pers);
+                        return del;
+                  	}
+                }
               ],
            "order": [[ 0, "asc" ]]
         } );

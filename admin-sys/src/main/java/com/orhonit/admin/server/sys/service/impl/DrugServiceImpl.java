@@ -12,6 +12,7 @@ import com.orhonit.admin.server.common.datatables.TableResponse;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.CountHandler;
 import com.orhonit.admin.server.common.datatables.TableRequestHandler.ListHandler;
 import com.orhonit.admin.server.sys.dao.DrugDao;
+import com.orhonit.admin.server.sys.dao.DrugstoreinfoDao;
 import com.orhonit.admin.server.sys.model.Drug;
 import com.orhonit.admin.server.sys.service.DrugService;
 import com.orhonit.admin.server.sys.utils.UserUtil;
@@ -37,7 +38,8 @@ public class DrugServiceImpl implements DrugService {
 		// TODO Auto-generated method stub
 		drugDao.update(drug);
 	}
-
+	@Autowired
+	private DrugstoreinfoDao drugstoreinfoDao;
 	@Override
 	public TableResponse<Drug> list(TableRequest request) {
 		// TODO Auto-generated method stub
@@ -51,7 +53,11 @@ public class DrugServiceImpl implements DrugService {
 
             @Override
             public List<Drug> list(TableRequest request) {
-                return drugDao.list(request.getParams(), request.getStart(), request.getLength());
+                List<Drug> list = drugDao.list(request.getParams(), request.getStart(), request.getLength());
+                for (Drug drug : list) {
+					drug.setNameD(drugstoreinfoDao.getByUid(drug.getUid()).getPharmacyName());
+				}
+                return list;
             }
         }).build().handle(request);
 	}
